@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FormulaireService } from '../../shared/formulaire.service';
+import { Absence } from 'src/app/models/absence';
+import { StatusAbsence } from 'src/app/models/status-absence';
+import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
 
 @Component({
   selector: 'app-creation.absence',
@@ -8,13 +10,15 @@ import { FormulaireService } from '../../shared/formulaire.service';
   styleUrls: ['./creation.absence.component.scss'],
 })
 export class CreationAbsenceComponent implements OnInit {
+
+  absence!: Absence;
   
   @Input() dateDebut!: Date;
   @Input() dateFin!: Date;
-  @Input() congesPayes!: boolean;
-  @Input() congesSansSolde!: boolean;
-  @Input() rtt!: boolean;
-  @Input() motif!: string;
+  congesPayes: boolean = false;
+  congesSansSolde: boolean = false;
+   rtt: boolean = false;
+   motif: string = "ajouter votre motif si c'est un congé sans solde";
   
   form: FormGroup = new FormGroup({
     dateDebut: new FormControl(this.dateDebut),
@@ -25,13 +29,24 @@ export class CreationAbsenceComponent implements OnInit {
     motif: new FormControl(this.motif),
   });
 
-  constructor(private _formulaireService: FormulaireService) {}
+  constructor(private _absenceHttpService: AbsenceHttpService) {}
   
   ngOnInit(): void {
+    this._init();
   }
 
   private _init() {
+    this.onSubmit();
 }
 
-  onSubmit() {}
+  onSubmit() {
+    this.absence.dateDebut = this.dateDebut;
+    this.absence.dateFin = this.dateFin;
+    this.absence.motif = this.motif;
+    this.absence.status = StatusAbsence.INITIALE;
+    this.absence.typeConge = 
+
+    this._absenceHttpService.post(this.absence).subscribe( () => {
+})
+}
 }
