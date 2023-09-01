@@ -1,3 +1,4 @@
+import { Absence } from "./absence";
 
 export interface Employee {
   id?: number;
@@ -5,7 +6,7 @@ export interface Employee {
   nom: string;
   prenom: string;
   role: any;
-  absences: any[];
+  absences: Absence[];
   nombresJoursRestantsCP: number;
   nombresJoursRestantsRTT: number;
 
