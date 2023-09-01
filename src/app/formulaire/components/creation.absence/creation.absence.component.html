@@ -1,0 +1,31 @@
+<p>creation.absence works!</p>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label> Date de début : 
+        <input type="date" formControlName="dateDebut" />
+    </label>
+    <br>
+    <label> Date de fin : 
+        <input type="date" formControlName="dateFin" />
+</label>
+<br>
+<label><i>JOURS R.</i> jrs</label>
+<br>
+<label> Congé p.
+    <input type="checkbox" formControlName="congesPayes" />
+</label>
+<br>
+<label> Congé s.s.
+    <input type="checkbox" formControlName="congesSansSolde" />
+</label>
+<br>
+<label> RTT
+    <input type="checkbox" formControlName="rtt" />
+</label>
+<br>
+<label> Motif
+    <input type="textArea" formControlName="motif" />
+</label>
+<br>
+<button type="submit">VALIDER</button>
+</form>
