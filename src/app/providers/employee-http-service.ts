@@ -17,12 +17,13 @@ export class EmployeeHttpService {
 
 
   postLogin(loginDto : Login){
-    return this.http.post<any>(this.URL_API_V1_EMPLOYEE_LOGIN, loginDto)
+    console.log(loginDto)
+    return this.http.post(this.URL_API_V1_EMPLOYEE_LOGIN, loginDto)
   }
 
 
-  postSignin(utilisateur : EmployeCreation){
-    return this.http.post<any>(this.URL_API_V1_EMPLOYEE_SIGNIN, utilisateur)
+  postSignUp(utilisateur : EmployeCreation){
+    return this.http.post(this.URL_API_V1_EMPLOYEE_SIGNIN, utilisateur)
   }
 
 }

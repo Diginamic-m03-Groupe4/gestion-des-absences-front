@@ -1,0 +1,34 @@
+<main>
+  <h1>Sign Up</h1>
+  <form class="form" [formGroup]="signinForm">
+    <div class="formGroup">
+      <label for="email">E-mail</label>
+      <input class="formControl"  name="email" formControlName="email" type="text" placeholder="E-mail">
+      <div class="error" *ngIf="!email?.valid && (this.signinForm.invalid && submitted) ">Invalid email</div>
+    </div>
+    <div class="formGroup">
+      <label for="first-name">Firstname</label>
+      <input class="formControl"  name="first-name" formControlName="firstName" type="text" placeholder="Firstname">
+      <div class="error" *ngIf="!firstName?.valid && (this.signinForm.invalid && submitted)">FirstName is required</div>
+    </div>
+    <div class="formGroup">
+      <label for="last-name">Lastname</label>
+      <input class="formControl"  name="last-name" formControlName="lastName" type="text" placeholder="Username">
+      <div class="error" *ngIf="!lastName?.valid && (this.signinForm.invalid && submitted) ">LastName is required</div>
+    </div>
+    <div class="formGroup">
+      <label for="password">Password</label>
+      <input class="formControl"  name="password" formControlName="password" type="password" placeholder="Password">
+      <div class="error" *ngIf="!password?.valid && (this.signinForm.invalid && submitted)">Password is required</div>
+    </div>
+    <div class="formGroup">
+      <label for="conf-password">Confirm Password</label>
+      <input class="formControl"  name="conf-password" formControlName="confirmPassword" type="password" placeholder="Password">
+      <div class="error" *ngIf="!confirmPassword?.valid && (this.signinForm.invalid && submitted)">Confirm Password is required</div>
+    </div>
+    <button class="button" (click)="onSubmit()" type="submit">Sign Up</button>
+    <div class="error">{{formError}}</div>
+  </form>
+  <a routerLink="/login" routerLinkActive="active" >Already have an account? Login</a>
+</main>
+
