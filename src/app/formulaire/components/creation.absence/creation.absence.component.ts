@@ -32,14 +32,15 @@ export class CreationAbsenceComponent implements OnInit {
   constructor(private _absenceHttpService: AbsenceHttpService) {}
   
   ngOnInit(): void {
-    this._init();
+    this._init()
+    this.onSubmit();
   }
 
   private _init() {
-    this.onSubmit();
+    
 }
 
-  onSubmit() {
+  private onSubmit() {
     this.absence.dateDebut = this.dateDebut;
     this.absence.dateFin = this.dateFin;
     this.absence.motif = this.motif;
@@ -47,6 +48,7 @@ export class CreationAbsenceComponent implements OnInit {
     this.absence.typeConge = 
 
     this._absenceHttpService.post(this.absence).subscribe( () => {
+      console.log(`Votre demande de congés a bien été prise en compte`);
 })
 }
 }
