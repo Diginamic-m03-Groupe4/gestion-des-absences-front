@@ -1,0 +1,7 @@
+export enum StatusAbsence {
+  INITIALE = "INITIALE",
+  ATTENTE_VALIDATION = "ATTENTE_VALIDATION",
+  VALIDEE = "VALIDEE",
+  REJETEE = "REJETEE"
+
+}
