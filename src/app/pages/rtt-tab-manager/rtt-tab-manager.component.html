@@ -10,8 +10,8 @@
 <div class="filters" [formGroup]="formCheckbox">
   <h2>Filtres</h2>
   <label>Jour fériés</label>
-  <input type="checkbox" id="feries" name="feries" formControlName="jf" (change)="handleFilter()">
+  <input type="checkbox" id="feries" name="feries" formControlName="Jour férié" (change)="handleFilter()">
   <label>Rtt</label>
-  <input type="checkbox" id="feries" name="feries" formControlName="rtt" (change)="handleFilter()">
+  <input type="checkbox" id="feries" name="feries" formControlName="RTT Employeur" (change)="handleFilter()">
 </div>
 <app-tableau [service]="service" [buttons]="buttons" [entities]="entities" [enTetes]="enTetes" ></app-tableau>

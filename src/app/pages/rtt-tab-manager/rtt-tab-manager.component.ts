@@ -23,20 +23,24 @@ export class RttTabManagerComponent {
   entities: AbsenceEmployeur[] = [];
   absenceSubscription?: Subscription
   formCheckbox : FormGroup
-  filterFunc: FilterFunc = (absence: AbsenceEmployeur) => true;
 
 
   constructor(public service: RttTabService, fb:FormBuilder) {
     this.formCheckbox = fb.group({
-      jf: [true],
-      rtt: [true],
+      "Jour férié": [true],
+      "RTT Employeur": [true],
     })
   }
 
   ngOnInit(): void {
     this.service.getAbsences(this.annee);
     this.absenceSubscription = this.service.getEntitiesSubject().subscribe(value => {
-      this.entities = value.filter(this.filterFunc);
+      this.entities = []
+      for (let entity of value) {
+        if (this.formCheckbox.get(entity.type)?.value) {
+          this.entities.push(entity)
+        }
+      }
     })
   }
 
@@ -59,15 +63,6 @@ export class RttTabManagerComponent {
   }
 
   handleFilter(){
-    if(this.jf.value && this.rtt.value){
-      this.filterFunc = (absence: AbsenceEmployeur) => true;
-    } else if(this.jf.value && !this.rtt.value){
-      this.filterFunc = (absence: AbsenceEmployeur) => absence.type == TypeAbsenceEmployeur.FERIE;
-    } else if(this.rtt.value){
-      this.filterFunc = (absence: AbsenceEmployeur) => absence.type == TypeAbsenceEmployeur.RTT;
-    } else {
-      this.filterFunc = (absence: AbsenceEmployeur) => false;
-    }
     this.service.getAbsences(this.annee);
   }
 
