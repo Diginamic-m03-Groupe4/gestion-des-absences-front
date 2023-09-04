@@ -1,7 +1,8 @@
+import { BaseEntity } from "./base-entity";
+import { StatusAbsenceEmployeur } from "./status-absence-employeur";
 
-export interface RttEmployeur {
-  id? : number;
+export interface RttEmployeur extends BaseEntity {
   date : Date;
   libelle : string;
-  statusAbsenceEmployeur : string;
+  statusAbsenceEmployeur : StatusAbsenceEmployeur;
 }

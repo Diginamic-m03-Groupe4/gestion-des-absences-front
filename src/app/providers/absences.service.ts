@@ -11,7 +11,7 @@ export class AbsencesService {
   constructor(private _http: HttpClient) { }
 
   public findAll() {
-    return this._http.get(this._baseUrl+'?annee=2023');
+    return this._http.get(this._baseUrl+'?annee=2023', {withCredentials: true});
   }
 
 }

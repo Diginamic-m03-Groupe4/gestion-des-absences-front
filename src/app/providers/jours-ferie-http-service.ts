@@ -14,12 +14,12 @@ export class JoursFerieHttpService {
 
 
   get(annee : number){
-    return this.http.get<any[]>(this.URL_API_V1_JOURS_FERIES+'?annee=' + annee)
+    return this.http.get<any[]>(this.URL_API_V1_JOURS_FERIES+'?annee=' + annee, {withCredentials: true})
   }
 
 
   put(jourFerie : any){
-    return this.http.put<any>(this.URL_API_V1_JOURS_FERIES, jourFerie)
+    return this.http.put<any>(this.URL_API_V1_JOURS_FERIES, jourFerie, {withCredentials: true})
   }
 
 }

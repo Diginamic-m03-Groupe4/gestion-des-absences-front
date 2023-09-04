@@ -27,7 +27,6 @@ export class SignupComponent {
   onSubmit() {
     this.submitted = true;
     if (this.signinForm.valid) {
-      console.log(this.signinForm);
       this.service.postSignUp({
         nom: this.firstName?.value,
         prenom: this.lastName?.value,
