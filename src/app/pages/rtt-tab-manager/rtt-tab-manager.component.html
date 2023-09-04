@@ -7,4 +7,11 @@
     <button class="btn btn--tab" (click)="handleAjout(typeJour.FERIE)">+ Ajouter Férié</button>
     <button class="btn btn--tab" (click)="handleAjout(typeJour.RTT)">+ Ajouter RTT</button>
 </div>
+<div class="filters" [formGroup]="formCheckbox">
+  <h2>Filtres</h2>
+  <label>Jour fériés</label>
+  <input type="checkbox" id="feries" name="feries" formControlName="jf" (change)="handleFilter()">
+  <label>Rtt</label>
+  <input type="checkbox" id="feries" name="feries" formControlName="rtt" (change)="handleFilter()">
+</div>
 <app-tableau [service]="service" [buttons]="buttons" [entities]="entities" [enTetes]="enTetes" ></app-tableau>
