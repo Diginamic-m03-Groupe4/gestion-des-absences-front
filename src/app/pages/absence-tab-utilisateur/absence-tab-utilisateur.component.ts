@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class AbsenceTabUtilisateurComponent implements OnInit, OnDestroy{
 
-  buttons : TableauButton[] = [TableauButton.MODIFICATION, TableauButton.SUPPRESSION]
+  buttons : TableauButton[] = [TableauButton.MODIFICATION, TableauButton.SUPPRESSION, TableauButton.AJOUT]
   enTetes : string[] = ["Date de début", "Date de fin", "Type de congé", "Motif", "Status"];
 
   annee : number = new Date().getFullYear();
