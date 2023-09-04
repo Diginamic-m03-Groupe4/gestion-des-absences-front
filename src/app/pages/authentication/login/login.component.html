@@ -1,0 +1,19 @@
+<main>
+  <h1>Login</h1>
+  <form class="form" [formGroup]="signinForm">
+    <div class="formGroup">
+      <label for="email">E-mail</label>
+      <input class="formControl"  name="email" formControlName="email" type="text" placeholder="E-mail">
+      <div class="error" *ngIf="!email?.valid && (this.signinForm.invalid && submitted) ">Invalid email</div>
+    </div>
+    <div class="formGroup">
+      <label for="password">Password</label>
+      <input class="formControl"  name="password" formControlName="password" type="password" placeholder="Password">
+      <div class="error" *ngIf="!password?.valid && (this.signinForm.invalid && submitted)">Passwword is required</div>
+    </div>
+    <button class="btn btn--primary" (click)="onSubmit()" type="submit">Login</button>
+    <div class="error">{{formError}}</div>
+  </form>
+  <a routerLink="/signup" routerLinkActive="active" >You don't have an account? Create one</a>
+</main>
+
