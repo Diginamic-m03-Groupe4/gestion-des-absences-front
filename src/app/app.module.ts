@@ -10,6 +10,7 @@ import { SignupComponent } from './pages/authentication/signup/signup.component'
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableauComponent } from './shared/tableau/tableau.component';
 import { AbsenceTabUtilisateurComponent } from './pages/absence-tab-utilisateur/absence-tab-utilisateur.component';
+import { RttTabManagerComponent } from './pages/rtt-tab-manager/rtt-tab-manager.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AbsenceTabUtilisateurComponent } from './pages/absence-tab-utilisateur/
     LoginComponent,
     SignupComponent,
     TableauComponent,
-    AbsenceTabUtilisateurComponent
+    AbsenceTabUtilisateurComponent,
+    RttTabManagerComponent
   ],
   imports: [
     BrowserModule,

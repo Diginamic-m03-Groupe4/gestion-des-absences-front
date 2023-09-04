@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { JourFerie } from '../models/jour-ferie';
 
 
 @Injectable({
@@ -14,12 +15,12 @@ export class JoursFerieHttpService {
 
 
   get(annee : number){
-    return this.http.get<any[]>(this.URL_API_V1_JOURS_FERIES+'?annee=' + annee, {withCredentials: true})
+    return this.http.get<JourFerie[]>(this.URL_API_V1_JOURS_FERIES+'?annee=' + annee, {withCredentials: true})
   }
 
 
   put(jourFerie : any){
-    return this.http.put<any>(this.URL_API_V1_JOURS_FERIES, jourFerie, {withCredentials: true})
+    return this.http.put<JourFerie>(this.URL_API_V1_JOURS_FERIES, jourFerie, {withCredentials: true})
   }
 
 }

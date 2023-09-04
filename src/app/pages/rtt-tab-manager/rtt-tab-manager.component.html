@@ -1,0 +1,10 @@
+<div class="tab--year">
+  <button class="btn btn--tab" (click)="decrementYear()">-</button>
+    {{annee}}
+  <button class="btn btn--tab" (click)="incrementYear()">+</button>
+</div>
+<div class="tab--ajout">
+    <button class="btn btn--tab" (click)="handleAjout(typeJour.FERIE)">+ Ajouter Férié</button>
+    <button class="btn btn--tab" (click)="handleAjout(typeJour.RTT)">+ Ajouter RTT</button>
+</div>
+<app-tableau [service]="service" [buttons]="buttons" [entities]="entities" [enTetes]="enTetes" ></app-tableau>

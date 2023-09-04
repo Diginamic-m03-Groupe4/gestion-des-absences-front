@@ -52,7 +52,6 @@ export class TableauComponent<T extends BaseEntity> implements OnInit, OnChanges
 
   fillTableau(entities:any[]|undefined) {
     if(entities != undefined && this.service != undefined){
-      this.entities = entities;
       this.presentationItems = this.service?.mapToPresentation(entities);
       this.shownPresentationItems.next(this.presentationItems);
     }
