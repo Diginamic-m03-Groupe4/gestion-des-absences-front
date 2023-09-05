@@ -16,7 +16,7 @@ import { TypeConge } from 'src/app/models/type-conge';
   templateUrl: './creation.absence.component.html',
   styleUrls: ['./creation.absence.component.scss'],
 })
-export class CreationAbsenceComponent {
+export class CreationAbsenceComponent implements OnInit {
   absence!: Absence;
   @Input() dateDebut!: Date;
   @Input() dateFin!: Date;
@@ -41,7 +41,11 @@ export class CreationAbsenceComponent {
     });
   }
 
-  private onSubmit() {
+  ngOnInit() {
+    this.onSubmit;
+}
+
+  onSubmit() {
     this.submitted = true;
     this.absence.dateDebut = this.form.value.getDateDebut?.value;
     this.absence.dateFin = this.form.value.getDateFin?.value;

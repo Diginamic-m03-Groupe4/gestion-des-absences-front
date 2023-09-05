@@ -5,7 +5,7 @@ import { ModificationAbsenceComponent } from './components/modification.absence/
 import { SuppressionAbsenceComponent } from './components/suppression.absence/suppression.absence.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChampsAbsenceComponent } from './components/champs.absence/champs.absence.component';
-
+import { RouterModule, Routes } from '@angular/router';
 
 
 @NgModule({
@@ -17,6 +17,7 @@ import { ChampsAbsenceComponent } from './components/champs.absence/champs.absen
   ],
   imports: [
     CommonModule, ReactiveFormsModule
-  ]
+  ],
+  exports: [RouterModule]
 })
 export class FormulaireModule { }

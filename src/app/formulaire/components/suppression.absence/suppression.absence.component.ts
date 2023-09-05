@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Absence } from 'src/app/models/absence';
 import { StatusAbsence } from 'src/app/models/status-absence';
@@ -10,7 +10,7 @@ import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
   templateUrl: './suppression.absence.component.html',
   styleUrls: ['./suppression.absence.component.scss'],
 })
-export class SuppressionAbsenceComponent {
+export class SuppressionAbsenceComponent implements OnInit {
   absence!: Absence;
   @Input() dateDebut!: Date;
   @Input() dateFin!: Date;
@@ -37,7 +37,11 @@ export class SuppressionAbsenceComponent {
     });
   }
 
-  private onSubmit() {
+  ngOnInit() {
+    this.onSubmit;
+}
+
+  onSubmit() {
     this.submitted = true;
 
     this.absence.id = this.form.value.getId?.value;

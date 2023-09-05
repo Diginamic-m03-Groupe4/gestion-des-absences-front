@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Absence } from 'src/app/models/absence';
 import { StatusAbsence } from 'src/app/models/status-absence';
@@ -10,7 +10,7 @@ import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
   templateUrl: './modification.absence.component.html',
   styleUrls: ['./modification.absence.component.scss'],
 })
-export class ModificationAbsenceComponent {
+export class ModificationAbsenceComponent implements OnInit {
   @Output() absence!: Absence;
   @Input() dateDebut!: Date;
   @Input() dateFin!: Date;
@@ -37,7 +37,11 @@ export class ModificationAbsenceComponent {
     });
   }
 
-  private onSubmit() {
+  ngOnInit() {
+    this.onSubmit
+}
+
+  onSubmit() {
     this.submitted = true;
 
     if (
