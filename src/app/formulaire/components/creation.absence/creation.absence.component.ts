@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Absence } from 'src/app/models/absence';
 import { Router } from '@angular/router';
 import { StatusAbsence } from 'src/app/models/status-absence';
@@ -12,66 +17,66 @@ import { TypeConge } from 'src/app/models/type-conge';
   styleUrls: ['./creation.absence.component.scss'],
 })
 export class CreationAbsenceComponent {
-
   absence!: Absence;
   @Input() dateDebut!: Date;
   @Input() dateFin!: Date;
-  typeConge!: TypeConge;
-  motif: string = "ajouter votre motif si c'est un congé sans solde";
+  @Input() typeConge!: TypeConge;
+  @Input() motif: string = "ajouter votre motif si c'est un congé sans solde";
 
   formValid: string = '';
   formError: string = '';
   submitted: boolean = false;
-  
-  form: FormGroup = new FormGroup({
-    dateDebut: new FormControl(this.dateDebut),
-    dateFin: new FormControl(this.dateFin),
-    typeConge: new FormControl(this.typeConge),
-    motif: new FormControl(this.motif),
-  });
 
-  constructor(private fb: FormBuilder,  private _absenceHttpService: AbsenceHttpService) {
+  @Input() form: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private _absenceHttpService: AbsenceHttpService
+  ) {
     this.form = this.fb.group({
       dateDebut: '',
       dateFin: '',
       typeConge: TypeConge.PAYE,
       motif: '',
-    })
-}
-
-  private onSubmit() {
-      this.submitted = true;
-      this.absence.dateDebut = this.form.value.getDateDebut?.value;
-      this.absence.dateFin = this.form.value.getDateFin?.value;
-      this.absence.typeConge = this.form.value.getTypeConge?.value;
-      this.absence.motif = this.form.value.getMotif?.value;
-
-    if(this.absence.typeConge !== TypeConge.SANS_SOLDE) {
-       this.absence.motif = '';
+    });
   }
 
-  if(this.form.valid) {
-    this._absenceHttpService.post(this.absence).subscribe( () => {
-      next: () => this.formValid =  'Votre demande de congés a bien été prise en compte';
-      error: (err: { error: { message: string; }; }) => {this.formError = err.error.message;}
-    })
-}
-}
+  private onSubmit() {
+    this.submitted = true;
+    this.absence.dateDebut = this.form.value.getDateDebut?.value;
+    this.absence.dateFin = this.form.value.getDateFin?.value;
+    this.absence.typeConge = this.form.value.getTypeConge?.value;
+    this.absence.motif = this.form.value.getMotif?.value;
 
-get getDateDebut() {
-  return this.form.get('dateDebut');
-}
+    if (this.absence.typeConge !== TypeConge.SANS_SOLDE) {
+      this.absence.motif = '';
+    }
 
-get getDateFin() {
-  return this.form.get('dateFin');
-}
+    if (this.form.valid) {
+      this._absenceHttpService.post(this.absence).subscribe(() => {
+        next: () =>
+          (this.formValid =
+            'Votre demande de congés a bien été prise en compte');
+        error: (err: { error: { message: string } }) => {
+          this.formError = err.error.message;
+        };
+      });
+    }
+  }
 
-get getTypeConge() {
-  return this.form.get('typeConge');
-}
+  get getDateDebut() {
+    return this.form.get('dateDebut');
+  }
 
-get getMotif() {
-  return this.form.get('motif');
-}
+  get getDateFin() {
+    return this.form.get('dateFin');
+  }
 
+  get getTypeConge() {
+    return this.form.get('typeConge');
+  }
+
+  get getMotif() {
+    return this.form.get('motif');
+  }
 }

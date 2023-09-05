@@ -4,6 +4,7 @@ import { CreationAbsenceComponent } from './components/creation.absence/creation
 import { ModificationAbsenceComponent } from './components/modification.absence/modification.absence.component';
 import { SuppressionAbsenceComponent } from './components/suppression.absence/suppression.absence.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ChampsAbsenceComponent } from './components/champs.absence/champs.absence.component';
 
 
 
@@ -11,7 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     CreationAbsenceComponent,
     ModificationAbsenceComponent,
-    SuppressionAbsenceComponent
+    SuppressionAbsenceComponent,
+    ChampsAbsenceComponent
   ],
   imports: [
     CommonModule, ReactiveFormsModule
