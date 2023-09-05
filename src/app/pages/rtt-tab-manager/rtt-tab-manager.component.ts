@@ -5,6 +5,8 @@ import { RttTabService } from './providers/rtt-tab.service';
 import { AbsenceEmployeur } from 'src/app/models/absence-employeur';
 import { TypeAbsenceEmployeur } from 'src/app/models/type-absence-employeur';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalCreationRttComponent } from 'src/app/shared/modal-creation-rtt/modal-creation-rtt.component';
 
 type FilterFunc = (absence: AbsenceEmployeur) => boolean;
 
@@ -25,7 +27,7 @@ export class RttTabManagerComponent {
   formCheckbox : FormGroup
 
 
-  constructor(public service: RttTabService, fb:FormBuilder) {
+  constructor(public service: RttTabService, fb:FormBuilder, private dialog : MatDialog) {
     this.formCheckbox = fb.group({
       "Jour férié": [true],
       "RTT Employeur": [true],
@@ -58,8 +60,8 @@ export class RttTabManagerComponent {
     this.service.getAbsences(this.annee);
   }
 
-  handleAjout(typeJour : TypeAbsenceEmployeur){
-    console.log(typeJour);
+  handleAjout(){
+    this.dialog.open(ModalCreationRttComponent)
   }
 
   handleFilter(){

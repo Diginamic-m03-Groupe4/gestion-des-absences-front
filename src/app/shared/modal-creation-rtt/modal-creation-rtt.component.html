@@ -1,0 +1,26 @@
+<div>
+  <div class="modal--title">Création d'un Rtt employeur</div>
+  <div class="modal--body">
+    <div  class="form">
+      <div class="form--group">
+        <label class="form--label" for="dateDebut">Date de début</label>
+        <input type="date" [min]="todayDate | date: 'yyyy-MM-dd'">
+        <div class="form--error" *ngIf="!dateDebut?.valid && (this.formCreation.invalid && submitted)">La date de début est obligatoire est doit être avant la date de fin</div>
+      </div>
+      <div class="form--group">
+        <label class="form--label" for="">Date de Fin</label>
+        <input type="date" [min]="todayDate | date: 'yyyy-MM-dd'">
+        <div class="form--error" *ngIf="!dateFin?.valid && (this.formCreation.invalid && submitted)"></div>
+      </div>
+      <div class="form--group">
+        <label class="" for="libelle">Libelle</label>
+        <input type="text">
+        <div name="libelle" class="form--error" *ngIf="!libelle?.valid && (this.formCreation.invalid && submitted)"></div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button class="btn valid" (click)="onModif()">Modifier</button>
+      <button class="btn danger" (click)="onAnnulation()">Annuler</button>
+    </div>
+  </div>
+</div>

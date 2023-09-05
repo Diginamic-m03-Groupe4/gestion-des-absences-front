@@ -12,6 +12,7 @@
         <div class="digitab--action-container">
           <button class="btn" *ngIf='buttons?.includes(tabNotication.MODIFICATION)' (click)='sendNotification(tabNotication.MODIFICATION, index)'>Modifier</button>
           <button class="btn danger" *ngIf='buttons?.includes(tabNotication.SUPPRESSION)' (click)='sendNotification(tabNotication.SUPPRESSION, index)'>Supprimer</button>
+          <button class="btn danger" *ngIf='buttons?.includes(tabNotication.DETAIL)' (click)='sendNotification(tabNotication.DETAIL, index)'>Details</button>
         </div>
       </td>
       <td class="digitab--cell" *ngFor="let row of item">{{row}}</td>
