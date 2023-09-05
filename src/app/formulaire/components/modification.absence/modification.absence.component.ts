@@ -1,6 +1,7 @@
 import { Component, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Absence } from 'src/app/models/absence';
+import { StatusAbsence } from 'src/app/models/status-absence';
 import { TypeConge } from 'src/app/models/type-conge';
 import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
 
@@ -15,6 +16,7 @@ export class ModificationAbsenceComponent {
   @Input() dateFin!: Date;
   @Input() typeConge!: TypeConge;
   @Input() motif!: string;
+  @Input() status!: StatusAbsence;
 
   formValid: string = '';
   formError: string = '';
@@ -31,25 +33,41 @@ export class ModificationAbsenceComponent {
       dateFin: this.dateFin,
       typeConge: this.typeConge,
       motif: this.motif,
+      status: this.status,
     });
   }
 
   private onSubmit() {
     this.submitted = true;
-    const id: string = `${this.absence.id}`;
+
+    if (
+      this.status === StatusAbsence.VALIDEE ||
+      this.status === StatusAbsence.ATTENTE_VALIDATION
+    ) {
+      this.formError =
+        "Votre demande d'absence a déjà été validée ou prise en compte par le traitement de nuit";
+    }
+
+    this.absence.id = this.form.value.getId?.value;
     this.absence.dateDebut = this.form.value.getDateDebut?.value;
     this.absence.dateFin = this.form.value.getDateFin?.value;
     this.absence.typeConge = this.form.value.getTypeConge?.value;
     this.absence.motif = this.form.value.getMotif?.value;
 
     if (this.form.valid) {
-      this._absenceHttpService.putByid(id, this.absence).subscribe(() => {
-        next: this.formValid = 'Votre demande de congés a bien été modifiée';
-        error: (err: { error: { message: string } }) => {
-          this.formError = err.error.message;
-        };
-      });
+      this._absenceHttpService
+        .putByid(`${this.absence.id}`, this.absence)
+        .subscribe(() => {
+          next: this.formValid = 'Votre demande de congés a bien été modifiée';
+          error: (err: { error: { message: string } }) => {
+            this.formError = err.error.message;
+          };
+        });
     }
+  }
+
+  get getId() {
+    return this.form.get('id');
   }
 
   get getDateDebut() {
@@ -66,5 +84,9 @@ export class ModificationAbsenceComponent {
 
   get getMotif() {
     return this.form.get('motif');
+  }
+
+  get getStatus() {
+    return this.form.get('status');
   }
 }
