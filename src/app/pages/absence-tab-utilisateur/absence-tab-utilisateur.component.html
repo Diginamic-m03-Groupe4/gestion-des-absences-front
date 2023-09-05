@@ -1,0 +1,6 @@
+<div class="tab--year">
+  <button class="btn btn--tab" (click)="decrementYear()">-</button>
+    {{annee}}
+  <button class="btn btn--tab" (click)="incrementYear()">+</button>
+</div>
+<app-tableau [service]="service" [buttons]="buttons" [entities]="entities" [enTetes]="enTetes" ></app-tableau>

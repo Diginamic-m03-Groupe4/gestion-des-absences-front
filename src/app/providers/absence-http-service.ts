@@ -16,33 +16,33 @@ export class AbsenceHttpService {
 
 
   get(annee : number){
-    return this.http.get<Absence[]>(this.URL_API_V1_ABSENCE+'?annee=' + annee)
+    return this.http.get<Absence[]>(this.URL_API_V1_ABSENCE+'?annee=' + annee, {withCredentials: true})
   }
 
 
   getByid(id : string){
     let newURL = this.URL_API_V1_ABSENCE_ID;
     newURL = newURL.replace('{id}', id);
-    return this.http.get<Absence>(newURL)
+    return this.http.get<Absence>(newURL, {withCredentials: true})
   }
 
 
   post(absenceDto : Absence){
-    return this.http.post<any>(this.URL_API_V1_ABSENCE, absenceDto)
+    return this.http.post<any>(this.URL_API_V1_ABSENCE, absenceDto, {withCredentials: true})
   }
 
 
   putByid(id : string, absenceDto : Absence){
     let newURL = this.URL_API_V1_ABSENCE_ID;
     newURL = newURL.replace('{id}', id);
-    return this.http.put<string>(newURL, absenceDto)
+    return this.http.put<string>(newURL, absenceDto,{withCredentials: true})
   }
 
 
   deleteByid(id : string){
     let newURL = this.URL_API_V1_ABSENCE_ID;
     newURL = newURL.replace('{id}', id);
-    return this.http.delete<string>(newURL)
+    return this.http.delete<string>(newURL ,{withCredentials: true})
   }
 
 }

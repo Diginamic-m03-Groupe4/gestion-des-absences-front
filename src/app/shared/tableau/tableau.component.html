@@ -1,0 +1,26 @@
+<div class="digitab--container">
+  <table class="digitab--table">
+    <thead class="digitab--head">
+    <tr>
+      <th class="digitab--column-head digitab--cell" rowspan="2">Action</th>
+      <th class="digitab--column-head" *ngFor="let enTete of enTetes">{{enTete}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of presentationItems; let index = index">
+      <td class="digitab--cell">
+        <div class="digitab--action-container">
+          <button class="btn" *ngIf='buttons?.includes(tabNotication.MODIFICATION)' (click)='sendNotification(tabNotication.MODIFICATION, index)'>Modifier</button>
+          <button class="btn danger" *ngIf='buttons?.includes(tabNotication.SUPPRESSION)' (click)='sendNotification(tabNotication.SUPPRESSION, index)'>Supprimer</button>
+          <button class="btn danger" *ngIf='buttons?.includes(tabNotication.DETAIL)' (click)='sendNotification(tabNotication.DETAIL, index)'>Details</button>
+        </div>
+      </td>
+      <td class="digitab--cell" *ngFor="let row of item">{{row}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="digitab--action-container">
+    <button class="btn valid" *ngIf="buttons?.includes(tabNotication.AJOUT)" (click)="handleAjout()">+ Ajouter</button>
+  </div>
+</div>
+
