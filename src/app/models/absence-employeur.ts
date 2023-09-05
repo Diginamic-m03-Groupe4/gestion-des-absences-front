@@ -6,5 +6,6 @@ export interface AbsenceEmployeur extends BaseEntity{
   date : Date;
   type: TypeAbsenceEmployeur;
   libelle: string;
+  worked : boolean,
 
 }

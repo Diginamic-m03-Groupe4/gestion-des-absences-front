@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TableauComponent } from './shared/tableau/tableau.component';
 import { AbsenceTabUtilisateurComponent } from './pages/absence-tab-utilisateur/absence-tab-utilisateur.component';
 import { RttTabManagerComponent } from './pages/rtt-tab-manager/rtt-tab-manager.component';
+import { ModalModifJFComponent } from './shared/modal-modif-jf/modal-modif-jf.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { RttTabManagerComponent } from './pages/rtt-tab-manager/rtt-tab-manager.
     SignupComponent,
     TableauComponent,
     AbsenceTabUtilisateurComponent,
-    RttTabManagerComponent
+    RttTabManagerComponent,
+    ModalModifJFComponent
   ],
   imports: [
     BrowserModule,

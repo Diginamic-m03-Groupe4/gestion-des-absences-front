@@ -16,7 +16,7 @@ type FilterFunc = (absence: AbsenceEmployeur) => boolean;
 export class RttTabManagerComponent {
 
   buttons: TableauButton[] = [TableauButton.MODIFICATION, TableauButton.SUPPRESSION]
-  enTetes: string[] = ["Date", "Libelle", "Type"];
+  enTetes: string[] = ["Date", "Libelle", "Type", "Travaillé"];
   typeJour = TypeAbsenceEmployeur;
 
   annee: number = new Date().getFullYear();
