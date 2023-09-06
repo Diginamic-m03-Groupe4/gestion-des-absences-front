@@ -12,10 +12,6 @@ export class AbsenceManagerService {
 
   private entitiesSubject:Subject<Absence[]> = new Subject();
 
-  constructor(private httpServvice : AbsenceHttpService) {}
-
-  getAbsences(){
-    this.httpServvice.getDemande()
-  }
+  constructor() {}
 
 }
