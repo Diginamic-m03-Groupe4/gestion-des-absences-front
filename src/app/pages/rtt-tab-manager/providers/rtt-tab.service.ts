@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
+import { Absence } from 'src/app/models/absence';
 import { AbsenceEmployeur } from 'src/app/models/absence-employeur';
 import { JourFerie } from 'src/app/models/jour-ferie';
 import { RttEmployeur } from 'src/app/models/rtt-employeur';
+import { StatusAbsence } from 'src/app/models/status-absence';
 import { TabService } from 'src/app/models/tab-service.service';
 import { TableauButton } from 'src/app/models/tableau-buttons';
 import { TypeAbsenceEmployeur } from 'src/app/models/type-absence-employeur';
@@ -50,32 +52,35 @@ export class RttTabService extends TabService<AbsenceEmployeur>{
     return forkJoin([this.jourFerieHttpService.get(annee), this.rttHttpService.get(annee)])
   }
 
+
   changeAbsenceEmployeur(absenceEmployeur: AbsenceEmployeur): void {
     switch (absenceEmployeur.type) {
       case TypeAbsenceEmployeur.FERIE:
         let jourFerie = this.jourFeries
-          .filter(jourFerie => jourFerie.id == absenceEmployeur.id)[0]
-        this.dialog.open(ModalModifJFComponent, { data: jourFerie })
+      .filter(jourFerie => jourFerie.id == absenceEmployeur.id)[0]
+      this.dialog.open(ModalModifJFComponent, { data: jourFerie })
     }
   }
 
-  override handleTabSignal(signal: TableauButton, entity?: any): void {
+  override handleTabSignal(signal: TableauButton, entity?: AbsenceEmployeur): void {
     switch(signal){
       case TableauButton.AJOUT:
         console.log("ajout");
-        break;
+      break;
       case TableauButton.DETAIL:
         console.log("detail");
-        break;
+      break;
       case TableauButton.SUPPRESSION:
         console.log("suppr");
-        break;
+      break;
       case TableauButton.ACTIVATION:
         console.log("activation");
-        break;
+      break;
       case TableauButton.MODIFICATION:
+        if (entity != undefined){
         this.changeAbsenceEmployeur(entity);
-        break;
+      }
+      break;
     }
   }
 

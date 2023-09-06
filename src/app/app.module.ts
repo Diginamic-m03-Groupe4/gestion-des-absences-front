@@ -14,6 +14,7 @@ import { RttTabManagerComponent } from './pages/rtt-tab-manager/rtt-tab-manager.
 import { ModalModifJFComponent } from './shared/modal-modif-jf/modal-modif-jf.component';
 import { ModalCreationRttComponent } from './shared/modal-creation-rtt/modal-creation-rtt.component';
 import { AbsencesManagerComponent } from './pages/absences-manager/absences-manager.component';
+import { ModalValidationAbsenceComponent } from './shared/modal-validation-absence/modal-validation-absence.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AbsencesManagerComponent } from './pages/absences-manager/absences-mana
     ModalModifJFComponent,
     ModalCreationRttComponent,
     AbsencesManagerComponent,
+    ModalValidationAbsenceComponent,
   ],
   imports: [
     BrowserModule,

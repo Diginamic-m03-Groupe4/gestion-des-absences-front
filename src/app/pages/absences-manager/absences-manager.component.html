@@ -9,12 +9,12 @@
 </div>
 <div class="tab-absence-manager"></div>
 <div class="tab-row">
-  <div class="tab-filler"></div>
+  <div class="tab-filler">Nom</div>
   <div class="tab-absence" *ngFor="let header of headers">{{header}}</div>
 </div>
 <div class="tab-row" *ngFor="let row of tabEmployees">
   <div class="tab-employee">{{row.employee.prenom}}</div>
   <div class="tab-absence" *ngFor="let absence of row.absence; let i = index">
-    <div>{{absence?.displayedLetter}}</div>
+    <div (click)="openChange(absence)" class="tab-absence-letter">{{absence?.displayedLetter}}</div>
   </div>
 </div>
