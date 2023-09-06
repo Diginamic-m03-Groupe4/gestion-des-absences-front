@@ -14,6 +14,7 @@ export class AbsencesManagerComponent implements OnInit {
 
   months = MONTHS;
   monthPointer = 0;
+  headers : number[] = [];
   tabEmployees : { employee : EmployeeC, absence : (CaseAbsence | undefined)[]}[] = [];
   employees : EmployeeC[] = []
   year = new Date().getFullYear();
@@ -31,7 +32,11 @@ export class AbsencesManagerComponent implements OnInit {
   }
 
   private initializeMonthTab(){
+    this.headers = []
     this.tabEmployees = []
+    for(let i = 0; i < this.getDaysInMonth(this.monthPointer+1, this.year); i++){
+      this.headers.push(i+1);
+    }
     for(let employee of this.employees){
       let rowEmployee : { employee : EmployeeC, absence : (CaseAbsence | undefined)[]} = {
         employee : employee,
@@ -46,9 +51,6 @@ export class AbsencesManagerComponent implements OnInit {
     for(let i = 0; i < this.getDaysInMonth(this.monthPointer+1, this.year); i++){
       let newDate = new Date(this.year, this.monthPointer, i+1);
       let absence = (employee.absenceMap.get(newDate.toLocaleDateString()));
-      if(absence != undefined){
-        console.log(absence)
-      }
       casesAbsences.push(absence)
     }
     return casesAbsences;
@@ -68,16 +70,18 @@ export class AbsencesManagerComponent implements OnInit {
     return new Date(year, month, 0).getDate();
   }
 
-  test(){
-
-  }
-
   decrementMonth() {
+    if (this.monthPointer == 0) {
+      this.year--;
+    }
     this.monthPointer = (this.monthPointer == 0) ? 11 : (this.monthPointer - 1) % 12;
     this.initializeMonthTab()
   }
 
   incrementMonth() {
+    if (this.monthPointer == 11) {
+      this.year++;
+    }
     this.monthPointer = (this.monthPointer + 1) % 12;
     this.initializeMonthTab()
   }

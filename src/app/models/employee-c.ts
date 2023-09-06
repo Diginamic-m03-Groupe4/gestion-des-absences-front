@@ -30,6 +30,5 @@ export class EmployeeC {
         this.absenceMap.set(date.toLocaleDateString() , {absencePointer : absence, displayedLetter : "C"})
       }
     }
-    console.log(this.absenceMap)
   }
 }
