@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { DateValidatorDirective } from 'src/app/directives/date-validator.directive';
 import { ErrorMessage } from 'src/app/models/error-message';
 import { RttEmployeur } from 'src/app/models/rtt-employeur';
-import { StatusAbsenceEmployeur } from 'src/app/models/status-absence-employeur';
 import { RttTabService } from 'src/app/pages/rtt-tab-manager/providers/rtt-tab.service';
 
 @Component({
@@ -39,7 +38,6 @@ export class ModalCreationRttComponent {
       }
       rtts.push(rtt)
     }
-    console.log(rtts)
     if(this.formCreation.valid){
       this.service.rttHttpService.post(rtts).subscribe({
         next : value => {

@@ -46,16 +46,8 @@ export class RttTabService extends TabService<AbsenceEmployeur>{
     return absence;
   }
 
-  getAbsences(annee: number): void {
-    forkJoin([this.jourFerieHttpService.get(annee), this.rttHttpService.get(annee)]).subscribe(results => {
-      let absenceEmployeurs : AbsenceEmployeur[] = []
-      this.jourFeries = results[0]
-      this.rttEmployeur = results[1]
-      results[0].forEach(result => absenceEmployeurs.push( this.mapJFToAbsenceEmployeur(result)))
-      results[1].forEach(result => absenceEmployeurs.push( this.mapRttToAbsenceEmployeur(result)))
-      this.absenceEmployeurs = absenceEmployeurs
-      this.getEntitiesSubject().next(absenceEmployeurs)
-    })
+  getAbsences(annee: number){
+    return forkJoin([this.jourFerieHttpService.get(annee), this.rttHttpService.get(annee)])
   }
 
   changeAbsenceEmployeur(absenceEmployeur: AbsenceEmployeur): void {
