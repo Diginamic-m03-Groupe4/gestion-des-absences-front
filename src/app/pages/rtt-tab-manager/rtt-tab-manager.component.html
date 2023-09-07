@@ -4,7 +4,7 @@
     {{annee}}
   <button class="btn btn--tab" (click)="incrementYear()">+</button>
 </div>
-<div class="tab--ajout">
+<div *ngIf="isAdmin" class="tab--ajout">
     <button class="btn btn--tab" (click)="handleAjout()">+ Ajouter RTT</button>
 </div>
 <div class="filters" [formGroup]="formCheckbox">

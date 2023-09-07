@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { TypeButton } from 'src/app/models/tableau-buttons';
+import { TabButton, TypeButton } from 'src/app/models/tableau-buttons';
 import { RttTabService } from './providers/rtt-tab.service';
 import { AbsenceEmployeur } from 'src/app/models/absence-employeur';
 import { TypeAbsenceEmployeur } from 'src/app/models/type-absence-employeur';
@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalCreationRttComponent } from 'src/app/shared/modal-creation-rtt/modal-creation-rtt.component';
 import { RttEmployeur } from 'src/app/models/rtt-employeur';
 import { JourFerie } from 'src/app/models/jour-ferie';
+import { isAdmin } from 'src/app/guards/is-logged-in.guard';
 
 @Component({
   selector: 'app-rtt-tab-manager',
@@ -17,7 +18,17 @@ import { JourFerie } from 'src/app/models/jour-ferie';
 })
 export class RttTabManagerComponent {
 
-  buttons: TypeButton[] = [TypeButton.MODIFICATION, TypeButton.SUPPRESSION]
+  isAdmin = isAdmin()
+  buttons: TabButton[] = [
+    {
+      typeBtn : TypeButton.MODIFICATION,
+      permission : isAdmin
+    },
+    {
+      typeBtn : TypeButton.SUPPRESSION,
+      permission : isAdmin
+    }
+  ]
   enTetes: string[] = ["Date", "Libelle", "Type", "Travaillé"];
   typeJour = TypeAbsenceEmployeur;
 

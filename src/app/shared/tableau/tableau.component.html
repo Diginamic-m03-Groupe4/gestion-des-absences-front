@@ -10,9 +10,9 @@
     <tr *ngFor="let item of presentationItems; let index = index">
       <td class="digitab--cell">
         <div class="digitab--action-container">
-          <button class="btn" *ngIf='buttons?.includes(tabNotication.MODIFICATION)' (click)='sendNotification(tabNotication.MODIFICATION, index)'>Modifier</button>
-          <button class="btn danger" *ngIf='buttons?.includes(tabNotication.SUPPRESSION)' (click)='sendNotification(tabNotication.SUPPRESSION, index)'>Supprimer</button>
-          <button class="btn danger" *ngIf='buttons?.includes(tabNotication.DETAIL)' (click)='sendNotification(tabNotication.DETAIL, index)'>Details</button>
+          <button class="btn" *ngIf='mapButtons(buttons).includes(tabNotification.MODIFICATION) && getButton(tabNotification.DETAIL).permission()' (click)='sendNotification(tabNotification.MODIFICATION, index)'>Modifier</button>
+          <button class="btn danger" *ngIf='mapButtons(buttons).includes(tabNotification.SUPPRESSION) && getButton(tabNotification.DETAIL).permission()' (click)='sendNotification(tabNotification.SUPPRESSION, index)'>Supprimer</button>
+          <button class="btn danger" *ngIf='mapButtons(buttons).includes(tabNotification.DETAIL) && getButton(tabNotification.DETAIL).permission()' (click)='sendNotification(tabNotification.DETAIL, index)'>Details</button>
         </div>
       </td>
       <td class="digitab--cell" *ngFor="let row of item">{{row}}</td>
@@ -20,7 +20,7 @@
     </tbody>
   </table>
   <div class="digitab--action-container">
-    <button class="btn valid" *ngIf="buttons?.includes(tabNotication.AJOUT)" (click)="handleAjout()">+ Ajouter</button>
+    <button class="btn valid" *ngIf="mapButtons(buttons).includes(tabNotification.AJOUT) && getButton(tabNotification.AJOUT).permission()" (click)="handleAjout()">+ Ajouter</button>
   </div>
 </div>
 
