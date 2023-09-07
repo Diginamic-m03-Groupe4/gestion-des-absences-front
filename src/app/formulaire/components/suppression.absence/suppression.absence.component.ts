@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Absence } from 'src/app/models/absence';
 import { StatusAbsence } from 'src/app/models/status-absence';
 import { TypeConge } from 'src/app/models/type-conge';
@@ -11,58 +12,32 @@ import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
   styleUrls: ['./suppression.absence.component.scss'],
 })
 export class SuppressionAbsenceComponent implements OnInit {
-  absence!: Absence;
-  @Input() dateDebut!: Date;
-  @Input() dateFin!: Date;
-  @Input() typeConge!: TypeConge;
-  @Input() motif!: string;
-  @Input() status!: StatusAbsence;
-
-  formValid: string = '';
-  formError: string = '';
-  submitted: boolean = false;
-
-  @Input() form: FormGroup;
+  absence!: Partial<Absence>;
+  id!: string;
 
   constructor(
-    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public  data: Absence,
+    private dialog: MatDialog,
     private _absenceHttpService: AbsenceHttpService
   ) {
-    this.form = this.fb.group({
-      dateDebut: this.dateDebut,
-      dateFin: this.dateFin,
-      typeCOnge: this.typeConge,
-      motif: this.motif,
-      status: this.status,
-    });
   }
 
   ngOnInit() {
     this.onSubmit;
 }
 
-  onSubmit() {
-    this.submitted = true;
-
-    this.absence.id = this.form.value.getId?.value;
-
-    if(this.status === StatusAbsence.VALIDEE || this.status === StatusAbsence.ATTENTE_VALIDATION) {
-      this.formError = "Vous ne pouvez plus supprimer une demande d'absence validée ou en cours de traitement";
+cancel() {
+  this.dialog.closeAll();
 }
 
-    if (this.form.valid) {
+  onSubmit() {
       this._absenceHttpService
-        .deleteByid(`${this.absence.id}`)
+        .deleteByid(`${this.data.id}`)
         .subscribe(() => {
-          next: this.formValid = 'Votre demande de congés a bien été supprimée';
+          next: this.dialog.closeAll()
           error: (err: { error: { message: string } }) => {
-            this.formError = err.error.message;
+            console.log(``,err.error.message);
           };
         });
     }
   }
-
-  get getId() {
-    return this.form.get('id');
-}
-}

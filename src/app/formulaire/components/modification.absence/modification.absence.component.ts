@@ -1,8 +1,11 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, Inject, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { Absence } from 'src/app/models/absence';
 import { StatusAbsence } from 'src/app/models/status-absence';
 import { TypeConge } from 'src/app/models/type-conge';
+import { AbsenceUtilTabService } from 'src/app/pages/absence-tab-utilisateur/providers/absence-util-tab.service';
 import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
 
 @Component({
@@ -11,7 +14,7 @@ import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
   styleUrls: ['./modification.absence.component.scss'],
 })
 export class ModificationAbsenceComponent implements OnInit {
-  @Output() absence!: Absence;
+  @Input() absence!: Partial<Absence>;
   @Input() dateDebut!: Date;
   @Input() dateFin!: Date;
   @Input() typeConge!: TypeConge;
@@ -22,45 +25,65 @@ export class ModificationAbsenceComponent implements OnInit {
   formError: string = '';
   submitted: boolean = false;
 
-  @Input() form: FormGroup;
+  @Input() entity!: Absence;
+  @Input() absenceSubscription?: Subscription;
+
+  form: FormGroup = new FormGroup({
+    dateDebut: new FormControl(this.dateDebut),
+    dateFin: new FormControl(this.dateFin),
+    typeConge: new FormControl(this.typeConge),
+    motif: new FormControl(this.motif),
+    status: new FormControl(this.status),
+  });
+
+  entities: Absence[] = [];
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: Absence,
+    private dialog: MatDialog,
     private fb: FormBuilder,
     private _absenceHttpService: AbsenceHttpService
   ) {
     this.form = this.fb.group({
-      dateDebut: this.dateDebut,
-      dateFin: this.dateFin,
-      typeConge: this.typeConge,
-      motif: this.motif,
-      status: this.status,
+      dateDebut: this.data.dateDebut,
+      dateFin: this.data.dateFin,
+      typeConge: this.data.typeConge,
+      motif: this.data.motif,
+      status: this.data.status,
     });
   }
 
   ngOnInit() {
-    this.onSubmit
-}
+    this.onSubmit;
+  }
+
+  onAnnulation() {
+    this.dialog.closeAll();
+  }
 
   onSubmit() {
     this.submitted = true;
 
     if (
-      this.status === StatusAbsence.VALIDEE ||
-      this.status === StatusAbsence.ATTENTE_VALIDATION
+      this.data.status === StatusAbsence.VALIDEE ||
+      this.data.status === StatusAbsence.ATTENTE_VALIDATION
     ) {
       this.formError =
         "Votre demande d'absence a déjà été validée ou prise en compte par le traitement de nuit";
     }
 
-    this.absence.id = this.form.value.getId?.value;
-    this.absence.dateDebut = this.form.value.getDateDebut?.value;
-    this.absence.dateFin = this.form.value.getDateFin?.value;
-    this.absence.typeConge = this.form.value.getTypeConge?.value;
-    this.absence.motif = this.form.value.getMotif?.value;
+    this.absence = {
+      dateDebut: this.getDateDebut?.value,
+      dateFin: this.getDateFin?.value,
+      typeConge: this.getTypeConge?.value,
+      motif: this.getMotif?.value,
+      status: this.getStatus?.value,
+      email: this.getEmail?.value,
+    };
 
     if (this.form.valid) {
       this._absenceHttpService
-        .putByid(`${this.absence.id}`, this.absence)
+        .putByid(`${this.data.id}`, this.absence)
         .subscribe(() => {
           next: this.formValid = 'Votre demande de congés a bien été modifiée';
           error: (err: { error: { message: string } }) => {
@@ -92,5 +115,9 @@ export class ModificationAbsenceComponent implements OnInit {
 
   get getStatus() {
     return this.form.get('status');
+  }
+
+  get getEmail() {
+    return this.form.get('email');
   }
 }

@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CreationAbsenceComponent } from 'src/app/formulaire/components/creation.absence/creation.absence.component';
+import { ModificationAbsenceComponent } from 'src/app/formulaire/components/modification.absence/modification.absence.component';
+import { SuppressionAbsenceComponent } from 'src/app/formulaire/components/suppression.absence/suppression.absence.component';
 import { Absence } from 'src/app/models/absence';
 import { TabService } from 'src/app/models/tab-service.service';
 import { TableauButton } from 'src/app/models/tableau-buttons';
@@ -34,23 +37,27 @@ export class AbsenceUtilTabService extends TabService<Absence>{
     });
   }
 
+
   override handleTabSignal(signal: TableauButton, entity?: any): void {
     console.log(entity);
     switch(signal){
       case TableauButton.AJOUT:
         console.log("ajout");
+        this.dialog.open(CreationAbsenceComponent)
         break;
       case TableauButton.DETAIL:
         console.log("detail");
         break;
       case TableauButton.SUPPRESSION:
         console.log("suppr");
+        this.dialog.open(SuppressionAbsenceComponent, {data: entity});
         break;
       case TableauButton.ACTIVATION:
         console.log("activation");
         break;
       case TableauButton.MODIFICATION:
         console.log("modif");
+        this.dialog.open(ModificationAbsenceComponent, {data: entity})
         break;
     }
   }

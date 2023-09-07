@@ -17,17 +17,24 @@ import { TypeConge } from 'src/app/models/type-conge';
   styleUrls: ['./creation.absence.component.scss'],
 })
 export class CreationAbsenceComponent implements OnInit {
-  absence!: Absence;
-  @Input() dateDebut!: Date;
-  @Input() dateFin!: Date;
-  @Input() typeConge!: TypeConge;
-  @Input() motif: string = "ajouter votre motif si c'est un congé sans solde";
+   absence!: Partial<Absence>;
+   dateDebut!: Date;
+  dateFin!: Date;
+  typeConge!: TypeConge;
+   motif: string = "ajouter votre motif si c'est un congé sans solde";
+  //  status!: string;
 
   formValid: string = '';
   formError: string = '';
   submitted: boolean = false;
 
-  @Input() form: FormGroup;
+  form: FormGroup = new FormGroup({
+    dateDebut: new FormControl(this.dateDebut),
+    dateFin: new FormControl(this.dateFin),
+    typeConge: new FormControl(this.typeConge),
+    motif: new FormControl(this.motif),
+    // status: new FormControl(this.status),
+  });
 
   constructor(
     private fb: FormBuilder,
@@ -47,10 +54,12 @@ export class CreationAbsenceComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.absence.dateDebut = this.form.value.getDateDebut?.value;
-    this.absence.dateFin = this.form.value.getDateFin?.value;
-    this.absence.typeConge = this.form.value.getTypeConge?.value;
-    this.absence.motif = this.form.value.getMotif?.value;
+    this.absence = {
+      dateDebut : this.getDateDebut?.value,
+      dateFin : this.getDateFin?.value,
+      typeConge : this.getTypeConge?.value,
+      motif : this.getMotif?.value,
+    }
 
     if (this.absence.typeConge !== TypeConge.SANS_SOLDE) {
       this.absence.motif = '';

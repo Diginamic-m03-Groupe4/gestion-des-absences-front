@@ -27,12 +27,12 @@ export class AbsenceHttpService {
   }
 
 
-  post(absenceDto : Absence){
+  post(absenceDto : Partial<Absence>){
     return this.http.post<any>(this.URL_API_V1_ABSENCE, absenceDto, {withCredentials: true})
   }
 
 
-  putByid(id : string, absenceDto : Absence){
+  putByid(id : string, absenceDto : Partial<Absence>){
     let newURL = this.URL_API_V1_ABSENCE_ID;
     newURL = newURL.replace('{id}', id);
     return this.http.put<string>(newURL, absenceDto,{withCredentials: true})

@@ -1,7 +1,64 @@
 <p>creation.absence works!</p>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <app-champs></app-champs>
+
+  <div>
+    <label> Date de début : </label>
+    <input type="date" formControlName="dateDebut" value="dateDebut" />
+  </div>
+  <div>
+    <label> Date de fin : </label>
+    <input type="date" formControlName="dateFin" value="dateFin" />
+  </div>
+  <div>
+    <label><i>JOURS R.</i> jrs</label>
+  </div>
+  <fieldset>
+    <legend>Selectionner Type de congé :</legend>
+    <div>
+      <input
+        type="radio"
+        id="CongeP"
+        formControlName="typeConge"
+        name="typeConge"
+        value="PAYE"
+      />
+      <label for="typeConge">Congé.p.</label>
+    </div>
+
+    <div>
+      <input
+        type="radio"
+        id="CongeSS"
+        formControlName="typeConge"
+        name="typeConge"
+        value="SANS_SOLDE"
+      />
+      <label for="typeConhe">Congé s.s.</label>
+    </div>
+
+    <div>
+      <input
+        type="radio"
+        id="RTT"
+        formControlName="typeConge"
+        name="typeConge"
+        value="RTT_EMPLOYE"
+      />
+      <label for="typeConge">RTT</label>
+    </div>
+  </fieldset>
+
+  <div>
+    <label> Motif </label>
+    <input type="textArea" formControlName="motif" name="motif" value="motif" />
+  </div>
+
+<!-- <div>
+  <label>Status: </label>
+  <input type="text" formControlName="status" name="status" />
+</div> -->
+
   <button type="submit">VALIDER</button>
 
   <!-- Message de succès après l'envoi de la requete  -->
