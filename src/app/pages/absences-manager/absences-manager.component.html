@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="tab--year">
   <button class="btn btn--tab" (click)="decrementYear()">-</button>
   {{year}}
@@ -14,8 +15,10 @@
   </div>
   <div class="tab-row" *ngFor="let row of tabEmployees">
     <div class="tab-employee">{{row.employee.prenom}}</div>
-    <div [ngClass]="{'tab-absence' : true, 'tab-absence-weekend' : getWeekDay(i) === 0 || getWeekDay(i) === 6}" *ngFor="let absence of row.absence; let i = index">
-      <div (click)="openChange(absence)" class="tab-absence-letter">{{absence?.displayedLetter}}</div>
+    <div [ngClass]="{'tab-absence' : true, 'tab-absence-weekend' : getWeekDay(i) === 0 || getWeekDay(i) === 6}" *ngFor="let absences of row.absences; let i = index">
+      <div class="tab-absence-letters">
+        <div *ngFor="let absence of absences" (click)="openChange(absence)" class="tab-absence-letter">{{absence?.displayedLetter}}</div>
+      </div>
     </div>
   </div>
 </div>

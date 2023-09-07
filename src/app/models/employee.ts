@@ -1,11 +1,12 @@
 import { Absence } from "./absence";
+import { Role } from "./role";
 
 export interface Employee {
   id?: number;
   email: string;
   nom: string;
   prenom: string;
-  role: any;
+  role: Role[];
   absences: Absence[];
   nombresJoursRestantsCP: number;
   nombresJoursRestantsRTT: number;

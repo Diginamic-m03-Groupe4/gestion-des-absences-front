@@ -28,8 +28,10 @@ export class LoginComponent {
         email:this.email?.value,
         password:this.password?.value
       }).subscribe({
-        next: () => {
+        next: (value) => {
+          console.log(value);
           localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('roles', value.role.join(','));
           this.router.navigate(['todoList']);
         },
         error: (err) => {

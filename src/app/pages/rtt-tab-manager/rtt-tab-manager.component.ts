@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { TableauButton } from 'src/app/models/tableau-buttons';
+import { TypeButton } from 'src/app/models/tableau-buttons';
 import { RttTabService } from './providers/rtt-tab.service';
 import { AbsenceEmployeur } from 'src/app/models/absence-employeur';
 import { TypeAbsenceEmployeur } from 'src/app/models/type-absence-employeur';
@@ -17,7 +17,7 @@ import { JourFerie } from 'src/app/models/jour-ferie';
 })
 export class RttTabManagerComponent {
 
-  buttons: TableauButton[] = [TableauButton.MODIFICATION, TableauButton.SUPPRESSION]
+  buttons: TypeButton[] = [TypeButton.MODIFICATION, TypeButton.SUPPRESSION]
   enTetes: string[] = ["Date", "Libelle", "Type", "Travaillé"];
   typeJour = TypeAbsenceEmployeur;
 

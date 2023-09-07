@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { EmployeCreation } from '../models/employe-creation';
 import { Login } from '../models/login';
@@ -19,7 +19,7 @@ export class EmployeeHttpService {
 
 
   postLogin(loginDto : Login){
-    return this.http.post(this.URL_API_V1_EMPLOYEE_LOGIN, loginDto, {withCredentials: true})
+    return this.http.post<Employee>(this.URL_API_V1_EMPLOYEE_LOGIN, loginDto, {withCredentials: true})
   }
 
 
