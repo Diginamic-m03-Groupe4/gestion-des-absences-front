@@ -5,7 +5,7 @@ import { AbsenceEmployeur } from 'src/app/models/absence-employeur';
 import { JourFerie } from 'src/app/models/jour-ferie';
 import { RttEmployeur } from 'src/app/models/rtt-employeur';
 import { TabService } from 'src/app/models/tab-service.service';
-import { TableauButton } from 'src/app/models/tableau-buttons';
+import { TypeButton } from 'src/app/models/tableau-buttons';
 import { TypeAbsenceEmployeur } from 'src/app/models/type-absence-employeur';
 import { JoursFerieHttpService } from 'src/app/providers/jours-ferie-http-service';
 import { RTTEmployeurHttpService } from 'src/app/providers/rtt-employeur-http-service';
@@ -16,15 +16,15 @@ import { ModalModifJFComponent } from 'src/app/shared/modal-modif-jf/modal-modif
 })
 export class RttTabService extends TabService<AbsenceEmployeur>{
 
-  private rttEmployeur: RttEmployeur[] = []
-  private jourFeries: JourFerie[] = []
-  private absenceEmployeurs : AbsenceEmployeur[] = [];
+  rttEmployeur: RttEmployeur[] = []
+  jourFeries: JourFerie[] = []
+  absenceEmployeurs : AbsenceEmployeur[] = [];
 
-  constructor(private rttHttpService : RTTEmployeurHttpService, private jourFerieHttpService: JoursFerieHttpService, private dialog: MatDialog) {
+  constructor(public rttHttpService : RTTEmployeurHttpService, public jourFerieHttpService: JoursFerieHttpService, private dialog: MatDialog) {
     super();
   }
 
-  private mapRttToAbsenceEmployeur(rtt: RttEmployeur): AbsenceEmployeur {
+  mapRttToAbsenceEmployeur(rtt: RttEmployeur): AbsenceEmployeur {
     let absence: AbsenceEmployeur = {
       id: rtt.id,
       type: TypeAbsenceEmployeur.RTT,
@@ -35,7 +35,7 @@ export class RttTabService extends TabService<AbsenceEmployeur>{
     return absence;
   }
 
-  private mapJFToAbsenceEmployeur(jf: JourFerie): AbsenceEmployeur {
+  mapJFToAbsenceEmployeur(jf: JourFerie): AbsenceEmployeur {
     let absence: AbsenceEmployeur = {
       id: jf.id,
       type: TypeAbsenceEmployeur.FERIE,
@@ -46,52 +46,45 @@ export class RttTabService extends TabService<AbsenceEmployeur>{
     return absence;
   }
 
-  getAbsences(annee: number): void {
-    forkJoin([this.jourFerieHttpService.get(annee), this.rttHttpService.get(annee)]).subscribe(results => {
-      let absenceEmployeurs : AbsenceEmployeur[] = []
-      this.jourFeries = results[0]
-      this.rttEmployeur = results[1]
-      results[0].forEach(result => absenceEmployeurs.push( this.mapJFToAbsenceEmployeur(result)))
-      results[1].forEach(result => absenceEmployeurs.push( this.mapRttToAbsenceEmployeur(result)))
-      this.absenceEmployeurs = absenceEmployeurs
-      this.getEntitiesSubject().next(absenceEmployeurs)
-    })
+  getAbsences(annee: number){
+    return forkJoin([this.jourFerieHttpService.get(annee), this.rttHttpService.get(annee)])
   }
+
 
   changeAbsenceEmployeur(absenceEmployeur: AbsenceEmployeur): void {
     switch (absenceEmployeur.type) {
       case TypeAbsenceEmployeur.FERIE:
         let jourFerie = this.jourFeries
-          .filter(jourFerie => jourFerie.id == absenceEmployeur.id)[0]
-        this.dialog.open(ModalModifJFComponent, { data: jourFerie })
+      .filter(jourFerie => jourFerie.id == absenceEmployeur.id)[0]
+      this.dialog.open(ModalModifJFComponent, { data: jourFerie })
     }
   }
 
-  override handleTabSignal(signal: TableauButton, entity?: any): void {
-    console.log(entity);
+  override handleTabSignal(signal: TypeButton, entity?: AbsenceEmployeur): void {
     switch(signal){
-      case TableauButton.AJOUT:
+      case TypeButton.AJOUT:
         console.log("ajout");
-        break;
-      case TableauButton.DETAIL:
+      break;
+      case TypeButton.DETAIL:
         console.log("detail");
-        break;
-      case TableauButton.SUPPRESSION:
+      break;
+      case TypeButton.SUPPRESSION:
         console.log("suppr");
-        break;
-      case TableauButton.ACTIVATION:
+      break;
+      case TypeButton.ACTIVATION:
         console.log("activation");
-        break;
-      case TableauButton.MODIFICATION:
+      break;
+      case TypeButton.MODIFICATION:
+        if (entity != undefined){
         this.changeAbsenceEmployeur(entity);
-        break;
+      }
+      break;
     }
   }
 
   override mapToPresentation(entities: AbsenceEmployeur[]): string[][] {
     let tab: string[][] = [];
     for(const rtt of entities){
-      console.log(rtt)
       let row: string[] = [];
       row.push(rtt.date.toString());
       row.push(rtt.libelle);
@@ -102,15 +95,7 @@ export class RttTabService extends TabService<AbsenceEmployeur>{
     return tab;
   }
 
-  modifierJF(jf : JourFerie){
-    this.jourFerieHttpService.put(jf).subscribe(value => {
-      for(let i = 0; i < this.absenceEmployeurs.length; i++){
-        if(this.absenceEmployeurs[i].id == value.id && this.absenceEmployeurs[i].type == TypeAbsenceEmployeur.FERIE){
-          this.absenceEmployeurs[i] = this.mapJFToAbsenceEmployeur(value);
-        }
-      }
-      this.getEntitiesSubject().next(this.absenceEmployeurs)
-    })
+  creerRTT(rtt : RttEmployeur){
   }
 
 }

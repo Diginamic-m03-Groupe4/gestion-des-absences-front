@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TableauButton } from 'src/app/models/tableau-buttons';
+import { TypeButton } from 'src/app/models/tableau-buttons';
 import { AbsenceUtilTabService } from './providers/absence-util-tab.service';
 import { Absence } from 'src/app/models/absence';
 import { Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class AbsenceTabUtilisateurComponent implements OnInit, OnDestroy{
 
-  buttons : TableauButton[] = [TableauButton.MODIFICATION, TableauButton.SUPPRESSION, TableauButton.AJOUT]
+  buttons : TypeButton[] = [TypeButton.MODIFICATION, TypeButton.SUPPRESSION, TypeButton.AJOUT]
   enTetes : string[] = ["Date de début", "Date de fin", "Type de congé", "Motif", "Status"];
 
   annee : number = new Date().getFullYear();

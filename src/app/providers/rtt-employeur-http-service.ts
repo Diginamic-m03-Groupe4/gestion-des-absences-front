@@ -27,8 +27,8 @@ export class RTTEmployeurHttpService {
   }
 
 
-  post(rttEmployeurDTO : RttEmployeur){
-    return this.http.post<RttEmployeur>(this.URL_API_V1_ADMIN, rttEmployeurDTO, {withCredentials: true})
+  post(rttEmployeurDTOs : Partial<RttEmployeur>[]){
+    return this.http.post<RttEmployeur[]>(this.URL_API_V1_ADMIN, rttEmployeurDTOs, {withCredentials: true})
   }
 
 

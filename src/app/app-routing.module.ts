@@ -8,12 +8,16 @@ import { FormulaireModule } from './formulaire/formulaire.module';
 import { CreationAbsenceComponent } from './formulaire/components/creation.absence/creation.absence.component';
 import { ModificationAbsenceComponent } from './formulaire/components/modification.absence/modification.absence.component';
 import { SuppressionAbsenceComponent } from './formulaire/components/suppression.absence/suppression.absence.component';
+import { AbsencesManagerComponent } from './pages/absences-manager/absences-manager.component';
+import { isLoggedInGuard, isManagerGuard } from './guards/is-logged-in.guard';
+
 const routes: Routes = [
   {path: 'formulaire', component: CreationAbsenceComponent},
   {path: 'modification', component: ModificationAbsenceComponent},
   { path: 'suppression', component: SuppressionAbsenceComponent},
   {path : "absences", component : AbsenceTabUtilisateurComponent},
   {path : "rtt-jf", component : RttTabManagerComponent},
+  {path : "absences-manager", component : AbsencesManagerComponent, canActivate : [isManagerGuard]},
   {path : "login", component : LoginComponent},
   {path : "signup", component : SignupComponent},
   {path : "", redirectTo : "login", pathMatch : "full"}

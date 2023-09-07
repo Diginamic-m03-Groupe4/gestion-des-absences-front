@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { TableauButton } from 'src/app/models/tableau-buttons';
+import { TypeButton } from 'src/app/models/tableau-buttons';
 import { RttTabService } from './providers/rtt-tab.service';
 import { AbsenceEmployeur } from 'src/app/models/absence-employeur';
 import { TypeAbsenceEmployeur } from 'src/app/models/type-absence-employeur';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalCreationRttComponent } from 'src/app/shared/modal-creation-rtt/modal-creation-rtt.component';
-
-type FilterFunc = (absence: AbsenceEmployeur) => boolean;
+import { RttEmployeur } from 'src/app/models/rtt-employeur';
+import { JourFerie } from 'src/app/models/jour-ferie';
 
 @Component({
   selector: 'app-rtt-tab-manager',
@@ -17,12 +17,13 @@ type FilterFunc = (absence: AbsenceEmployeur) => boolean;
 })
 export class RttTabManagerComponent {
 
-  buttons: TableauButton[] = [TableauButton.MODIFICATION, TableauButton.SUPPRESSION]
+  buttons: TypeButton[] = [TypeButton.MODIFICATION, TypeButton.SUPPRESSION]
   enTetes: string[] = ["Date", "Libelle", "Type", "Travaillé"];
   typeJour = TypeAbsenceEmployeur;
 
   annee: number = new Date().getFullYear();
   entities: AbsenceEmployeur[] = [];
+  shownEntities: AbsenceEmployeur[] = [];
   absenceSubscription?: Subscription
   formCheckbox : FormGroup
 
@@ -35,15 +36,21 @@ export class RttTabManagerComponent {
   }
 
   ngOnInit(): void {
-    this.service.getAbsences(this.annee);
+    this.service.getAbsences(this.annee).subscribe(results => this.getEntities(results))
     this.absenceSubscription = this.service.getEntitiesSubject().subscribe(value => {
-      this.entities = []
-      for (let entity of value) {
-        if (this.formCheckbox.get(entity.type)?.value) {
-          this.entities.push(entity)
-        }
-      }
+      this.entities = value
+      this.shownEntities = []
     })
+  }
+
+  private getEntities(results : [JourFerie[], RttEmployeur[]]) {
+      let absenceEmployeurs : AbsenceEmployeur[] = []
+      this.service.jourFeries = results[0]
+      this.service.rttEmployeur = results[1]
+      results[0].forEach(result => absenceEmployeurs.push( this.service.mapJFToAbsenceEmployeur(result)))
+      results[1].forEach(result => absenceEmployeurs.push( this.service.mapRttToAbsenceEmployeur(result)))
+      this.service.absenceEmployeurs = absenceEmployeurs
+      this.service.getEntitiesSubject().next(absenceEmployeurs)
   }
 
   ngOnDestroy(): void {
@@ -52,12 +59,12 @@ export class RttTabManagerComponent {
 
   decrementYear() {
     this.annee--;
-    this.service.getAbsences(this.annee);
+    this.service.getAbsences(this.annee).subscribe(results => this.getEntities(results));
   }
 
   incrementYear() {
     this.annee++;
-    this.service.getAbsences(this.annee);
+    this.service.getAbsences(this.annee).subscribe(results => this.getEntities(results));
   }
 
   handleAjout(){
@@ -65,7 +72,13 @@ export class RttTabManagerComponent {
   }
 
   handleFilter(){
-    this.service.getAbsences(this.annee);
+    this.shownEntities = []
+    for (let entity of this.entities) {
+      if (this.formCheckbox.get(entity.type)?.value) {
+        this.entities.push(entity)
+      }
+    }
+    this.service.getAbsences(this.annee).subscribe(results => this.getEntities(results));
   }
 
   get jf() {
