@@ -15,34 +15,34 @@ export class RTTEmployeurHttpService {
   constructor(private http:HttpClient) {}
 
 
-  get(){
-    return this.http.get<any>(this.URL_API_V1_ADMIN)
+  get(annee: number){
+    return this.http.get<RttEmployeur[]>(this.URL_API_V1_ADMIN + "?annee="+annee, {withCredentials: true})
   }
 
 
   getByid(id : string){
     let newURL = this.URL_API_V1_ADMIN_ID;
     newURL = newURL.replace('{id}', id);
-    return this.http.get<any>(newURL)
+    return this.http.get<RttEmployeur>(newURL, {withCredentials: true})
   }
 
 
-  post(rttEmployeurDTO : any){
-    return this.http.post<any>(this.URL_API_V1_ADMIN, rttEmployeurDTO)
+  post(rttEmployeurDTOs : Partial<RttEmployeur>[]){
+    return this.http.post<RttEmployeur[]>(this.URL_API_V1_ADMIN, rttEmployeurDTOs, {withCredentials: true})
   }
 
 
   putByid(rttEmployeurDTO : RttEmployeur, id : string){
     let newURL = this.URL_API_V1_ADMIN_ID;
     newURL = newURL.replace('{id}', id);
-    return this.http.put<string>(newURL, rttEmployeurDTO)
+    return this.http.put<string>(newURL, rttEmployeurDTO, {withCredentials: true})
   }
 
 
   deleteByid(id : string){
     let newURL = this.URL_API_V1_ADMIN_ID;
     newURL = newURL.replace('{id}', id);
-    return this.http.delete<string>(newURL)
+    return this.http.delete<string>(newURL, {withCredentials: true})
   }
 
 }

@@ -1,0 +1,20 @@
+<div class="tab--year">
+  <button class="btn btn--tab" (click)="decrementYear()">-</button>
+  {{year}}
+  <button class="btn btn--tab" (click)="incrementYear()">+</button>
+  <p></p>
+  <button class="btn btn--tab" (click)="decrementMonth()">-</button>
+  {{months[monthPointer]}}
+  <button class="btn btn--tab" (click)="incrementMonth()">+</button>
+</div>
+<div class="tab-absence-manager"></div>
+<div class="tab-row">
+  <div class="tab-filler">Nom</div>
+  <div class="tab-absence" *ngFor="let header of headers">{{header}}</div>
+</div>
+<div class="tab-row" *ngFor="let row of tabEmployees">
+  <div class="tab-employee">{{row.employee.prenom}}</div>
+  <div class="tab-absence" *ngFor="let absence of row.absence; let i = index">
+    <div (click)="openChange(absence)" class="tab-absence-letter">{{absence?.displayedLetter}}</div>
+  </div>
+</div>
