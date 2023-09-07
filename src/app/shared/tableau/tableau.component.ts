@@ -23,24 +23,17 @@ export class TableauComponent<T extends BaseEntity> implements OnInit, OnChanges
   @Input() enTetes:string[] | undefined =[];
   @Input() service?: TabService<T>;
   @Input() entities?: T[];
-  @Input() buttons: TabButton[] = [];
+  @Input() buttons?: TypeButton[];
+  @Input() permission = false;
   subEntites: Subscription | undefined;
   constructor(private fb:FormBuilder) {
     this.formSearch = this.fb.group({});
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.buttons);
     this.fillTableau(this.entities);
   }
-
-  mapButtons(buttons:TabButton[]){
-    return buttons.map(button => button.typeBtn)
-  }
-
-  getButton(buttonType : TypeButton){
-    return this.buttons.filter(button => button.typeBtn = buttonType)[0];
-  }
-
 
   ngOnInit(): void {
     this.shownPresentationItems.subscribe(value =>{

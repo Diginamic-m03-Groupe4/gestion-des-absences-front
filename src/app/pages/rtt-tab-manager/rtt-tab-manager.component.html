@@ -14,4 +14,4 @@
   <label>Rtt</label>
   <input type="checkbox" id="feries" name="feries" formControlName="RTT Employeur">
 </div>
-<app-tableau [service]="service" [buttons]="buttons" [entities]="entities" [enTetes]="enTetes" ></app-tableau>
+<app-tableau [permission]="isAdmin" [service]="service" [buttons]="buttons" [entities]="entities" [enTetes]="enTetes" ></app-tableau>

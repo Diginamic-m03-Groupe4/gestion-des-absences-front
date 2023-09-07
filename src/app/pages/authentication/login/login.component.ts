@@ -32,7 +32,7 @@ export class LoginComponent {
           console.log(value);
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('roles', value.role.join(','));
-          this.router.navigate(['todoList']);
+          this.router.navigate(['/absences']);
         },
         error: (err) => {
           this.formError = err.error.message;

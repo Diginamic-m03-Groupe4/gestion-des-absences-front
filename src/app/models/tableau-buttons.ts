@@ -9,5 +9,5 @@ export enum TypeButton {
 
 export interface TabButton {
   typeBtn: TypeButton;
-  permission : () => boolean;
+  permission : boolean
 }

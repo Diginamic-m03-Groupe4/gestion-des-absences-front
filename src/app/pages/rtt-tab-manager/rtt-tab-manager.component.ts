@@ -19,15 +19,9 @@ import { isAdmin } from 'src/app/guards/is-logged-in.guard';
 export class RttTabManagerComponent {
 
   isAdmin = isAdmin()
-  buttons: TabButton[] = [
-    {
-      typeBtn : TypeButton.MODIFICATION,
-      permission : isAdmin
-    },
-    {
-      typeBtn : TypeButton.SUPPRESSION,
-      permission : isAdmin
-    }
+  buttons: TypeButton[] = [
+      TypeButton.MODIFICATION,
+      TypeButton.SUPPRESSION,
   ]
   enTetes: string[] = ["Date", "Libelle", "Type", "Travaillé"];
   typeJour = TypeAbsenceEmployeur;
