@@ -7,14 +7,15 @@
   {{months[monthPointer]}}
   <button class="btn btn--tab" (click)="incrementMonth()">+</button>
 </div>
-<div class="tab-absence-manager"></div>
-<div class="tab-row">
-  <div class="tab-filler">Nom</div>
-  <div class="tab-absence" *ngFor="let header of headers">{{header}}</div>
-</div>
-<div class="tab-row" *ngFor="let row of tabEmployees">
-  <div class="tab-employee">{{row.employee.prenom}}</div>
-  <div class="tab-absence" *ngFor="let absence of row.absence; let i = index">
-    <div (click)="openChange(absence)" class="tab-absence-letter">{{absence?.displayedLetter}}</div>
+<div class="tab-absence-manager">
+  <div class="tab-row">
+    <div class="tab-filler"></div>
+    <div [ngClass]="{'tab-absence': true, 'tab-absence-weekend' : header.dayInWeek === 'D' || header.dayInWeek === 'S'}" *ngFor="let header of headers">{{header.dayInMonth}} {{header.dayInWeek}}</div>
+  </div>
+  <div class="tab-row" *ngFor="let row of tabEmployees">
+    <div class="tab-employee">{{row.employee.prenom}}</div>
+    <div [ngClass]="{'tab-absence' : true, 'tab-absence-weekend' : getWeekDay(i) === 0 || getWeekDay(i) === 6}" *ngFor="let absence of row.absence; let i = index">
+      <div (click)="openChange(absence)" class="tab-absence-letter">{{absence?.displayedLetter}}</div>
+    </div>
   </div>
 </div>
