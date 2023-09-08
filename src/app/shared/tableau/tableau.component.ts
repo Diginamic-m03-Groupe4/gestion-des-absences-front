@@ -4,7 +4,7 @@ import { FormBuilder, FormControl } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { TabService } from 'src/app/models/tab-service.service';
 import { BaseEntity } from 'src/app/models/base-entity';
-import { TypeButton } from 'src/app/models/tableau-buttons';
+import { TabButton, TypeButton } from 'src/app/models/tableau-buttons';
 
 @Component({
   selector: 'app-tableau',
@@ -15,7 +15,7 @@ export class TableauComponent<T extends BaseEntity> implements OnInit, OnChanges
 
   presentationItems: string[][] =  [];
   shownPresentationItems: Subject<string[][]> = new Subject();
-  tabNotication = TypeButton;
+  tabNotification = TypeButton;
   tabEntities : Object[] = [];
   Tsubscription:Subscription = new Subscription();
   formSearch:FormGroup;
@@ -24,15 +24,16 @@ export class TableauComponent<T extends BaseEntity> implements OnInit, OnChanges
   @Input() service?: TabService<T>;
   @Input() entities?: T[];
   @Input() buttons?: TypeButton[];
+  @Input() permission = false;
   subEntites: Subscription | undefined;
   constructor(private fb:FormBuilder) {
     this.formSearch = this.fb.group({});
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.buttons);
     this.fillTableau(this.entities);
   }
-
 
   ngOnInit(): void {
     this.shownPresentationItems.subscribe(value =>{

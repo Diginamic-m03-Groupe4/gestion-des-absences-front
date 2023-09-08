@@ -1,10 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Absence } from 'src/app/models/absence';
-import { StatusAbsence } from 'src/app/models/status-absence';
-import { TypeConge } from 'src/app/models/type-conge';
-import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
+import { AbsenceUtilTabService } from 'src/app/pages/absence-tab-utilisateur/providers/absence-util-tab.service';
 
 @Component({
   selector: 'app-suppression.absence',
@@ -18,26 +15,26 @@ export class SuppressionAbsenceComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public  data: Absence,
     private dialog: MatDialog,
-    private _absenceHttpService: AbsenceHttpService
+    private service : AbsenceUtilTabService
   ) {
   }
 
   ngOnInit() {
     this.onSubmit;
-}
+  }
 
-cancel() {
-  this.dialog.closeAll();
-}
+  cancel() {
+    this.dialog.closeAll();
+  }
 
   onSubmit() {
-      this._absenceHttpService
-        .deleteByid(`${this.data.id}`)
-        .subscribe(() => {
-          next: this.dialog.closeAll()
-          error: (err: { error: { message: string } }) => {
-            console.log(``,err.error.message);
-          };
-        });
-    }
+    this.service.httpService
+    .deleteByid(`${this.data.id}`)
+    .subscribe(() => {
+        console.log(`Suppression de l'absence ${this.data.id}`);
+        this.service.getAbsences(this.service.annee)
+        this.dialog.closeAll()
+    });
   }
+}
+

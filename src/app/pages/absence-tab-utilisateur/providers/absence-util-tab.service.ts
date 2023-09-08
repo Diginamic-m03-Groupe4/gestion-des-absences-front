@@ -13,7 +13,8 @@ import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
 })
 export class AbsenceUtilTabService extends TabService<Absence>{
 
-  constructor(private httpService:AbsenceHttpService, private dialog:MatDialog) {
+  annee : number = new Date().getFullYear();
+  constructor(public httpService:AbsenceHttpService, private dialog:MatDialog) {
     super();
   }
 

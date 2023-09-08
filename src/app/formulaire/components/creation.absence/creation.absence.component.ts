@@ -3,13 +3,12 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
 } from '@angular/forms';
 import { Absence } from 'src/app/models/absence';
-import { Router } from '@angular/router';
-import { StatusAbsence } from 'src/app/models/status-absence';
 import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
 import { TypeConge } from 'src/app/models/type-conge';
+import { MatDialog } from '@angular/material/dialog';
+import { AbsenceUtilTabService } from 'src/app/pages/absence-tab-utilisateur/providers/absence-util-tab.service';
 
 @Component({
   selector: 'app-creation.absence',
@@ -37,8 +36,9 @@ export class CreationAbsenceComponent implements OnInit {
   });
 
   constructor(
+    private dialog: MatDialog,
     private fb: FormBuilder,
-    private _absenceHttpService: AbsenceHttpService
+    private service :AbsenceUtilTabService
   ) {
     this.form = this.fb.group({
       dateDebut: '',
@@ -66,13 +66,15 @@ export class CreationAbsenceComponent implements OnInit {
     }
 
     if (this.form.valid) {
-      this._absenceHttpService.post(this.absence).subscribe(() => {
-        next: () =>
-          (this.formValid =
-            'Votre demande de congés a bien été prise en compte');
+      this.service.httpService.post(this.absence).subscribe({
+        next: () => {
+          this.formValid = 'Votre demande de congés a bien été prise en compte';
+          this.service.getAbsences(this.service.annee)
+          this.dialog.closeAll();
+        },
         error: (err: { error: { message: string } }) => {
           this.formError = err.error.message;
-        };
+        },
       });
     }
   }

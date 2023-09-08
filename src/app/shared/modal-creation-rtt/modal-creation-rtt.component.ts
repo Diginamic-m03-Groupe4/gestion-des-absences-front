@@ -42,10 +42,10 @@ export class ModalCreationRttComponent {
       this.service.rttHttpService.post(rtts).subscribe({
         next : value => {
           this.service.getAbsences(endDate.getFullYear());
+          this.dialog.closeAll()
         },
         error : (err : ErrorMessage)  => console.log(err.message)
       })
-      this.dialog.closeAll()
     }
   }
 
