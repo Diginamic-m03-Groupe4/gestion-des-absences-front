@@ -4,7 +4,7 @@ import { FormBuilder, FormControl } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { TabService } from 'src/app/models/tab-service.service';
 import { BaseEntity } from 'src/app/models/base-entity';
-import { TableauButton } from 'src/app/models/tableau-buttons';
+import { TabButton, TypeButton } from 'src/app/models/tableau-buttons';
 
 @Component({
   selector: 'app-tableau',
@@ -15,7 +15,7 @@ export class TableauComponent<T extends BaseEntity> implements OnInit, OnChanges
 
   presentationItems: string[][] =  [];
   shownPresentationItems: Subject<string[][]> = new Subject();
-  tabNotication = TableauButton;
+  tabNotification = TypeButton;
   tabEntities : Object[] = [];
   Tsubscription:Subscription = new Subscription();
   formSearch:FormGroup;
@@ -23,16 +23,17 @@ export class TableauComponent<T extends BaseEntity> implements OnInit, OnChanges
   @Input() enTetes:string[] | undefined =[];
   @Input() service?: TabService<T>;
   @Input() entities?: T[];
-  @Input() buttons?: TableauButton[];
+  @Input() buttons?: TypeButton[];
+  @Input() permission = false;
   subEntites: Subscription | undefined;
   constructor(private fb:FormBuilder) {
     this.formSearch = this.fb.group({});
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.buttons);
     this.fillTableau(this.entities);
   }
-
 
   ngOnInit(): void {
     this.shownPresentationItems.subscribe(value =>{
@@ -57,7 +58,7 @@ export class TableauComponent<T extends BaseEntity> implements OnInit, OnChanges
     }
   }
 
-  sendNotification(notification:TableauButton, id:number | null = null){
+  sendNotification(notification:TypeButton, id:number | null = null){
     if(this.service != undefined){
       if(this.entities != undefined && id != null){
         this.service.handleTabSignal(notification, this.entities[id]);
@@ -73,7 +74,7 @@ export class TableauComponent<T extends BaseEntity> implements OnInit, OnChanges
       for(let key of Object.keys(this.entities[0])){
         entity[key] = null;
       }
-      this.service?.handleTabSignal(TableauButton.AJOUT, entity);
+      this.service?.handleTabSignal(TypeButton.AJOUT, entity);
     }
   }
 

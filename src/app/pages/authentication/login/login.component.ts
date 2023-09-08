@@ -28,9 +28,11 @@ export class LoginComponent {
         email:this.email?.value,
         password:this.password?.value
       }).subscribe({
-        next: () => {
+        next: (value) => {
+          console.log(value);
           localStorage.setItem('isLoggedIn', 'true');
-          this.router.navigate(['todoList']);
+          localStorage.setItem('roles', value.role.join(','));
+          this.router.navigate(['/absences']);
         },
         error: (err) => {
           this.formError = err.error.message;

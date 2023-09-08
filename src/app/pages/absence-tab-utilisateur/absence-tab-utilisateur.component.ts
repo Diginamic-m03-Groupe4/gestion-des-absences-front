@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TableauButton } from 'src/app/models/tableau-buttons';
+import { TabButton, TypeButton } from 'src/app/models/tableau-buttons';
 import { AbsenceUtilTabService } from './providers/absence-util-tab.service';
 import { Absence } from 'src/app/models/absence';
 import { Subscription } from 'rxjs';
@@ -11,17 +11,22 @@ import { Subscription } from 'rxjs';
 })
 export class AbsenceTabUtilisateurComponent implements OnInit, OnDestroy{
 
-  buttons : TableauButton[] = [TableauButton.MODIFICATION, TableauButton.SUPPRESSION, TableauButton.AJOUT]
+  typeButton = TypeButton;
+  buttons : TypeButton[] = [
+      this.typeButton.SUPPRESSION,
+      this.typeButton.MODIFICATION,
+      this.typeButton.AJOUT,
+  ]
+  permission = true;
   enTetes : string[] = ["Date de début", "Date de fin", "Type de congé", "Motif", "Status"];
 
-  annee : number = new Date().getFullYear();
   entities : Absence[] = [];
   absenceSubscription? : Subscription
 
   constructor(public service : AbsenceUtilTabService) { }
 
   ngOnInit(): void {
-    this.service.getAbsences(this.annee);
+    this.service.getAbsences(this.service.annee);
     this.absenceSubscription = this.service.getEntitiesSubject().subscribe(value => {
       this.entities = value;
     })
@@ -32,13 +37,13 @@ export class AbsenceTabUtilisateurComponent implements OnInit, OnDestroy{
   }
 
   decrementYear(){
-    this.annee--;
-    this.service.getAbsences(this.annee);
+    this.service.annee--;
+    this.service.getAbsences(this.service.annee);
   }
 
   incrementYear(){
-    this.annee++;
-    this.service.getAbsences(this.annee);
+    this.service.annee++;
+    this.service.getAbsences(this.service.annee);
   }
 
 }

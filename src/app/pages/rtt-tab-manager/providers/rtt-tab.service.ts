@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
-import { Absence } from 'src/app/models/absence';
 import { AbsenceEmployeur } from 'src/app/models/absence-employeur';
 import { JourFerie } from 'src/app/models/jour-ferie';
 import { RttEmployeur } from 'src/app/models/rtt-employeur';
-import { StatusAbsence } from 'src/app/models/status-absence';
 import { TabService } from 'src/app/models/tab-service.service';
-import { TableauButton } from 'src/app/models/tableau-buttons';
+import { TypeButton } from 'src/app/models/tableau-buttons';
 import { TypeAbsenceEmployeur } from 'src/app/models/type-absence-employeur';
 import { JoursFerieHttpService } from 'src/app/providers/jours-ferie-http-service';
 import { RTTEmployeurHttpService } from 'src/app/providers/rtt-employeur-http-service';
@@ -62,21 +60,21 @@ export class RttTabService extends TabService<AbsenceEmployeur>{
     }
   }
 
-  override handleTabSignal(signal: TableauButton, entity?: AbsenceEmployeur): void {
+  override handleTabSignal(signal: TypeButton, entity?: AbsenceEmployeur): void {
     switch(signal){
-      case TableauButton.AJOUT:
+      case TypeButton.AJOUT:
         console.log("ajout");
       break;
-      case TableauButton.DETAIL:
+      case TypeButton.DETAIL:
         console.log("detail");
       break;
-      case TableauButton.SUPPRESSION:
+      case TypeButton.SUPPRESSION:
         console.log("suppr");
       break;
-      case TableauButton.ACTIVATION:
+      case TypeButton.ACTIVATION:
         console.log("activation");
       break;
-      case TableauButton.MODIFICATION:
+      case TypeButton.MODIFICATION:
         if (entity != undefined){
         this.changeAbsenceEmployeur(entity);
       }

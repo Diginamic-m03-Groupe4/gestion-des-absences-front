@@ -1,9 +1,10 @@
+<app-navbar></app-navbar>
 <div class="tab--year">
   <button class="btn btn--tab" (click)="decrementYear()">-</button>
     {{annee}}
   <button class="btn btn--tab" (click)="incrementYear()">+</button>
 </div>
-<div class="tab--ajout">
+<div *ngIf="isAdmin" class="tab--ajout">
     <button class="btn btn--tab" (click)="handleAjout()">+ Ajouter RTT</button>
 </div>
 <div class="filters" [formGroup]="formCheckbox">
@@ -13,4 +14,4 @@
   <label>Rtt</label>
   <input type="checkbox" id="feries" name="feries" formControlName="RTT Employeur">
 </div>
-<app-tableau [service]="service" [buttons]="buttons" [entities]="entities" [enTetes]="enTetes" ></app-tableau>
+<app-tableau [permission]="isAdmin" [service]="service" [buttons]="buttons" [entities]="entities" [enTetes]="enTetes" ></app-tableau>
