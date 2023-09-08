@@ -6,7 +6,6 @@ import { Absence } from 'src/app/models/absence';
 import { StatusAbsence } from 'src/app/models/status-absence';
 import { TypeConge } from 'src/app/models/type-conge';
 import { AbsenceUtilTabService } from 'src/app/pages/absence-tab-utilisateur/providers/absence-util-tab.service';
-import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
 
 @Component({
   selector: 'app-modification.absence',
@@ -42,7 +41,7 @@ export class ModificationAbsenceComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Absence,
     private dialog: MatDialog,
     private fb: FormBuilder,
-    private _absenceHttpService: AbsenceHttpService
+    private service : AbsenceUtilTabService
   ) {
     this.form = this.fb.group({
       dateDebut: this.data.dateDebut,
@@ -78,17 +77,19 @@ export class ModificationAbsenceComponent implements OnInit {
       typeConge: this.getTypeConge?.value,
       motif: this.getMotif?.value,
       status: this.getStatus?.value,
-      email: this.getEmail?.value,
     };
 
     if (this.form.valid) {
-      this._absenceHttpService
+      this.service.httpService
         .putByid(`${this.data.id}`, this.absence)
-        .subscribe(() => {
-          next: this.formValid = 'Votre demande de congés a bien été modifiée';
+        .subscribe({
+          next: () =>{
+            this.formValid = 'Votre demande de congés a bien été modifiée'
+            this.service.getAbsences(this.service.annee)
+          },
           error: (err: { error: { message: string } }) => {
             this.formError = err.error.message;
-          };
+          },
         });
     }
   }
