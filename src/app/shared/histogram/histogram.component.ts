@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ListAbsByEmployeeHttpService } from 'src/app/providers/listAbsByEmployee-http-service';
 import { DEPARTEMENTS } from 'src/app/models/departements';
+import { ListAbsByEmployeeHttpService } from 'src/app/providers/listAbsByEmployee-http-service';
 
 @Component({
   selector: 'app-histogram',
@@ -20,28 +20,20 @@ export class HistogramComponent implements OnInit {
 
   columnNames = ["Nombre de jours d'absences cumulés"];
 
+
+
   constructor(private service: ListAbsByEmployeeHttpService) {}
 
   ngOnInit(): void {
-    this.init();
+    this.getData();
   }
 
-  private init(): void {
-    for (let ele of DEPARTEMENTS) {
-      if (ele.id === this.departementId) {
-      }
-    }
+  private init(): void {}
+
+  getData() {
+    this.service.get("2").forEach((data) => console.log(`data :`, data));
   }
 
-  getData(id: string) {
-    this.service.get(id);
-  }
-
-  onChange() {
-  }
+  onChange() {}
 
 }
-function moment() {
-  throw new Error('Function not implemented.');
-}
-
