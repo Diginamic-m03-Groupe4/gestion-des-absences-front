@@ -78,7 +78,6 @@ export class ModificationAbsenceComponent implements OnInit {
       typeConge: this.getTypeConge?.value,
       motif: this.getMotif?.value,
       status: this.getStatus?.value,
-      email: this.getEmail?.value,
     };
 
     if (this.form.valid) {

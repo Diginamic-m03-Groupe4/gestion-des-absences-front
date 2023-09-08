@@ -16,6 +16,8 @@ import { ModalCreationRttComponent } from './shared/modal-creation-rtt/modal-cre
 import { AbsencesManagerComponent } from './pages/absences-manager/absences-manager.component';
 import { ModalValidationAbsenceComponent } from './shared/modal-validation-absence/modal-validation-absence.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { HistogramComponent } from './shared/histogram/histogram.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
     AbsencesManagerComponent,
     ModalValidationAbsenceComponent,
     NavbarComponent,
+    HistogramComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    GoogleChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
