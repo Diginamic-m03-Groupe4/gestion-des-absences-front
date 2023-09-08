@@ -10,8 +10,8 @@
 <div class="filters" [formGroup]="formCheckbox">
   <h2>Filtres</h2>
   <label>Jour fériés</label>
-  <input type="checkbox" id="feries" name="feries" formControlName="Jour férié" >
+  <input type="checkbox" id="feries" name="feries" (ngModelChange)="handleFilter()" formControlName="Jour férié" >
   <label>Rtt</label>
-  <input type="checkbox" id="feries" name="feries" formControlName="RTT Employeur">
+  <input type="checkbox" id="feries" name="feries" (ngModelChange)="handleFilter()" formControlName="RTT Employeur">
 </div>
-<app-tableau [permission]="isAdmin" [service]="service" [buttons]="buttons" [entities]="entities" [enTetes]="enTetes" ></app-tableau>
+<app-tableau [permission]="isAdmin" [service]="service" [buttons]="buttons" [entities]="shownEntities" [enTetes]="enTetes" ></app-tableau>
