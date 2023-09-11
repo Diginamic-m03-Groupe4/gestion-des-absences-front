@@ -45,7 +45,6 @@ export class CalendarComponent implements OnInit {
         display: 'background'
       },
     ];
-    console.log(this.absencesCal);
   }
 
   getAnnee() {
@@ -63,8 +62,6 @@ export class CalendarComponent implements OnInit {
       };
       this.absencesCal.push(absenceSmall);
     }
-    console.log(annee);
-    console.log(this.absencesCal);
   }
 
   // absencesList : Absence[] = [];
