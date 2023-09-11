@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, Output } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -70,13 +70,6 @@ export class ModificationAbsenceComponent implements OnInit {
       this.formError =
         "Votre demande d'absence a déjà été validée ou prise en compte par le traitement de nuit";
     }
-
-    // if (
-    //   this.absence.typeConge === TypeConge.SANS_SOLDE &&
-    //   this.absence.motif === ''
-    // ) {
-    //   this.formError = 'Le motif est obligatoire si congé sans solde.';
-    // }
 
     this.absence = {
       dateDebut: this.getDateDebut?.value,
