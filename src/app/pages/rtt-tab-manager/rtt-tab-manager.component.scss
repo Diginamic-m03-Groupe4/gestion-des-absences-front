@@ -1,4 +1,4 @@
-.tab--year{
+.tab--year, .tab--ajout{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,9 +16,18 @@
     // align-items: center;
     h2 {
         text-align: center;
+        margin-top: 1.5rem;
     }
     div {
         display: flex;
         justify-content: center;
+        > * {
+            margin: .2rem;
+            display: flex;
+
+        }
+    }
+    > * {
+        margin: .2rem;
     }
 }

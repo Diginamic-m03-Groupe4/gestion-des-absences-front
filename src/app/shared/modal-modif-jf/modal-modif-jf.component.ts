@@ -17,7 +17,7 @@ export class ModalModifJFComponent implements OnInit{
   constructor( @Inject(MAT_DIALOG_DATA) private data: JourFerie, private service: RttTabService, private dialog : MatDialog) {}
 
   ngOnInit(): void {
-    this.messageModif = `Voulez-vous marqué ce jour comme${(this.data.worked) ? " non" : ""} travaillé?`
+    this.messageModif = `Voulez-vous marquer ce jour comme${(this.data.worked) ? " non" : ""} travaillé?`
   }
 
   onModif(){

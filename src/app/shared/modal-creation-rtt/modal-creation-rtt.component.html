@@ -10,7 +10,7 @@
       <div class="form--group" >
         <label class="form--label" for="">Date de Fin</label>
         <input type="date" formControlName="dateFin"  [min]="todayDate | date: 'yyyy-MM-dd'">
-        <div class="form--error" *ngIf="!dateFin?.valid && (this.formCreation.invalid && submitted)">La date de fin est obligatoire<</div>
+        <div class="form--error" *ngIf="!dateFin?.valid && (this.formCreation.invalid && submitted)">La date de fin est obligatoire</div>
       </div>
       <div class="form--group">
         <label class=""  for="libelle">Libelle</label>
