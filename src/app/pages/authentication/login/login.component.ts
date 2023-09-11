@@ -29,7 +29,6 @@ export class LoginComponent {
         password:this.password?.value
       }).subscribe({
         next: (value) => {
-          console.log(value);
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('roles', value.role.join(','));
           this.router.navigate(['/absences']);

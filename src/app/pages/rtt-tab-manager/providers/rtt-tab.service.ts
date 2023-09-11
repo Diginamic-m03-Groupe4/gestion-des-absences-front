@@ -65,14 +65,8 @@ export class RttTabService extends TabService<AbsenceEmployeur>{
       case TypeButton.AJOUT:
         console.log("ajout");
       break;
-      case TypeButton.DETAIL:
-        console.log("detail");
-      break;
       case TypeButton.SUPPRESSION:
         console.log("suppr");
-      break;
-      case TypeButton.ACTIVATION:
-        console.log("activation");
       break;
       case TypeButton.MODIFICATION:
         if (entity != undefined){
