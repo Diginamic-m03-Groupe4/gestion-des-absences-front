@@ -26,7 +26,6 @@ export class RttTabManagerComponent {
   enTetes: string[] = ["Date", "Libelle", "Type", "Travaillé"];
   typeJour = TypeAbsenceEmployeur;
 
-  annee: number = new Date().getFullYear();
   entities: AbsenceEmployeur[] = [];
   shownEntities: AbsenceEmployeur[] = [];
   absenceSubscription?: Subscription
@@ -41,7 +40,7 @@ export class RttTabManagerComponent {
   }
 
   ngOnInit(): void {
-    this.service.getAbsences(this.annee).subscribe(results => this.getEntities(results))
+    this.service.getAbsences(this.service.annee).subscribe(results => this.getEntities(results))
     this.absenceSubscription = this.service.getEntitiesSubject().subscribe(value => {
       this.entities = value
       this.handleFilter()
@@ -63,13 +62,13 @@ export class RttTabManagerComponent {
   }
 
   decrementYear() {
-    this.annee--;
-    this.service.getAbsences(this.annee).subscribe(results => this.getEntities(results));
+    this.service.annee--;
+    this.service.getAbsences(this.service.annee).subscribe(results => this.getEntities(results));
   }
 
   incrementYear() {
-    this.annee++;
-    this.service.getAbsences(this.annee).subscribe(results => this.getEntities(results));
+    this.service.annee++;
+    this.service.getAbsences(this.service.annee).subscribe(results => this.getEntities(results));
   }
 
   handleAjout(){

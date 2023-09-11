@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
+import { SuppressionAbsenceComponent } from 'src/app/formulaire/components/suppression.absence/suppression.absence.component';
 import { AbsenceEmployeur } from 'src/app/models/absence-employeur';
 import { JourFerie } from 'src/app/models/jour-ferie';
 import { RttEmployeur } from 'src/app/models/rtt-employeur';
@@ -12,6 +13,7 @@ import { RTTEmployeurHttpService } from 'src/app/providers/rtt-employeur-http-se
 import { ModalCreationRttComponent } from 'src/app/shared/modal-creation-rtt/modal-creation-rtt.component';
 import { ModalModifJFComponent } from 'src/app/shared/modal-modif-jf/modal-modif-jf.component';
 import { ModalModifRTTComponent } from 'src/app/shared/modal-modif-rtt/modal-modif-rtt.component';
+import { ModalSuppressionRttComponent } from 'src/app/shared/modal-suppression-rtt/modal-suppression-rtt.component';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,7 @@ import { ModalModifRTTComponent } from 'src/app/shared/modal-modif-rtt/modal-mod
 export class RttTabService extends TabService<AbsenceEmployeur>{
 
   rttEmployeur: RttEmployeur[] = []
+  annee: number = new Date().getFullYear();
   jourFeries: JourFerie[] = []
   absenceEmployeurs : AbsenceEmployeur[] = [];
 
@@ -66,18 +69,29 @@ export class RttTabService extends TabService<AbsenceEmployeur>{
     }
   }
 
+  deleteAbsenceEmployeur(entity : AbsenceEmployeur){
+    if (entity.type == TypeAbsenceEmployeur.FERIE){
+      this.changeAbsenceEmployeur(entity);
+    } else {
+      let rtt = this.rttEmployeur.filter(rtt => rtt.id == entity.id)
+      this.dialog.open(ModalSuppressionRttComponent, {data:entity})
+    }
+  }
+
   override handleTabSignal(signal: TypeButton, entity?: AbsenceEmployeur): void {
     switch(signal){
       case TypeButton.AJOUT:
         console.log("ajout");
       break;
       case TypeButton.SUPPRESSION:
-        console.log("suppr");
+        if (entity != undefined){
+          this.deleteAbsenceEmployeur(entity);
+        }
       break;
       case TypeButton.MODIFICATION:
         if (entity != undefined){
-        this.changeAbsenceEmployeur(entity);
-      }
+          this.changeAbsenceEmployeur(entity);
+        }
       break;
     }
   }

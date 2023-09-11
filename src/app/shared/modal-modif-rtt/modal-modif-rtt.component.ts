@@ -27,21 +27,25 @@ export class ModalModifRTTComponent {
   }
 
   onModif(){
-    this.service.rttHttpService.putByid(this.data, this.data.id!).subscribe(value => {
-      for(let i = 0; i < this.service.absenceEmployeurs.length; i++){
-        if(this.service.absenceEmployeurs[i].id == value.id && this.service.absenceEmployeurs[i].type == TypeAbsenceEmployeur.RTT){
-          this.service.absenceEmployeurs[i] = this.service.mapRttToAbsenceEmployeur(value);
+    this.service.rttHttpService.putByid(this.data).subscribe({
+      next : value => {
+        for(let i = 0; i < this.service.absenceEmployeurs.length; i++){
+          if(this.service.absenceEmployeurs[i].id == value.id && this.service.absenceEmployeurs[i].type == TypeAbsenceEmployeur.RTT){
+            this.service.absenceEmployeurs[i] = this.service.mapRttToAbsenceEmployeur(value);
+          }
         }
+        this.service.getEntitiesSubject().next(this.service.absenceEmployeurs)
+        this.dialog.closeAll()
+      },
+      error : (err) => {
+        this.errorMessage = err.error.message
       }
-      this.service.getEntitiesSubject().next(this.service.absenceEmployeurs)
     })
-    this.dialog.closeAll()
   }
 
   onAnnulation(){
     this.dialog.closeAll()
   }
-
   get libelle(){
     return this.formModif.get("libelle")
   }

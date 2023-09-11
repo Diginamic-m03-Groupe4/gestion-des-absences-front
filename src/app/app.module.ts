@@ -19,6 +19,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { ModalCreationRttComponent } from './shared/modal-creation-rtt/modal-creation-rtt.component';
 import { ModalModifJFComponent } from './shared/modal-modif-jf/modal-modif-jf.component';
 import { ModalModifRTTComponent } from './shared/modal-modif-rtt/modal-modif-rtt.component';
+import { ModalSuppressionRttComponent } from './shared/modal-suppression-rtt/modal-suppression-rtt.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ModalModifRTTComponent } from './shared/modal-modif-rtt/modal-modif-rtt
     CalendarComponent,
     ModalCreationRttComponent,
     ModalModifJFComponent,
-    ModalModifRTTComponent
+    ModalModifRTTComponent,
+    ModalSuppressionRttComponent
   ],
   imports: [
     BrowserModule,

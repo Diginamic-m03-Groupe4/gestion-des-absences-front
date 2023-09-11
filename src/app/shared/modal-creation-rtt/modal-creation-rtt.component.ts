@@ -44,7 +44,7 @@ export class ModalCreationRttComponent {
           this.service.getAbsences(endDate.getFullYear());
           this.dialog.closeAll()
         },
-        error : (err : ErrorMessage)  => console.log(err.message)
+        error : (err)  => this.errorMessage = err.error.message
       })
     }
   }
