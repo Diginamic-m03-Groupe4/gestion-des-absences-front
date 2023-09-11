@@ -1,5 +1,7 @@
 # Gestion des absences : Front end
 
+Projet de GOERTZ Juliette, WILK Arnold, CICCOLI Abel
+
 Application permettant aux utilisateurs d'une entreprise de gérer leurs absences
 
 Pour cela, il faut lancer l'application back-end en local. Veuillez vérifier le README.md du back pour connaitre la démarche à suivre
