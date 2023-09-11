@@ -1,27 +1,24 @@
-# GestionDesAbsencesFront
+# Gestion des absences : Front end
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+Application permettant aux utilisateurs d'une entreprise de gérer leurs absences
 
-## Development server
+Pour cela, il faut lancer l'application back-end en local. Veuillez vérifier le README.md du back pour connaitre la démarche à suivre
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Naviguer dans le site
 
-## Code scaffolding
+Il y a plusieurs utilisateurs différents avec plusieurs status avec lesquels on peut s'authentifier (si l'on utilise les données fournies dans le back)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+ * vincent1@vincent.vincent est un administrateur
 
-## Build
+ * vincent4@vincent.vincent est un manager
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+ * vincent5@vincent.vincent est un utilisateur normal
 
-## Running unit tests
+Après s'être authentifié, en fonction de son status on peut:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+ * consulter ses absences sur cette route: "/absences"
 
-## Running end-to-end tests
+ * consulter le tableau des absences des employés de son département pour les manager sur cette route : "/absences-manager"
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+ * consulter les rtts employeurs et jours fériés, et les modifier si on est amdin sur cette route : "/rtt-jf"
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
