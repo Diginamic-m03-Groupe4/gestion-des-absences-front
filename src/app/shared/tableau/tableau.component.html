@@ -1,10 +1,13 @@
 <div class="digitab--container">
+  <div class="digitab--action-container">
+    <button class="btn valid" *ngIf="buttons?.includes(tabNotification.AJOUT) && permission" (click)="handleAjout()">+ Ajouter</button>
+  </div>
   <table class="digitab--table">
     <thead class="digitab--head">
-    <tr>
-      <th *ngIf="permission" class="digitab--column-head digitab--cell" rowspan="2">Action</th>
-      <th class="digitab--column-head" *ngFor="let enTete of enTetes">{{enTete}}</th>
-    </tr>
+      <tr>
+        <th *ngIf="permission" class="digitab--column-head digitab--cell" rowspan="2">Action</th>
+        <th class="digitab--column-head" *ngFor="let enTete of enTetes">{{enTete}}</th>
+      </tr>
     </thead>
     <tbody>
     <tr *ngFor="let item of presentationItems; let index = index">
@@ -19,8 +22,5 @@
     </tr>
     </tbody>
   </table>
-  <div class="digitab--action-container">
-    <button class="btn valid" *ngIf="buttons?.includes(tabNotification.AJOUT) && permission" (click)="handleAjout()">+ Ajouter</button>
-  </div>
 </div>
 

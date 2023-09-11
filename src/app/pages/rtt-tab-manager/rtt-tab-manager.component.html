@@ -9,9 +9,13 @@
 </div>
 <div class="filters" [formGroup]="formCheckbox">
   <h2>Filtres</h2>
-  <label>Jour fériés</label>
+  <div>
+    <label>Jour fériés</label>
   <input type="checkbox" id="feries" name="feries" (ngModelChange)="handleFilter()" formControlName="Jour férié" >
-  <label>Rtt</label>
+  </div>
+  <div>
+    <label>Rtt</label>
   <input type="checkbox" id="feries" name="feries" (ngModelChange)="handleFilter()" formControlName="RTT Employeur">
+  </div>
 </div>
 <app-tableau [permission]="isAdmin" [service]="service" [buttons]="buttons" [entities]="shownEntities" [enTetes]="enTetes" ></app-tableau>
