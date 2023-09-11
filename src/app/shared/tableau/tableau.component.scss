@@ -1,0 +1,41 @@
+.digitab--container{
+    .digitab--action-container {
+        margin-bottom: 1rem;
+    }
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 1.5rem;
+    table {
+        padding: 1rem 1rem;
+        background: white;
+        width: 75%;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        td, th{
+            padding: .5rem;
+        }
+        td {
+            text-align: center;
+        }
+    //     display: flex;
+    //     flex-direction: column;
+    //     background-color: white;
+    //     width: 75%;
+    //     thead {
+    //     display: flex;
+    //     justify-content: space-around;
+    //     tr { 
+    //         display: flex;
+    //         th {
+
+    //         }
+    //     }
+    //     tbody {
+    //         display: flex;
+    //         justify-content: space-around;
+    //     }
+        
+    // }
+    }
+    
+}
