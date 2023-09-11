@@ -4,6 +4,12 @@ Application permettant aux utilisateurs d'une entreprise de gérer leurs absence
 
 Pour cela, il faut lancer l'application back-end en local. Veuillez vérifier le README.md du back pour connaitre la démarche à suivre
 
+## Lancer le serveur
+
+* Lancez npm i pour installer les dépendances sur projet
+* Lancez ng build ou ng serve 
+* Une fois le build finis, allez dans dist/ et lancez un serveur node
+
 ## Naviguer dans le site
 
 Il y a plusieurs utilisateurs différents avec plusieurs status avec lesquels on peut s'authentifier (si l'on utilise les données fournies dans le back)
