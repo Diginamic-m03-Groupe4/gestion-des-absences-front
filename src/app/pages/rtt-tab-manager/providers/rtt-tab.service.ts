@@ -9,7 +9,9 @@ import { TypeButton } from 'src/app/models/tableau-buttons';
 import { TypeAbsenceEmployeur } from 'src/app/models/type-absence-employeur';
 import { JoursFerieHttpService } from 'src/app/providers/jours-ferie-http-service';
 import { RTTEmployeurHttpService } from 'src/app/providers/rtt-employeur-http-service';
+import { ModalCreationRttComponent } from 'src/app/shared/modal-creation-rtt/modal-creation-rtt.component';
 import { ModalModifJFComponent } from 'src/app/shared/modal-modif-jf/modal-modif-jf.component';
+import { ModalModifRTTComponent } from 'src/app/shared/modal-modif-rtt/modal-modif-rtt.component';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +59,10 @@ export class RttTabService extends TabService<AbsenceEmployeur>{
         let jourFerie = this.jourFeries
       .filter(jourFerie => jourFerie.id == absenceEmployeur.id)[0]
       this.dialog.open(ModalModifJFComponent, { data: jourFerie })
+      break;
+      case TypeAbsenceEmployeur.RTT:
+        let rtt = this.rttEmployeur.filter(rtt => rtt.id == absenceEmployeur.id)[0]
+        this.dialog.open(ModalModifRTTComponent, { data: rtt })
     }
   }
 

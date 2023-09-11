@@ -42,21 +42,16 @@ export class AbsenceUtilTabService extends TabService<Absence>{
     console.log(entity);
     switch(signal){
       case TypeButton.AJOUT:
-        console.log("ajout");
         this.dialog.open(CreationAbsenceComponent)
         break;
       case TypeButton.DETAIL:
-        console.log("detail");
         break;
       case TypeButton.SUPPRESSION:
-        console.log("suppr");
         this.dialog.open(SuppressionAbsenceComponent, {data: entity});
         break;
       case TypeButton.ACTIVATION:
-        console.log("activation");
         break;
       case TypeButton.MODIFICATION:
-        console.log("modif");
         this.dialog.open(ModificationAbsenceComponent, {data: entity})
         break;
     }

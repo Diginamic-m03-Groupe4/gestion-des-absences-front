@@ -5,7 +5,6 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { Absence } from 'src/app/models/absence';
-import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
 import { TypeConge } from 'src/app/models/type-conge';
 import { MatDialog } from '@angular/material/dialog';
 import { AbsenceUtilTabService } from 'src/app/pages/absence-tab-utilisateur/providers/absence-util-tab.service';
@@ -16,11 +15,11 @@ import { AbsenceUtilTabService } from 'src/app/pages/absence-tab-utilisateur/pro
   styleUrls: ['./creation.absence.component.scss'],
 })
 export class CreationAbsenceComponent implements OnInit {
-   absence!: Partial<Absence>;
-   dateDebut!: Date;
+  absence!: Partial<Absence>;
+  dateDebut!: Date;
   dateFin!: Date;
   typeConge!: TypeConge;
-   motif: string = "ajouter votre motif si c'est un congé sans solde";
+  motif: string = "ajouter votre motif si c'est un congé sans solde";
   //  status!: string;
 
   formValid: string = '';
@@ -50,7 +49,7 @@ export class CreationAbsenceComponent implements OnInit {
 
   ngOnInit() {
     this.onSubmit;
-}
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -59,10 +58,6 @@ export class CreationAbsenceComponent implements OnInit {
       dateFin : this.getDateFin?.value,
       typeConge : this.getTypeConge?.value,
       motif : this.getMotif?.value,
-    }
-
-    if (this.absence.typeConge !== TypeConge.SANS_SOLDE) {
-      this.absence.motif = '';
     }
 
     if (this.form.valid) {

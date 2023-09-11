@@ -32,10 +32,10 @@ export class RTTEmployeurHttpService {
   }
 
 
-  putByid(rttEmployeurDTO : RttEmployeur, id : string){
+  putByid(rttEmployeurDTO : RttEmployeur, id : number){
     let newURL = this.URL_API_V1_ADMIN_ID;
-    newURL = newURL.replace('{id}', id);
-    return this.http.put<string>(newURL, rttEmployeurDTO, {withCredentials: true})
+    newURL = newURL.replace('{id}', id.toString());
+    return this.http.put<RttEmployeur>(newURL, rttEmployeurDTO, {withCredentials: true})
   }
 
 
