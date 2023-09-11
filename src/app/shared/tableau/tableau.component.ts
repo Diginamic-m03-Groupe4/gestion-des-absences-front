@@ -70,9 +70,6 @@ export class TableauComponent<T extends BaseEntity> implements OnInit, OnChanges
   handleAjout(){
     let entity:any = {};
     if(this.entities != undefined){
-      for(let key of Object.keys(this.entities[0])){
-        entity[key] = null;
-      }
       this.service?.handleTabSignal(TypeButton.AJOUT, entity);
     }
   }
