@@ -1,9 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Absence } from 'src/app/models/absence';
 import { TypeConge } from 'src/app/models/type-conge';
 import { MatDialog } from '@angular/material/dialog';
@@ -37,7 +33,7 @@ export class CreationAbsenceComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private fb: FormBuilder,
-    private service :AbsenceUtilTabService
+    private service: AbsenceUtilTabService
   ) {
     this.form = this.fb.group({
       dateDebut: '',
@@ -54,17 +50,23 @@ export class CreationAbsenceComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.absence = {
-      dateDebut : this.getDateDebut?.value,
-      dateFin : this.getDateFin?.value,
-      typeConge : this.getTypeConge?.value,
-      motif : this.getMotif?.value,
+      dateDebut: this.getDateDebut?.value,
+      dateFin: this.getDateFin?.value,
+      typeConge: this.getTypeConge?.value,
+      motif: this.getMotif?.value,
+    };
+    if (
+      this.absence.typeConge === TypeConge.SANS_SOLDE &&
+      this.absence.motif === ''
+    ) {
+      this.formError = 'Le motif est obligatoire si congé sans solde.';
     }
 
     if (this.form.valid) {
       this.service.httpService.post(this.absence).subscribe({
         next: () => {
           this.formValid = 'Votre demande de congés a bien été prise en compte';
-          this.service.getAbsences(this.service.annee)
+          this.service.getAbsences(this.service.annee);
           this.dialog.closeAll();
         },
         error: (err: { error: { message: string } }) => {
