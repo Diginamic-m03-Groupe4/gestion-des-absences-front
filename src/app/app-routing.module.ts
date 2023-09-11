@@ -10,6 +10,7 @@ import { ModificationAbsenceComponent } from './formulaire/components/modificati
 import { SuppressionAbsenceComponent } from './formulaire/components/suppression.absence/suppression.absence.component';
 import { AbsencesManagerComponent } from './pages/absences-manager/absences-manager.component';
 import { isLoggedInGuard, isManagerGuard } from './guards/is-logged-in.guard';
+import { CalendarComponent } from './pages/calendar/calendar.component';
 
 const routes: Routes = [
   {path: 'formulaire', component: CreationAbsenceComponent},
@@ -20,11 +21,12 @@ const routes: Routes = [
   {path : "absences-manager", component : AbsencesManagerComponent, canActivate : [isManagerGuard]},
   {path : "login", component : LoginComponent},
   {path : "signup", component : SignupComponent},
-  {path : "", redirectTo : "login", pathMatch : "full"}
+  {path : "", redirectTo : "login", pathMatch : "full"},
+  {path : "calendar", component : CalendarComponent}
 ];
 
 @NgModule({
-  imports: [FormulaireModule, RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
