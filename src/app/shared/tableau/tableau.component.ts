@@ -31,7 +31,6 @@ export class TableauComponent<T extends BaseEntity> implements OnInit, OnChanges
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.buttons);
     this.fillTableau(this.entities);
   }
 

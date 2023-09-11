@@ -44,7 +44,7 @@ export class RttTabManagerComponent {
     this.service.getAbsences(this.annee).subscribe(results => this.getEntities(results))
     this.absenceSubscription = this.service.getEntitiesSubject().subscribe(value => {
       this.entities = value
-      this.shownEntities = []
+      this.handleFilter()
     })
   }
 
@@ -80,10 +80,9 @@ export class RttTabManagerComponent {
     this.shownEntities = []
     for (let entity of this.entities) {
       if (this.formCheckbox.get(entity.type)?.value) {
-        this.entities.push(entity)
+        this.shownEntities.push(entity)
       }
     }
-    this.service.getAbsences(this.annee).subscribe(results => this.getEntities(results));
   }
 
   get jf() {
