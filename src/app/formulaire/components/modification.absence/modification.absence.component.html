@@ -65,6 +65,7 @@
   <!-- Message de succès après l'envoi de la requete  -->
   <div class="" *ngIf="this.form.valid && submitted">
     {{ formValid }}
+    <button type="submit" (click)="onAnnulation()">FERMER</button>
   </div>
   <!-- Message d'erreur renvoyé par le back -->
   <div class="error" *ngIf="!this.form.valid && submitted">{{ formError }}</div>
