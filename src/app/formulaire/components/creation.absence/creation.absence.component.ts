@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Absence } from 'src/app/models/absence';
-import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
 import { TypeConge } from 'src/app/models/type-conge';
 import { MatDialog } from '@angular/material/dialog';
 import { AbsenceUtilTabService } from 'src/app/pages/absence-tab-utilisateur/providers/absence-util-tab.service';
@@ -56,7 +55,6 @@ export class CreationAbsenceComponent implements OnInit {
       typeConge: this.getTypeConge?.value,
       motif: this.getMotif?.value,
     };
-
     if (
       this.absence.typeConge === TypeConge.SANS_SOLDE &&
       this.absence.motif === ''

@@ -10,7 +10,7 @@ import { RttEmployeur } from '../models/rtt-employeur';
 export class RTTEmployeurHttpService {
 
   private URL_API_V1_ADMIN = environment.baseUrl + "/api/v1/admin";
-  private URL_API_V1_ADMIN_ID = environment.baseUrl + "/api/v1/admin/{id}";
+  private URL_API_V1_ADMIN_ID = environment.baseUrl + "/api/v1/admin";
 
   constructor(private http:HttpClient) {}
 
@@ -32,10 +32,8 @@ export class RTTEmployeurHttpService {
   }
 
 
-  putByid(rttEmployeurDTO : RttEmployeur, id : string){
-    let newURL = this.URL_API_V1_ADMIN_ID;
-    newURL = newURL.replace('{id}', id);
-    return this.http.put<string>(newURL, rttEmployeurDTO, {withCredentials: true})
+  putByid(rttEmployeurDTO : RttEmployeur){
+    return this.http.put<RttEmployeur>(this.URL_API_V1_ADMIN, rttEmployeurDTO, {withCredentials: true})
   }
 
 

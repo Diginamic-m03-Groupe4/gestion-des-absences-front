@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Absence } from 'src/app/models/absence';
+import { ErrorMessage } from 'src/app/models/error-message';
 import { AbsenceUtilTabService } from 'src/app/pages/absence-tab-utilisateur/providers/absence-util-tab.service';
 
 @Component({
@@ -11,6 +12,7 @@ import { AbsenceUtilTabService } from 'src/app/pages/absence-tab-utilisateur/pro
 export class SuppressionAbsenceComponent implements OnInit {
   absence!: Partial<Absence>;
   id!: string;
+  errorMessage = ""
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public  data: Absence,
@@ -20,7 +22,7 @@ export class SuppressionAbsenceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.onSubmit;
+    this.onSubmit; //Meilleure ligne de code
   }
 
   cancel() {
@@ -30,10 +32,16 @@ export class SuppressionAbsenceComponent implements OnInit {
   onSubmit() {
     this.service.httpService
     .deleteByid(`${this.data.id}`)
-    .subscribe(() => {
+    .subscribe({
+      next : () => {
         console.log(`Suppression de l'absence ${this.data.id}`);
         this.service.getAbsences(this.service.annee)
         this.dialog.closeAll()
+      },
+      error : (error) => {
+        this.errorMessage = error.error.message
+      }
+
     });
   }
 }

@@ -12,6 +12,7 @@ import { RttTabService } from 'src/app/pages/rtt-tab-manager/providers/rtt-tab.s
 export class ModalModifJFComponent implements OnInit{
 
   messageModif = "";
+  errorMessage = "";
 
   constructor( @Inject(MAT_DIALOG_DATA) private data: JourFerie, private service: RttTabService, private dialog : MatDialog) {}
 
@@ -20,13 +21,18 @@ export class ModalModifJFComponent implements OnInit{
   }
 
   onModif(){
-    this.service.jourFerieHttpService.put(this.data).subscribe(value => {
-      for(let i = 0; i < this.service.absenceEmployeurs.length; i++){
-        if(this.service.absenceEmployeurs[i].id == value.id && this.service.absenceEmployeurs[i].type == TypeAbsenceEmployeur.FERIE){
-          this.service.absenceEmployeurs[i] = this.service.mapJFToAbsenceEmployeur(value);
+    this.service.jourFerieHttpService.put(this.data).subscribe({
+      next : value => {
+        for(let i = 0; i < this.service.absenceEmployeurs.length; i++){
+          if(this.service.absenceEmployeurs[i].id == value.id && this.service.absenceEmployeurs[i].type == TypeAbsenceEmployeur.FERIE){
+            this.service.absenceEmployeurs[i] = this.service.mapJFToAbsenceEmployeur(value);
+          }
         }
+        this.service.getEntitiesSubject().next(this.service.absenceEmployeurs)
+      },
+      error : (err) => {
+        this.errorMessage = err.error.message
       }
-      this.service.getEntitiesSubject().next(this.service.absenceEmployeurs)
     })
     this.dialog.closeAll()
   }
