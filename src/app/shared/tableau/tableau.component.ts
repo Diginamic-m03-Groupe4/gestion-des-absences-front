@@ -1,10 +1,9 @@
-import {  Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import { Subject, Subscription} from "rxjs";
-import { FormBuilder, FormControl } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
-import { TabService } from 'src/app/models/tab-service.service';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Subject, Subscription } from "rxjs";
 import { BaseEntity } from 'src/app/models/base-entity';
-import { TabButton, TypeButton } from 'src/app/models/tableau-buttons';
+import { TabService } from 'src/app/models/tab-service.service';
+import { TypeButton } from 'src/app/models/tableau-buttons';
 
 @Component({
   selector: 'app-tableau',

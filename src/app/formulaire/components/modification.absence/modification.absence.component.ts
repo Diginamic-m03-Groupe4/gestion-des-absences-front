@@ -71,6 +71,13 @@ export class ModificationAbsenceComponent implements OnInit {
         "Votre demande d'absence a déjà été validée ou prise en compte par le traitement de nuit";
     }
 
+    // if (
+    //   this.absence.typeConge === TypeConge.SANS_SOLDE &&
+    //   this.absence.motif === ''
+    // ) {
+    //   this.formError = 'Le motif est obligatoire si congé sans solde.';
+    // }
+
     this.absence = {
       dateDebut: this.getDateDebut?.value,
       dateFin: this.getDateFin?.value,
