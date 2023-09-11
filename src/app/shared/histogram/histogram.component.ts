@@ -11,24 +11,17 @@ export class HistogramComponent implements OnInit {
   title = 'Histogramme par département et par jour';
   type = 'Histogram';
 
-  @Input() departementId!: string;
-  @Input() departementName!: string;
-
-  departements!: typeof DEPARTEMENTS;
-
-  data = [];
-
-  columnNames = ["Nombre de jours d'absences cumulés"];
-
 
 
   constructor(private service: ListAbsByEmployeeHttpService) {}
 
   ngOnInit(): void {
-    this.getData();
+    this._init();
   }
 
-  private init(): void {}
+  private _init(): void {
+    this.getData();
+}
 
   getData() {
     this.service.get("2").forEach((data) => console.log(`data :`, data));
