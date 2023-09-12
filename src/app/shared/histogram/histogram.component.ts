@@ -1,23 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ListAbsByEmployeeHttpService } from 'src/app/providers/listAbsByEmployee-http-service';
-import {
-    IgxCategoryXAxisComponent, 
-    IgxCategoryYAxisComponent,
-    IgxDataChartComponent,
-    IgxNumericXAxisComponent,
-    IgxNumericYAxisComponent,
-    IgxStacked100AreaSeriesComponent,
-    IgxStacked100BarSeriesComponent,
-    IgxStacked100ColumnSeriesComponent,
-    IgxStacked100LineSeriesComponent,
-    IgxStacked100SplineSeriesComponent,
-    IgxStackedAreaSeriesComponent,
-    IgxStackedBarSeriesComponent,
-    IgxStackedColumnSeriesComponent,
-    IgxStackedFragmentSeriesComponent,
-    IgxStackedLineSeriesComponent,
-    IgxStackedSplineSeriesComponent
-} from "igniteui-angular-charts";
+import { Component, Input, OnInit } from '@angular/core';
+import { DEPARTEMENTS } from 'src/app/models/departements';
+import { Employee } from 'src/app/models/employee';
+import { MONTHS } from 'src/app/models/month-year';
+import { EmployeeHttpService } from 'src/app/providers/employee-http-service';
 
 @Component({
   selector: 'app-histogram',
@@ -25,201 +10,169 @@ import {
   styleUrls: ['./histogram.component.scss'],
 })
 export class HistogramComponent implements OnInit {
-  public data!: any[];
+  chart: any;
 
-  public catXAxis!: IgxCategoryXAxisComponent;
-  public numYAxis!: IgxNumericYAxisComponent;
+  employees!: Employee[];
+  employeeAbsence!: {};
+  employeeListAbsence!: any[];
+  @Input() months: number = 9;
+  @Input() year: number = 2023;
+  data: [
+    (
+      | {
+          type: string;
+          name: string;
+          showInLegend: boolean;
+          dataPoints: {
+            label: string;
+            y: number;
+          }[];
+        }
+      | {
+          type: string;
+          name: string;
+          showInLegend: boolean;
+          dataPoints: {
+            label: string;
+            y: number;
+          }[];
+        }
+    )[]
+  ] = [[]];
 
-  public catYAxis!: IgxCategoryYAxisComponent;
-  public numXAxis!: IgxNumericXAxisComponent;
+  departement!: typeof DEPARTEMENTS;
+  id!: string;
 
-  @ViewChild("chart", { static: true})
-  public chart!: IgxDataChartComponent;
-
-
-  constructor(private service: ListAbsByEmployeeHttpService) {
- this.catXAxis = new IgxCategoryXAxisComponent();
-        this.catXAxis.label = "Days of Month";
-
-        this.catYAxis = new IgxCategoryYAxisComponent();
-        this.catYAxis.label = "Synthèse par jour";
-
-        this.numXAxis = new IgxNumericXAxisComponent();
-        this.numYAxis = new IgxNumericYAxisComponent();
-
-        this.initData();
-}
-
-  public ngOnInit() {
-        this.setSeries("Stacked Column");
+  fullFillListOfAbsences() {
+    for (let employe of this.employees) {
+      for (let absence of employe.absences) {
+        let listOfAbsences = this.getDaysFromAbsenceByEmployee(
+          absence.dateDebut,
+          absence.dateFin
+        );
+        for (let day of listOfAbsences) {
+          if (
+            this.populateGraph().filter((x) => {
+              x.dataPoints.forEach((obj) => obj.label === day.toDateString());
+            })
+          ) {
+            this.populateGraph().map((x) => {
+              x.name = employe.nom;
+              x.dataPoints.map((obj) => obj.y++);
+            });
+          }
+        }
+      }
     }
-
-  onChange() {}
-
-
-  private initData(): void {
-    this.getData();
-}
-
-  getData() {
-    this.service.get("2").forEach((data) => console.log(`data :`, data));
+    return this.populateGraph();
   }
 
-  public getFragments(): IgxStackedFragmentSeriesComponent[] {
-        const fragment1 = new IgxStackedFragmentSeriesComponent();
-        fragment1.valueMemberPath = "USA";
-        fragment1.title = "USA";
-        const fragment2 = new IgxStackedFragmentSeriesComponent();
-        fragment2.valueMemberPath = "Europe";
-        fragment2.title = "Europe";
-        const fragment3 = new IgxStackedFragmentSeriesComponent();
-        fragment3.valueMemberPath = "China";
-        fragment3.title = "China";
-
-        const fragments: IgxStackedFragmentSeriesComponent[] = [];
-        fragments.push(fragment1);
-        fragments.push(fragment2);
-        fragments.push(fragment3);
-        return fragments;
+  populateGraph() {
+    let listOfDates= [];
+    let listDaysOfMonth = this.getDaysInMonth(this.year, this.months);
+    for (let dayOfMonth of listDaysOfMonth) {
+      listOfDates.push({
+        type: 'stackedColumn',
+        name: 'none',
+        showInLegend: true,
+        dataPoints: [{ label: dayOfMonth.toDateString(), y: 0 }],
+      });
     }
+    return listOfDates;
+  }
 
-    public onSeriesTypeChanged(e: any) {
-        const selectedSeries = e.target.value.toString();
-        this.chart.series.clear();
-        this.setSeries(selectedSeries);
+  chartOptions = {
+    theme: 'light2',
+    title: {
+      text: 'Synthèse des jours',
+    },
+    animationEnabled: true,
+    toolTip: {
+      shared: true,
+    },
+    legend: {
+      horizontalAlign: 'right',
+      verticalAlign: 'center',
+      reversed: true,
+    },
+    axisY: {
+      includeZero: true,
+    },
+    data: this.populateGraph(),
+  };
+  //     { label: 'Qtr 1', y: 19 },
+  //     { label: 'Qtr 2', y: 22 },
+  //     { label: 'Qtr 3', y: 12 },
+  //     { label: 'Qtr 4', y: 22 },
+  //   ],
+  // },
+  // {
+  //   type: 'stackedColumn',
+  //   name: ``,
+  //   showInLegend: true,
+  //   dataPoints: [
+  //     { label: 'Qtr 1', y: 42 },
+  //     { label: 'Qtr 2', y: 63 },
+  //     { label: 'Qtr 3', y: 35 },
+  //     { label: 'Qtr 4', y: 38 },
+  //   ],
+  // },
+  // {
+  //   type: 'stackedColumn',
+  //   name: ``,
+  //   showInLegend: true,
+  //   dataPoints: [
+  //     { label: 'Qtr 1', y: 53 },
+  //     { label: 'Qtr 2', y: 86 },
+  //     { label: 'Qtr 3', y: 47 },
+  //     { label: 'Qtr 4', y: 94 },
+  //   ],
+  // },
+  // ],
+
+  // [
+  // ],
+
+  constructor(private service: EmployeeHttpService) {}
+
+  public ngOnInit() {
+    this.initData();
+  }
+
+  private initData() {
+    this.getData();
+    console.log(`this.populateGraph : `, this.populateGraph());
+  }
+
+  getData() {
+    this.service.getByDepartement().subscribe({
+      next: (val) => {
+        this.employees = val;
+        this.populateGraph();
+        this.fullFillListOfAbsences();
+      },
+      error: (err: any) => console.error(err),
+    });
+  }
+
+  getDaysFromAbsenceByEmployee(dateDebut: string, dateFin: string) {
+    for (
+      var listDates = [], d = new Date(dateDebut);
+      d <= new Date(dateFin);
+      d.setDate(d.getDate() + 1)
+    ) {
+      listDates.push(new Date(d));
     }
+    return listDates;
+  }
 
-    public setSeries(seriesType: string) {
-
-        this.chart.axes.clear();
-        this.chart.series.clear();
-
-        const fragments = this.getFragments();
-
-        if (seriesType === "Stacked Column") {
-            const stack = new IgxStackedColumnSeriesComponent();
-            stack.xAxis = this.catXAxis;
-            stack.yAxis = this.numYAxis;
-            this.chart.axes.add(this.catXAxis);
-            this.chart.axes.add(this.numYAxis);
-            for (const frag of fragments) {
-                stack.series.add(frag);
-            }
-            this.chart.series.add(stack);
-
-        } else if (seriesType === "Stacked 100 Column") {
-            const stack = new IgxStacked100ColumnSeriesComponent();
-            stack.xAxis = this.catXAxis;
-            stack.yAxis = this.numYAxis;
-            this.chart.axes.add(this.catXAxis);
-            this.chart.axes.add(this.numYAxis);
-            for (const frag of fragments) {
-                stack.series.add(frag);
-            }
-            this.chart.series.add(stack);
-
-        } else if (seriesType === "Stacked Area") {
-            const stack = new IgxStackedAreaSeriesComponent();
-            stack.xAxis = this.catXAxis;
-            stack.yAxis = this.numYAxis;
-            this.chart.axes.add(this.catXAxis);
-            this.chart.axes.add(this.numYAxis);
-            for (const frag of fragments) {
-                stack.series.add(frag);
-            }
-            this.chart.series.add(stack);
-
-        } else if (seriesType === "Stacked 100 Area") {
-            const stack = new IgxStacked100AreaSeriesComponent();
-            stack.xAxis = this.catXAxis;
-            stack.yAxis = this.numYAxis;
-            this.chart.axes.add(this.catXAxis);
-            this.chart.axes.add(this.numYAxis);
-            for (const frag of fragments) {
-                stack.series.add(frag);
-            }
-            this.chart.series.add(stack);
-
-        } else if (seriesType === "Stacked Line") {
-            const stack = new IgxStackedLineSeriesComponent();
-            stack.xAxis = this.catXAxis;
-            stack.yAxis = this.numYAxis;
-            this.chart.axes.add(this.catXAxis);
-            this.chart.axes.add(this.numYAxis);
-            for (const frag of fragments) {
-                stack.series.add(frag);
-            }
-            this.chart.series.add(stack);
-
-        } else if (seriesType === "Stacked 100 Line") {
-            const stack = new IgxStacked100LineSeriesComponent();
-            stack.xAxis = this.catXAxis;
-            stack.yAxis = this.numYAxis;
-            this.chart.axes.add(this.catXAxis);
-            this.chart.axes.add(this.numYAxis);
-            for (const frag of fragments) {
-                stack.series.add(frag);
-            }
-            this.chart.series.add(stack);
-
-        } else if (seriesType === "Stacked Spline") {
-            const stack = new IgxStackedSplineSeriesComponent();
-            stack.xAxis = this.catXAxis;
-            stack.yAxis = this.numYAxis;
-            this.chart.axes.add(this.catXAxis);
-            this.chart.axes.add(this.numYAxis);
-            for (const frag of fragments) {
-                stack.series.add(frag);
-            }
-            this.chart.series.add(stack);
-
-        } else if (seriesType === "Stacked 100 Spline") {
-            const stack = new IgxStacked100SplineSeriesComponent();
-            stack.xAxis = this.catXAxis;
-            stack.yAxis = this.numYAxis;
-            this.chart.axes.add(this.catXAxis);
-            this.chart.axes.add(this.numYAxis);
-            for (const frag of fragments) {
-                stack.series.add(frag);
-            }
-            this.chart.series.add(stack);
-
-        } else if (seriesType === "Stacked Bar") {
-            const stack = new IgxStackedBarSeriesComponent();
-            stack.xAxis = this.numXAxis;
-            stack.yAxis = this.catYAxis;
-            this.chart.axes.add(this.numXAxis);
-            this.chart.axes.add(this.catYAxis);
-            for (const frag of fragments) {
-                stack.series.add(frag);
-            }
-            this.chart.series.add(stack);
-
-        } else if (seriesType === "Stacked 100 Bar") {
-            const stack = new IgxStacked100BarSeriesComponent();
-            stack.xAxis = this.numXAxis;
-            stack.yAxis = this.catYAxis;
-            this.chart.axes.add(this.numXAxis);
-            this.chart.axes.add(this.catYAxis);
-            for (const frag of fragments) {
-                stack.series.add(frag);
-            }
-
-            this.chart.series.add(stack);
-        }
+  getDaysInMonth(year: number, month: number): Date[] {
+    let date = new Date(year, month, 1);
+    let days = [];
+    while (date.getMonth() == month) {
+      days.push(new Date(date));
+      date.setDate(date.getDate() + 1);
     }
-
-
-  getDaysInMonth(year: number, month: number): number {
-  // Create a new Date object with the specified year and month
-  const date = new Date(year, month - 1, 1);
-
-  // Move to the next month by setting the day to 0 (last day of the previous month)
-  date.setMonth(date.getMonth() + 1);
-  date.setDate(0);
-
-  // Retrieve the day of the month, which represents the number of days in the specified month
-  return date.getDate();
-}
-
+    return days;
+  }
 }
