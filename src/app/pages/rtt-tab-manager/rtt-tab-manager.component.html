@@ -1,21 +1,13 @@
 <app-navbar></app-navbar>
 <div class="tab--year">
   <button class="btn btn--tab" (click)="decrementYear()">-</button>
-    {{service.annee}}
+    {{annee}}
   <button class="btn btn--tab" (click)="incrementYear()">+</button>
 </div>
 <div *ngIf="isAdmin" class="tab--ajout">
     <button class="btn btn--tab" (click)="handleAjout()">+ Ajouter RTT</button>
 </div>
-<div class="filters" [formGroup]="formCheckbox">
-  <h2>Filtres</h2>
-  <div>
-    <label>Jour fériés</label>
-  <input type="checkbox" id="feries" name="feries" (ngModelChange)="handleFilter()" formControlName="Jour férié" >
-  </div>
-  <div>
-    <label>Rtt</label>
-  <input type="checkbox" id="feries" name="feries" (ngModelChange)="handleFilter()" formControlName="RTT Employeur">
-  </div>
-</div>
-<app-tableau [permission]="isAdmin" [service]="service" [buttons]="buttons" [entities]="shownEntities" [enTetes]="enTetes" ></app-tableau>
+<h2>Jour Fériés</h2>
+<app-tableau [permission]="isAdmin" [service]="jfService" [buttons]="buttonsJF" [entities]="jfService.shownJf" [enTetes]="enTetesJF" ></app-tableau>
+<h2>Rtts Employeurs</h2>
+<app-tableau [permission]="isAdmin" [service]="rttService" [buttons]="buttonsRtt" [entities]="rttService.shownRtt" [enTetes]="enTetesRtt" ></app-tableau>

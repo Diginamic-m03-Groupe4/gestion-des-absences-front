@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { RttEmployeur } from 'src/app/models/rtt-employeur';
 import { TypeAbsenceEmployeur } from 'src/app/models/type-absence-employeur';
-import { RttTabService } from 'src/app/pages/rtt-tab-manager/providers/rtt-tab.service';
+import { RttServiceService } from 'src/app/pages/rtt-tab-manager/providers/rtt-service.service';
 
 @Component({
   selector: 'app-modal-modif-rtt',
@@ -16,7 +16,7 @@ export class ModalModifRTTComponent {
   todayDate = Date.now()
   errorMessage = "";
 
-  constructor( @Inject(MAT_DIALOG_DATA) private data: RttEmployeur, private service: RttTabService, private dialog : MatDialog, fb : FormBuilder) {
+  constructor( @Inject(MAT_DIALOG_DATA) private data: RttEmployeur, private service: RttServiceService, private dialog : MatDialog, fb : FormBuilder) {
     this.formModif = fb.group({
       date: [data.date, Validators.required],
       libelle : [data.libelle, Validators.required]
@@ -27,14 +27,10 @@ export class ModalModifRTTComponent {
   }
 
   onModif(){
-    this.service.rttHttpService.putByid(this.data).subscribe({
+    this.service.httpService.putByid(this.data).subscribe({
       next : value => {
-        for(let i = 0; i < this.service.absenceEmployeurs.length; i++){
-          if(this.service.absenceEmployeurs[i].id == value.id && this.service.absenceEmployeurs[i].type == TypeAbsenceEmployeur.RTT){
-            this.service.absenceEmployeurs[i] = this.service.mapRttToAbsenceEmployeur(value);
-          }
-        }
-        this.service.getEntitiesSubject().next(this.service.absenceEmployeurs)
+        this.service.shownRtt.filter((rtt) => rtt.id == value.id)[0] = value
+        this.service.getEntitiesSubject().next(this.service.shownRtt)
         this.dialog.closeAll()
       },
       error : (err) => {

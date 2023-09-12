@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RttTabService } from './rtt-tab.service';
+import { RttServiceService } from './rtt-service.service';
 
-describe('RttTabService', () => {
-  let service: RttTabService;
+describe('RttServiceService', () => {
+  let service: RttServiceService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(RttTabService);
+    service = TestBed.inject(RttServiceService);
   });
 
   it('should be created', () => {

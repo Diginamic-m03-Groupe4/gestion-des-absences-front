@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { JourFerie } from 'src/app/models/jour-ferie';
-import { TypeAbsenceEmployeur } from 'src/app/models/type-absence-employeur';
-import { RttTabService } from 'src/app/pages/rtt-tab-manager/providers/rtt-tab.service';
+import { JfServiceService } from 'src/app/pages/rtt-tab-manager/providers/jf-service.service';
 
 @Component({
   selector: 'app-modal-modif-jf',
@@ -14,27 +13,23 @@ export class ModalModifJFComponent implements OnInit{
   messageModif = "";
   errorMessage = "";
 
-  constructor( @Inject(MAT_DIALOG_DATA) private data: JourFerie, private service: RttTabService, private dialog : MatDialog) {}
+  constructor( @Inject(MAT_DIALOG_DATA) private data: JourFerie, private service: JfServiceService, private dialog : MatDialog) {}
 
   ngOnInit(): void {
     this.messageModif = `Voulez-vous marqué ce jour comme${(this.data.worked) ? " non" : ""} travaillé?`
   }
 
   onModif(){
-    this.service.jourFerieHttpService.put(this.data).subscribe({
+    this.service.httpService.put(this.data).subscribe({
       next : value => {
-        for(let i = 0; i < this.service.absenceEmployeurs.length; i++){
-          if(this.service.absenceEmployeurs[i].id == value.id && this.service.absenceEmployeurs[i].type == TypeAbsenceEmployeur.FERIE){
-            this.service.absenceEmployeurs[i] = this.service.mapJFToAbsenceEmployeur(value);
-          }
-        }
-        this.service.getEntitiesSubject().next(this.service.absenceEmployeurs)
+        this.service.shownJf.filter((jf) => jf.id == this.data.id)[0].worked = value.worked
+        this.service.getEntitiesSubject().next(this.service.shownJf)
+        this.dialog.closeAll()
       },
       error : (err) => {
         this.errorMessage = err.error.message
       }
     })
-    this.dialog.closeAll()
   }
 
   onAnnulation(){

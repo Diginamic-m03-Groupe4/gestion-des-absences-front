@@ -6,6 +6,7 @@ import { SuppressionAbsenceComponent } from 'src/app/formulaire/components/suppr
 import { Absence } from 'src/app/models/absence';
 import { TabService } from 'src/app/models/tab-service.service';
 import { TypeButton } from 'src/app/models/tableau-buttons';
+import { TypeConge } from 'src/app/models/type-conge';
 import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
 
 @Injectable({
@@ -13,18 +14,23 @@ import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
 })
 export class AbsenceUtilTabService extends TabService<Absence>{
 
+
   annee : number = new Date().getFullYear();
   constructor(public httpService:AbsenceHttpService, private dialog:MatDialog) {
     super();
   }
 
   override mapToPresentation(entities: Absence[]): string[][] {
+    let mapTypeConge = new Map<TypeConge, string>()
+    mapTypeConge.set(TypeConge.PAYE, "Congé payé")
+    mapTypeConge.set(TypeConge.RTT_EMPLOYE, "RTT Employé")
+    mapTypeConge.set(TypeConge.SANS_SOLDE, "Congé sans solde")
     let results:string[][] = [];
     for (const absence of entities) {
       let row:string[] = [];
       row.push(absence.dateDebut.toString());
       row.push(absence.dateFin.toString());
-      row.push(absence.typeConge);
+      row.push(mapTypeConge.get(absence.typeConge)!);
       row.push(absence.motif);
       row.push(absence.status);
       results.push(row);

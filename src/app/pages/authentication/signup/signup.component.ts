@@ -26,7 +26,7 @@ export class SignupComponent {
 
   onSubmit() {
     this.submitted = true;
-    if (this.signinForm.valid) {
+    if (this.signinForm.valid && this.confirmPassword?.value === this.password?.value) {
       this.service.postSignUp({
         nom: this.firstName?.value,
         prenom: this.lastName?.value,

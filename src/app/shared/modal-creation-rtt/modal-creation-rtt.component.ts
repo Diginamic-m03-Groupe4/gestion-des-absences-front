@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DateValidatorDirective } from 'src/app/directives/date-validator.directive';
-import { ErrorMessage } from 'src/app/models/error-message';
 import { RttEmployeur } from 'src/app/models/rtt-employeur';
-import { RttTabService } from 'src/app/pages/rtt-tab-manager/providers/rtt-tab.service';
+import { RttServiceService } from 'src/app/pages/rtt-tab-manager/providers/rtt-service.service';
 
 @Component({
   selector: 'app-modal-creation-rtt',
@@ -18,7 +17,7 @@ export class ModalCreationRttComponent {
   todayDate = Date.now()
   errorMessage = "";
 
-  constructor(fb : FormBuilder, private dialog : MatDialog, private service: RttTabService){
+  constructor(fb : FormBuilder, private dialog : MatDialog, private service: RttServiceService){
     this.formCreation = fb.group({
       dateDebut : ["", Validators.required],
       dateFin : ["", [Validators.required]],
@@ -39,9 +38,9 @@ export class ModalCreationRttComponent {
       rtts.push(rtt)
     }
     if(this.formCreation.valid){
-      this.service.rttHttpService.post(rtts).subscribe({
+      this.service.httpService.post(rtts).subscribe({
         next : value => {
-          this.service.getAbsences(endDate.getFullYear());
+          this.service.shownRtt = this.service.shownRtt.concat(value)
           this.dialog.closeAll()
         },
         error : (err)  => this.errorMessage = err.error.message

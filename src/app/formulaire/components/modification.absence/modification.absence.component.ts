@@ -91,8 +91,8 @@ export class ModificationAbsenceComponent implements OnInit {
         .putByid(`${this.data.id}`, this.absence)
         .subscribe({
           next: () =>{
-            this.formValid = 'Votre demande de congés a bien été modifiée'
             this.service.getAbsences(this.service.annee)
+            this.dialog.closeAll();
           },
           error: (err: { error: { message: string } }) => {
             this.formError = err.error.message;
