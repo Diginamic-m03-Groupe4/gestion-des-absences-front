@@ -14,8 +14,8 @@ import { CalendarComponent } from './pages/calendar/calendar.component';
 import { HistogramComponent } from './shared/histogram/histogram.component';
 
 const routes: Routes = [
-
   { path: 'histogram', component: HistogramComponent },
+  {path: 'calendar', component: CalendarComponent},
   {path: 'formulaire', component: CreationAbsenceComponent},
   {path: 'modification', component: ModificationAbsenceComponent},
   { path: 'suppression', component: SuppressionAbsenceComponent},

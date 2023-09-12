@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
- import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './pages/authentication/login/login.component';
 import { SignupComponent } from './pages/authentication/signup/signup.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableauComponent } from './shared/tableau/tableau.component';
 import { AbsenceTabUtilisateurComponent } from './pages/absence-tab-utilisateur/absence-tab-utilisateur.component';
 import { RttTabManagerComponent } from './pages/rtt-tab-manager/rtt-tab-manager.component';
@@ -21,6 +21,15 @@ import { ModalModifJFComponent } from './shared/modal-modif-jf/modal-modif-jf.co
 import { ModalModifRTTComponent } from './shared/modal-modif-rtt/modal-modif-rtt.component';
 import { ModalSuppressionRttComponent } from './shared/modal-suppression-rtt/modal-suppression-rtt.component';
 import { HistogramComponent } from './shared/histogram/histogram.component';
+import {
+  IgxDataChartCoreModule,
+  IgxDataChartCategoryModule,
+  IgxDataChartInteractivityModule,
+  IgxLegendModule,
+  IgxDataChartStackedModule,
+  IgxStackedFragmentSeriesModule,
+} from 'igniteui-angular-charts';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -45,6 +54,10 @@ import { HistogramComponent } from './shared/histogram/histogram.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    CommonModule,
+    FormsModule,
+    BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -52,8 +65,14 @@ import { HistogramComponent } from './shared/histogram/histogram.component';
     FullCalendarModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    IgxDataChartCoreModule,
+    IgxDataChartCategoryModule,
+    IgxDataChartInteractivityModule,
+    IgxLegendModule,
+    IgxDataChartStackedModule,
+    IgxStackedFragmentSeriesModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

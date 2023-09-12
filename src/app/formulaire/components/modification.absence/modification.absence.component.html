@@ -1,5 +1,7 @@
 <p>modification.absence works!</p>
 
+
+<div class="" *ngIf="submitted !== true">
 <form [formGroup]="form" (ngSubmit)="onSubmit()" >
 
   <div>
@@ -59,8 +61,8 @@
   <input type="text" formControlName="status" name="status" />
 </div>
 
-
   <button type="submit">VALIDER</button>
+  </div>
 
   <!-- Message de succès après l'envoi de la requete  -->
   <div class="" *ngIf="this.form.valid && submitted">
