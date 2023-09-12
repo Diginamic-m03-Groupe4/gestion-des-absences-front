@@ -16,8 +16,8 @@ export class SignupComponent {
 
   constructor(fb: FormBuilder, private service: EmployeeHttpService, private router: Router) {
     this.signinForm = fb.group({
-      firstName: ['', Validators.required, Validators.minLength(2)],
-      lastName: ['', Validators.required, Validators.minLength(2)],
+      firstName: ['', [Validators.required, Validators.minLength(2)]],
+      lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', Validators.required, Validators.email],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
