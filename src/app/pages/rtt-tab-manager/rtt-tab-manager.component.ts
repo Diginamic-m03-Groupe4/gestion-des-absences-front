@@ -44,6 +44,7 @@ export class RttTabManagerComponent {
   }
 
   ngOnInit(): void {
+    this.annee = this.rttService.annee;
     this.getEntities();
     this.jfSubscription = this.jfService.getEntitiesSubject().subscribe((jf) => {
       this.jfService.shownJf = jf
