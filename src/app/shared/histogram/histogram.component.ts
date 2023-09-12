@@ -1,22 +1,23 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { DEPARTEMENTS } from 'src/app/models/departements';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ListAbsByEmployeeHttpService } from 'src/app/providers/listAbsByEmployee-http-service';
-import { IgxCategoryXAxisComponent } from "igniteui-angular-charts";
-import { IgxCategoryYAxisComponent } from "igniteui-angular-charts";
-import { IgxDataChartComponent } from "igniteui-angular-charts";
-import { IgxNumericXAxisComponent } from "igniteui-angular-charts";
-import { IgxNumericYAxisComponent } from "igniteui-angular-charts";
-import { IgxStacked100AreaSeriesComponent } from "igniteui-angular-charts";
-import { IgxStacked100BarSeriesComponent } from "igniteui-angular-charts";
-import { IgxStacked100ColumnSeriesComponent } from "igniteui-angular-charts";
-import { IgxStacked100LineSeriesComponent } from "igniteui-angular-charts";
-import { IgxStacked100SplineSeriesComponent } from "igniteui-angular-charts";
-import { IgxStackedAreaSeriesComponent } from "igniteui-angular-charts";
-import { IgxStackedBarSeriesComponent } from "igniteui-angular-charts";
-import { IgxStackedColumnSeriesComponent } from "igniteui-angular-charts";
-import { IgxStackedFragmentSeriesComponent } from "igniteui-angular-charts";
-import { IgxStackedLineSeriesComponent } from "igniteui-angular-charts";
-import { IgxStackedSplineSeriesComponent } from "igniteui-angular-charts";
+import {
+    IgxCategoryXAxisComponent, 
+    IgxCategoryYAxisComponent,
+    IgxDataChartComponent,
+    IgxNumericXAxisComponent,
+    IgxNumericYAxisComponent,
+    IgxStacked100AreaSeriesComponent,
+    IgxStacked100BarSeriesComponent,
+    IgxStacked100ColumnSeriesComponent,
+    IgxStacked100LineSeriesComponent,
+    IgxStacked100SplineSeriesComponent,
+    IgxStackedAreaSeriesComponent,
+    IgxStackedBarSeriesComponent,
+    IgxStackedColumnSeriesComponent,
+    IgxStackedFragmentSeriesComponent,
+    IgxStackedLineSeriesComponent,
+    IgxStackedSplineSeriesComponent
+} from "igniteui-angular-charts";
 
 @Component({
   selector: 'app-histogram',
