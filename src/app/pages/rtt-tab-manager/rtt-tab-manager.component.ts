@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { TabButton, TypeButton } from 'src/app/models/tableau-buttons';
-import { RttTabService } from './providers/rtt-tab.service';
-import { AbsenceEmployeur } from 'src/app/models/absence-employeur';
+import { Subscription, forkJoin } from 'rxjs';
+import { TypeButton } from 'src/app/models/tableau-buttons';
 import { TypeAbsenceEmployeur } from 'src/app/models/type-absence-employeur';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +8,8 @@ import { ModalCreationRttComponent } from 'src/app/shared/modal-creation-rtt/mod
 import { RttEmployeur } from 'src/app/models/rtt-employeur';
 import { JourFerie } from 'src/app/models/jour-ferie';
 import { isAdmin } from 'src/app/guards/is-logged-in.guard';
+import { RttServiceService } from './providers/rtt-service.service';
+import { JfServiceService } from './providers/jf-service.service';
 
 @Component({
   selector: 'app-rtt-tab-manager',
@@ -19,20 +19,24 @@ import { isAdmin } from 'src/app/guards/is-logged-in.guard';
 export class RttTabManagerComponent {
 
   isAdmin = isAdmin()
-  buttons: TypeButton[] = [
+  annee = new Date().getFullYear();
+  buttonsRtt: TypeButton[] = [
       TypeButton.MODIFICATION,
       TypeButton.SUPPRESSION,
   ]
-  enTetes: string[] = ["Date", "Libelle", "Type", "Travaillé"];
+  buttonsJF: TypeButton[] = [
+      TypeButton.MODIFICATION,
+  ]
+  enTetesJF: string[] = ["Date", "Libelle", "Travaillé"];
+  enTetesRtt: string[] = ["Date", "Libelle"];
   typeJour = TypeAbsenceEmployeur;
 
-  entities: AbsenceEmployeur[] = [];
-  shownEntities: AbsenceEmployeur[] = [];
-  absenceSubscription?: Subscription
+  jfSubscription?: Subscription
+  rttSubscription?: Subscription
   formCheckbox : FormGroup
 
 
-  constructor(public service: RttTabService, fb:FormBuilder, private dialog : MatDialog) {
+  constructor(public rttService : RttServiceService, public jfService : JfServiceService, fb:FormBuilder, private dialog : MatDialog) {
     this.formCheckbox = fb.group({
       "Jour férié": [true],
       "RTT Employeur": [true],
@@ -40,48 +44,43 @@ export class RttTabManagerComponent {
   }
 
   ngOnInit(): void {
-    this.service.getAbsences(this.service.annee).subscribe(results => this.getEntities(results))
-    this.absenceSubscription = this.service.getEntitiesSubject().subscribe(value => {
-      this.entities = value
-      this.handleFilter()
+    this.annee = this.rttService.annee;
+    this.getEntities();
+    this.jfSubscription = this.jfService.getEntitiesSubject().subscribe((jf) => {
+      this.jfService.shownJf = jf
+    })
+    this.rttSubscription = this.rttService.getEntitiesSubject().subscribe((rtt) => {
+      this.rttService.shownRtt = rtt
     })
   }
 
-  private getEntities(results : [JourFerie[], RttEmployeur[]]) {
-      let absenceEmployeurs : AbsenceEmployeur[] = []
-      this.service.jourFeries = results[0]
-      this.service.rttEmployeur = results[1]
-      results[0].forEach(result => absenceEmployeurs.push( this.service.mapJFToAbsenceEmployeur(result)))
-      results[1].forEach(result => absenceEmployeurs.push( this.service.mapRttToAbsenceEmployeur(result)))
-      this.service.absenceEmployeurs = absenceEmployeurs
-      this.service.getEntitiesSubject().next(absenceEmployeurs)
+  private getEntities() {
+    forkJoin([this.rttService.httpService.get(this.rttService.annee), this.jfService.httpService.get(this.jfService.annee)]).subscribe(results => {
+      this.rttService.shownRtt = results[0]
+      this.jfService.shownJf = results[1]
+    })
   }
 
   ngOnDestroy(): void {
-    this.absenceSubscription?.unsubscribe();
+    this.jfSubscription?.unsubscribe();
   }
 
   decrementYear() {
-    this.service.annee--;
-    this.service.getAbsences(this.service.annee).subscribe(results => this.getEntities(results));
+    this.annee--;
+    this.rttService.annee--;
+    this.jfService.annee--;
+    this.getEntities();
   }
 
   incrementYear() {
-    this.service.annee++;
-    this.service.getAbsences(this.service.annee).subscribe(results => this.getEntities(results));
+    this.annee++;
+    this.rttService.annee++;
+    this.jfService.annee++;
+    this.getEntities();
   }
 
   handleAjout(){
     this.dialog.open(ModalCreationRttComponent)
-  }
-
-  handleFilter(){
-    this.shownEntities = []
-    for (let entity of this.entities) {
-      if (this.formCheckbox.get(entity.type)?.value) {
-        this.shownEntities.push(entity)
-      }
-    }
   }
 
   get jf() {

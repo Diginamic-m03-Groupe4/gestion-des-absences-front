@@ -19,7 +19,7 @@ export class AbsencesManagerComponent implements OnInit, OnDestroy {
 
   months = MONTHS;
   days = DAYS;
-  monthPointer = 0;
+  monthPointer = new Date().getMonth();
   employeesSubscription? : Subscription;
   absenceEmployeurMap : Map<string, CaseAbsence> = new Map();
   headers : {dayInMonth : number, dayInWeek : string}[] = [];

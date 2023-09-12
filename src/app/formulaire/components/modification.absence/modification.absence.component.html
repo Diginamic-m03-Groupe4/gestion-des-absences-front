@@ -8,9 +8,6 @@
     <label> Date de fin : </label>
     <input type="date" formControlName="dateFin" value="dateFin" />
   </div>
-  <div>
-    <label><i>JOURS R.</i> jrs</label>
-  </div>
   <fieldset>
     <legend>Selectionner Type de congé :</legend>
     <div>
@@ -59,12 +56,7 @@
 
 
   <button type="submit">VALIDER</button>
-
-  <!-- Message de succès après l'envoi de la requete  -->
-  <div class="" *ngIf="this.form.valid && submitted">
-    {{ formValid }}
-    <button type="submit" (click)="onAnnulation()">FERMER</button>
-  </div>
+  <button type="submit" (click)="onAnnulation()">FERMER</button>
   <!-- Message d'erreur renvoyé par le back -->
-  <div class="error" *ngIf="!this.form.valid && submitted">{{ formError }}</div>
+  <div class="error">{{ formError }}</div>
 </form>
