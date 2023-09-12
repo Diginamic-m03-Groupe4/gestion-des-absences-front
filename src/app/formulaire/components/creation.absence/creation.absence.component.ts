@@ -27,7 +27,6 @@ export class CreationAbsenceComponent implements OnInit {
     dateFin: new FormControl(this.dateFin),
     typeConge: new FormControl(this.typeConge),
     motif: new FormControl(this.motif),
-    // status: new FormControl(this.status),
   });
 
   constructor(
@@ -65,7 +64,6 @@ export class CreationAbsenceComponent implements OnInit {
     if (this.form.valid) {
       this.service.httpService.post(this.absence).subscribe({
         next: () => {
-          this.formValid = 'Votre demande de congés a bien été prise en compte';
           this.service.getAbsences(this.service.annee);
           this.dialog.closeAll();
         },
@@ -74,6 +72,10 @@ export class CreationAbsenceComponent implements OnInit {
         },
       });
     }
+  }
+
+  onAnnulation() {
+    this.dialog.closeAll();
   }
 
   get getDateDebut() {

@@ -32,7 +32,7 @@ export class RTTEmployeurHttpService {
   }
 
 
-  putByid(rttEmployeurDTO : RttEmployeur){
+  putByid(rttEmployeurDTO : Partial<RttEmployeur>){
     return this.http.put<RttEmployeur>(this.URL_API_V1_ADMIN, rttEmployeurDTO, {withCredentials: true})
   }
 

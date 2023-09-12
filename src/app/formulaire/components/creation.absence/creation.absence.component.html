@@ -1,5 +1,3 @@
-<p>creation.absence works!</p>
-
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
   <div>
@@ -9,9 +7,6 @@
   <div>
     <label> Date de fin : </label>
     <input type="date" formControlName="dateFin" value="dateFin" />
-  </div>
-  <div>
-    <label><i>JOURS R.</i> jrs</label>
   </div>
   <fieldset>
     <legend>Selectionner Type de congé :</legend>
@@ -53,18 +48,9 @@
     <label> Motif </label>
     <input type="text" formControlName="motif" name="motif"/>
   </div>
-
-<!-- <div>
-  <label>Status: </label>
-  <input type="text" formControlName="status" name="status" />
-</div> -->
-
   <button type="submit">VALIDER</button>
+  <button (click)="onAnnulation()">ANNULER</button>
 
-  <!-- Message de succès après l'envoi de la requete  -->
-  <div class="" *ngIf="this.form.valid && submitted">
-    {{ formValid }}
-  </div>
   <!-- Message d'erreur renvoyé par le back -->
-  <div class="error" *ngIf="!this.form.valid && submitted">{{ formError }}</div>
+  <div class="error">{{ formError }}</div>
 </form>

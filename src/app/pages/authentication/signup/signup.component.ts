@@ -16,9 +16,9 @@ export class SignupComponent {
 
   constructor(fb: FormBuilder, private service: EmployeeHttpService, private router: Router) {
     this.signinForm = fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.required],
+      firstName: ['', Validators.required, Validators.minLength(2)],
+      lastName: ['', Validators.required, Validators.minLength(2)],
+      email: ['', Validators.required, Validators.email],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     });
@@ -26,7 +26,7 @@ export class SignupComponent {
 
   onSubmit() {
     this.submitted = true;
-    if (this.signinForm.valid) {
+    if (this.signinForm.valid && this.confirmPassword?.value === this.password?.value) {
       this.service.postSignUp({
         nom: this.firstName?.value,
         prenom: this.lastName?.value,

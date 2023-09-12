@@ -1,8 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { ErrorMessage } from 'src/app/models/error-message';
 import { RttEmployeur } from 'src/app/models/rtt-employeur';
-import { RttTabService } from 'src/app/pages/rtt-tab-manager/providers/rtt-tab.service';
+import { RttServiceService } from 'src/app/pages/rtt-tab-manager/providers/rtt-service.service';
 
 @Component({
   selector: 'app-modal-suppression-rtt',
@@ -18,7 +17,7 @@ export class ModalSuppressionRttComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public  data: RttEmployeur,
     private dialog: MatDialog,
-    private service : RttTabService
+    private service : RttServiceService
   ) {}
 
 
@@ -27,13 +26,15 @@ export class ModalSuppressionRttComponent {
   }
 
   onSubmit() {
-    this.service.rttHttpService
+    this.service.httpService
     .deleteByid(`${this.data.id}`)
     .subscribe(({
       next : () => {
-        console.log(`Suppression de l'absence ${this.data.id}`);
-        this.service.getAbsences(this.service.annee)
-        this.dialog.closeAll()
+        this.service.httpService.get(this.service.annee).subscribe(value => {
+          this.service.shownRtt = value
+          this.service.getEntitiesSubject().next(this.service.shownRtt)
+          this.dialog.closeAll()
+        })
       },
       error : (error) => {
         this.errorMessage = error.error.message
