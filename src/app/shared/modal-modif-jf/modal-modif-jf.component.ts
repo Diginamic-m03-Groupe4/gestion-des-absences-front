@@ -22,7 +22,7 @@ export class ModalModifJFComponent implements OnInit{
   onModif(){
     this.service.httpService.put(this.data).subscribe({
       next : value => {
-        this.service.shownJf.filter((jf) => jf.id == this.data.id)[0].worked = value.worked
+        this.service.shownJf[this.service.shownJf.indexOf(this.service.shownJf.filter((jf) => jf.id == this.data.id)[0])] = value
         this.service.getEntitiesSubject().next(this.service.shownJf)
         this.dialog.closeAll()
       },

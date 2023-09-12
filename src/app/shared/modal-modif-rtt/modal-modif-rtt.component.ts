@@ -27,9 +27,14 @@ export class ModalModifRTTComponent {
   }
 
   onModif(){
-    this.service.httpService.putByid(this.data).subscribe({
+    let rtt : Partial<RttEmployeur> = {
+      id : this.data.id,
+      date : this.date?.value,
+      libelle : this.libelle?.value,
+    }
+    this.service.httpService.putByid(rtt).subscribe({
       next : value => {
-        this.service.shownRtt.filter((rtt) => rtt.id == value.id)[0] = value
+        this.service.shownRtt[this.service.shownRtt.indexOf(this.service.shownRtt.filter((jf) => jf.id == this.data.id)[0])] = value
         this.service.getEntitiesSubject().next(this.service.shownRtt)
         this.dialog.closeAll()
       },
