@@ -1,0 +1,22 @@
+<div>
+  <div class="modal--title">Modification d'un Rtt employeur</div>
+  <div class="modal--body">
+    <div  class="form" [formGroup]="formModif">
+      <div class="form--group">
+        <label class="form--label" for="dateDebut">Date</label>
+        <input type="date" formControlName="date" [min]="todayDate | date: 'yyyy-MM-dd'" id="dateDebut">
+        <div class="form--error"  *ngIf="!date?.valid && (this.formModif.invalid && submitted)">La date de début est obligatoire</div>
+      </div>
+      <div class="form--group">
+        <label class=""  for="libelle">Libelle</label>
+        <input type="text" formControlName="libelle">
+        <div name="libelle" class="form--error" *ngIf="!libelle?.valid && (this.formModif.invalid && submitted)">Le libelle est obligatoire</div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button class="btn valid" (click)="onModif()">Modifier</button>
+      <button class="btn danger" (click)="onAnnulation()">Annuler</button>
+    </div>
+    <div>{{errorMessage}}</div>
+  </div>
+</div>

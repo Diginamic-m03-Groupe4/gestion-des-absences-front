@@ -1,0 +1,31 @@
+<p>calendar works!</p>
+<button (click)="toggleWeekends()">toggle weekends</button>
+<button (click)="getAnnee()">annee</button>
+<div 
+class="absences"
+*ngFor="let a of absences">
+    <div>{{a.dateDebut}}</div>
+</div>
+<full-calendar [options]="calendarOptions"></full-calendar>
+
+<div>XX</div>
+
+<div>
+   <input type="checkbox" id="RTT">
+    <label for="RTT">RTT Employé</label>
+    <input type="checkbox" id="JF">
+    <label for="JF">Jour Férié</label>
+    <input type="checkbox" id="CP">
+    <label for="CP">Congé Payé</label>
+    <input type="checkbox" id="RTTR">
+    <label for="RTTR">RTT Employeur</label>
+    <input type="checkbox" id="CSS">
+    <label for="CSS">Congé Sans Solde</label>
+</div>
+
+<div>
+    <p>Jours Restants :</p>
+    <p>RTT Employés :</p>
+    <p>Congés Payés :</p>
+    <p>RTT Employeurs :</p>
+</div>

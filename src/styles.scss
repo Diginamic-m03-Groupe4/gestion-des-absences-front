@@ -1,3 +1,5 @@
+/* You can add global styles to this file, and also import other style files */
+
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
@@ -33,7 +35,87 @@ $gestion-des-absences-front-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($gestion-des-absences-front-theme);
 
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body * {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Century Gothic", 'Lato', sans-serif;
+  display: flex;
+  flex-direction: column;
+  a {
+    text-decoration: none;
+  }
+  background-color: #EEEEEE;
+}
+
+
+button {
+  background-color: #FFFFFF;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .5rem .5rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  &:hover {
+      background-color: rgb(249,250,251);
+  }
+  &:focus {
+    outline: 2px solid transparent;
+  outline-offset: 2px;
+  }
+  &:focus-visible{
+      box-shadow: none;
+  }
+}
+
+
+// button {
+//   font-size: 16px;
+//   font-weight: 200;
+//   letter-spacing: 1px;
+//   padding: 13px 20px 13px;
+//   outline: 0;
+//   border: 1px solid black;
+//   cursor: pointer;
+//   position: relative;
+//   background-color: rgba(0, 0, 0, 0);
+//   user-select: none;
+//   -webkit-user-select: none;
+//   touch-action: manipulation;
+//   &:after {
+//     content: "";
+//     background-color: rgba(102, 177, 241, 0.8);
+//     width: 100%;
+//     z-index: -1;
+//     position: absolute;
+//     height: 100%;
+//     top: 7px;
+//     left: 7px;
+//     transition: 0.2s;
+//   }
+//   &:hover:after {
+//     top: 0px;
+//     left: 0px;
+//   }
+// }

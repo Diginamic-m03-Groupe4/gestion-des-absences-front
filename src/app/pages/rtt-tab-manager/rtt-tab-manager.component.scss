@@ -1,0 +1,24 @@
+.tab--year{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    div {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+}
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // align-items: center;
+    h2 {
+        text-align: center;
+    }
+    div {
+        display: flex;
+        justify-content: center;
+    }
+}

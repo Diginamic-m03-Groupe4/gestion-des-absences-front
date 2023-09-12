@@ -1,27 +1,32 @@
-# GestionDesAbsencesFront
+# Gestion des absences : Front end
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+Projet de GOERTZ Juliette, WILK Arnold, CICCOLI Abel
 
-## Development server
+Application permettant aux utilisateurs d'une entreprise de gérer leurs absences
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Pour cela, il faut lancer l'application back-end en local. Veuillez vérifier le README.md du back pour connaitre la démarche à suivre
 
-## Code scaffolding
+## Lancer le serveur
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* Lancez npm i pour installer les dépendances sur projet
+* Lancez ng build ou ng serve 
+* Une fois le build finis, allez dans dist/ et lancez un serveur node
 
-## Build
+## Naviguer dans le site
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Il y a plusieurs utilisateurs différents avec plusieurs status avec lesquels on peut s'authentifier (si l'on utilise les données fournies dans le back)
 
-## Running unit tests
+ * vincent1@vincent.vincent est un administrateur
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+ * vincent4@vincent.vincent est un manager
 
-## Running end-to-end tests
+ * vincent5@vincent.vincent est un utilisateur normal
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Après s'être authentifié, en fonction de son status on peut:
 
-## Further help
+ * consulter ses absences sur cette route: "/absences"
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+ * consulter le tableau des absences des employés de son département pour les manager sur cette route : "/absences-manager"
+
+ * consulter les rtts employeurs et jours fériés, et les modifier si on est amdin sur cette route : "/rtt-jf"
+

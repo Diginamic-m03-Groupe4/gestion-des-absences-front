@@ -1,11 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Absence } from 'src/app/models/absence';
-import { AbsenceHttpService } from 'src/app/providers/absence-http-service';
 import { TypeConge } from 'src/app/models/type-conge';
 import { MatDialog } from '@angular/material/dialog';
 import { AbsenceUtilTabService } from 'src/app/pages/absence-tab-utilisateur/providers/absence-util-tab.service';
@@ -16,11 +11,11 @@ import { AbsenceUtilTabService } from 'src/app/pages/absence-tab-utilisateur/pro
   styleUrls: ['./creation.absence.component.scss'],
 })
 export class CreationAbsenceComponent implements OnInit {
-   absence!: Partial<Absence>;
-   dateDebut!: Date;
+  absence!: Partial<Absence>;
+  dateDebut!: Date;
   dateFin!: Date;
   typeConge!: TypeConge;
-   motif: string = "ajouter votre motif si c'est un congé sans solde";
+  motif: string = "ajouter votre motif si c'est un congé sans solde";
   //  status!: string;
 
   formValid: string = '';
@@ -38,7 +33,7 @@ export class CreationAbsenceComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private fb: FormBuilder,
-    private service :AbsenceUtilTabService
+    private service: AbsenceUtilTabService
   ) {
     this.form = this.fb.group({
       dateDebut: '',
@@ -50,26 +45,28 @@ export class CreationAbsenceComponent implements OnInit {
 
   ngOnInit() {
     this.onSubmit;
-}
+  }
 
   onSubmit() {
     this.submitted = true;
     this.absence = {
-      dateDebut : this.getDateDebut?.value,
-      dateFin : this.getDateFin?.value,
-      typeConge : this.getTypeConge?.value,
-      motif : this.getMotif?.value,
-    }
-
-    if (this.absence.typeConge !== TypeConge.SANS_SOLDE) {
-      this.absence.motif = '';
+      dateDebut: this.getDateDebut?.value,
+      dateFin: this.getDateFin?.value,
+      typeConge: this.getTypeConge?.value,
+      motif: this.getMotif?.value,
+    };
+    if (
+      this.absence.typeConge === TypeConge.SANS_SOLDE &&
+      this.absence.motif === ''
+    ) {
+      this.formError = 'Le motif est obligatoire si congé sans solde.';
     }
 
     if (this.form.valid) {
       this.service.httpService.post(this.absence).subscribe({
         next: () => {
           this.formValid = 'Votre demande de congés a bien été prise en compte';
-          this.service.getAbsences(this.service.annee)
+          this.service.getAbsences(this.service.annee);
           this.dialog.closeAll();
         },
         error: (err: { error: { message: string } }) => {

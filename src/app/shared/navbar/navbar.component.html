@@ -1,8 +1,9 @@
 <nav>
-  <div>Gestion des absences</div>
+  <h1>Gestion des absences</h1>
   <li>
     <ul><a routerLink="/absences" routerLinkActive="active">Mes absences</a></ul>
     <ul><a  routerLink="/rtt-jf" routerLinkActive="active">Rtts Employeurs et Jours fériés</a></ul>
     <ul><a *ngIf="isManager" routerLink="/absences-manager" routerLinkActive="active">Absences de mon départements</a></ul>
+    <ul><a (click)="logout()">Se déconnecter</a></ul>
   </li>
 </nav>
