@@ -20,7 +20,6 @@ import { ModalCreationRttComponent } from './shared/modal-creation-rtt/modal-cre
 import { ModalModifJFComponent } from './shared/modal-modif-jf/modal-modif-jf.component';
 import { ModalModifRTTComponent } from './shared/modal-modif-rtt/modal-modif-rtt.component';
 import { ModalSuppressionRttComponent } from './shared/modal-suppression-rtt/modal-suppression-rtt.component';
-import { GoogleChartsModule } from 'angular-google-charts';
 import { HistogramComponent } from './shared/histogram/histogram.component';
 
 @NgModule({
@@ -41,7 +40,7 @@ import { HistogramComponent } from './shared/histogram/histogram.component';
     ModalCreationRttComponent,
     ModalModifJFComponent,
     ModalModifRTTComponent,
-    ModalSuppressionRttComponent
+    ModalSuppressionRttComponent,
     HistogramComponent,
   ],
   imports: [
@@ -53,7 +52,6 @@ import { HistogramComponent } from './shared/histogram/histogram.component';
     FullCalendarModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    GoogleChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
