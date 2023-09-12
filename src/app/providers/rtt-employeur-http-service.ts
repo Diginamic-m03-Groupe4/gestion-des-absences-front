@@ -10,7 +10,7 @@ import { RttEmployeur } from '../models/rtt-employeur';
 export class RTTEmployeurHttpService {
 
   private URL_API_V1_ADMIN = environment.baseUrl + "/api/v1/admin";
-  private URL_API_V1_ADMIN_ID = environment.baseUrl + "/api/v1/admin";
+  private URL_API_V1_ADMIN_ID = environment.baseUrl + "/api/v1/admin/{id}";
 
   constructor(private http:HttpClient) {}
 
