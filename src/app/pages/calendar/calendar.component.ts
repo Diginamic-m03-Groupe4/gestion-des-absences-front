@@ -18,7 +18,15 @@ export class CalendarComponent implements OnInit {
   survol: boolean = false;
   absences: Absence[] = [];
   absencesCal: any[] = [];
-  absencesCal2: any[] = [];
+  absencesCal2: any[] = [
+    {
+      id: 'hey',
+      title: 'RTT_EMPLOYE',
+      start: '2023-09-11',
+      end: '2023-09-13',
+      display: 'background'
+    },
+  ];
 
   constructor(private service: AbsenceHttpService) {}
 
@@ -26,8 +34,7 @@ export class CalendarComponent implements OnInit {
     // let calendar = new Calendar(calendarEl, {})
     this.service.get(2023).subscribe((absence) => {
       this.absences = <Absence[]>absence;
-    });
-    for (let absence of this.absences) {
+      for (let absence of this.absences) {
       let absenceSmall = {
         id: absence.id,
         title: absence.typeConge,
@@ -35,7 +42,10 @@ export class CalendarComponent implements OnInit {
         end: absence.dateFin,
       };
       this.absencesCal.push(absenceSmall);
-    }
+      }
+      this.calendarOptions.events = this.absencesCal;
+    });
+    
     this.absencesCal2 = [
       {
         id: 'hey',
@@ -75,15 +85,7 @@ export class CalendarComponent implements OnInit {
     plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
     // dateClick: this.handleDateClick.bind(this),
 
-    events: [
-      {
-        id: 'hey',
-        title: 'RTT_EMPLOYE',
-        start: '2023-09-11',
-        end: '2023-09-13',
-        display: 'background'
-      }
-    ],
+    events: [],
     // this.absencesCal2,
 
     weekends: false,

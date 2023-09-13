@@ -16,8 +16,9 @@ const routes: Routes = [
   {path : "login", component : LoginComponent},
   {path : "signup", component : SignupComponent},
   {path : "", redirectTo : "login", pathMatch : "full"},
-  {path : "**", redirectTo : "login", pathMatch : "full"},
-  {path : "calendar", component : CalendarComponent}
+  {path : "calendar", component : CalendarComponent},
+  {path : "**", redirectTo : "login", pathMatch : "full"}
+
 ];
 
 @NgModule({

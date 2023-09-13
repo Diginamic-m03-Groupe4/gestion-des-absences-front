@@ -1,3 +1,13 @@
+.tab--year{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  div {
+      margin: 1rem;
+  }
+}
+
 .tab-row{
   display: flex;
 }
@@ -31,6 +41,12 @@
   background-color: #c7c7ff;
 }
 .tab-filler{
+  margin : 2px;
+  width: 50px;
+  height: 75px;
+}
+
+.tab-employee {
   margin : 2px;
   width: 50px;
   height: 75px;

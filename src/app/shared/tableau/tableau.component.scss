@@ -17,25 +17,18 @@
         td {
             text-align: center;
         }
-    //     display: flex;
-    //     flex-direction: column;
-    //     background-color: white;
-    //     width: 75%;
-    //     thead {
-    //     display: flex;
-    //     justify-content: space-around;
-    //     tr { 
-    //         display: flex;
-    //         th {
-
-    //         }
-    //     }
-    //     tbody {
-    //         display: flex;
-    //         justify-content: space-around;
-    //     }
+        .action {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            .digitab--action-container {
+                display: flex;
+                margin-bottom: 0px;
+                width: 100%;
+                justify-content: space-around;
+            }
+        }
         
-    // }
     }
     
 }

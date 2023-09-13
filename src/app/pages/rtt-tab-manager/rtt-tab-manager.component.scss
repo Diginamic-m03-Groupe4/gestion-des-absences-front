@@ -1,24 +1,32 @@
-.tab--year{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
-    div {
-        margin-left: 1rem;
-        margin-right: 1rem;
-    }
+.tab--year,
+.tab--ajout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  div {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
 }
 
 .filters {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  h2 {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  div {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    // align-items: center;
-    h2 {
-        text-align: center;
+    > * {
+      margin: 0.2rem;
+      display: flex;
     }
-    div {
-        display: flex;
-        justify-content: center;
-    }
+  }
+  > * {
+    margin: 0.2rem;
+  }
 }
