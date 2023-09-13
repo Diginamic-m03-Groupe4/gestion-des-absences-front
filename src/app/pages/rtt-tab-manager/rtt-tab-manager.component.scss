@@ -10,6 +10,20 @@
   }
 }
 
+#tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+  .tab {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    h2{
+      text-align: center;
+    }
+  }
+}
+
 .filters {
   display: flex;
   flex-direction: column;
