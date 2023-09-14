@@ -45,7 +45,6 @@ export class AbsenceUtilTabService extends TabService<Absence>{
   }
 
   override handleTabSignal(signal: TypeButton, entity?: any): void {
-    console.log(entity);
     switch(signal){
       case TypeButton.AJOUT:
         this.dialog.open(CreationAbsenceComponent)
