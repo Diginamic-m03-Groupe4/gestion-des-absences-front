@@ -1,8 +1,42 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DEPARTEMENTS } from 'src/app/models/departements';
 import { Employee } from 'src/app/models/employee';
-import { MONTHS } from 'src/app/models/month-year';
 import { EmployeeHttpService } from 'src/app/providers/employee-http-service';
+
+interface SingleData {
+  type: string;
+  name: string;
+  showInLegend: boolean;
+  color: string;
+  dataPoints: DataPoint[];
+}
+
+interface DataPoint {
+  label: string;
+  y: number;
+}
+
+interface ChartOptions {
+  animationEnabled: boolean;
+  exportEnabled: boolean;
+  title: {
+    text: string;
+    fontFamily: string;
+  };
+  axisY: {
+    title: string;
+    reversed: boolean;
+  };
+  axisX: {
+    title: string;
+    prefix: string;
+    suffix: string;
+    includeZero: boolean;
+  };
+  toolTip: {
+    shared: boolean;
+  };
+  data: SingleData[];
+}
 
 @Component({
   selector: 'app-histogram',
@@ -10,158 +44,115 @@ import { EmployeeHttpService } from 'src/app/providers/employee-http-service';
   styleUrls: ['./histogram.component.scss'],
 })
 export class HistogramComponent implements OnInit {
+  @Input() year!: number;
+  month!: number;
+
+  @Input() months!: string[];
+  @Input() daysInMonth!: number;
+
+  allDatas: { nom: string; data: DataPoint[] }[] = [];
+
   chart: any;
-
-  employees!: Employee[];
-  employeeAbsence!: {};
-  employeeListAbsence!: any[];
-  @Input() months: number = 9;
-  @Input() year: number = 2023;
-  data: [
-    (
-      | {
-          type: string;
-          name: string;
-          showInLegend: boolean;
-          dataPoints: {
-            label: string;
-            y: number;
-          }[];
-        }
-      | {
-          type: string;
-          name: string;
-          showInLegend: boolean;
-          dataPoints: {
-            label: string;
-            y: number;
-          }[];
-        }
-    )[]
-  ] = [[]];
-
-  departement!: typeof DEPARTEMENTS;
-  id!: string;
-
-  fullFillListOfAbsences() {
-    for (let employe of this.employees) {
-      for (let absence of employe.absences) {
-        let listOfAbsences = this.getDaysFromAbsenceByEmployee(
-          absence.dateDebut,
-          absence.dateFin
-        );
-        for (let day of listOfAbsences) {
-          if (
-            this.populateGraph().filter((x) => {
-              x.dataPoints.forEach((obj) => obj.label === day.toDateString());
-            })
-          ) {
-            this.populateGraph().map((x) => {
-              x.name = employe.nom;
-              x.dataPoints.map((obj) => obj.y++);
-            });
-          }
-        }
-      }
-    }
-    return this.populateGraph();
-  }
-
-  populateGraph() {
-    let listOfDates= [];
-    let listDaysOfMonth = this.getDaysInMonth(this.year, this.months);
-    for (let dayOfMonth of listDaysOfMonth) {
-      listOfDates.push({
-        type: 'stackedColumn',
-        name: 'none',
-        showInLegend: true,
-        dataPoints: [{ label: dayOfMonth.toDateString(), y: 0 }],
-      });
-    }
-    return listOfDates;
-  }
-
-  chartOptions = {
-    theme: 'light2',
-    title: {
-      text: 'Synthèse des jours',
-    },
+  chartOptions: ChartOptions = {
     animationEnabled: true,
+    exportEnabled: true,
+    title: {
+      text: 'Absences',
+      fontFamily: 'Calibri, Arial, sans-serif',
+    },
+    axisY: {
+      title: "Nombre d'absences",
+      reversed: true,
+    },
+    axisX: {
+      title: 'Jour du mois',
+      prefix: '$',
+      suffix: 'k',
+      includeZero: false,
+    },
     toolTip: {
       shared: true,
     },
-    legend: {
-      horizontalAlign: 'right',
-      verticalAlign: 'center',
-      reversed: true,
-    },
-    axisY: {
-      includeZero: true,
-    },
-    data: this.populateGraph(),
+    data: [],
   };
-  //     { label: 'Qtr 1', y: 19 },
-  //     { label: 'Qtr 2', y: 22 },
-  //     { label: 'Qtr 3', y: 12 },
-  //     { label: 'Qtr 4', y: 22 },
-  //   ],
-  // },
-  // {
-  //   type: 'stackedColumn',
-  //   name: ``,
-  //   showInLegend: true,
-  //   dataPoints: [
-  //     { label: 'Qtr 1', y: 42 },
-  //     { label: 'Qtr 2', y: 63 },
-  //     { label: 'Qtr 3', y: 35 },
-  //     { label: 'Qtr 4', y: 38 },
-  //   ],
-  // },
-  // {
-  //   type: 'stackedColumn',
-  //   name: ``,
-  //   showInLegend: true,
-  //   dataPoints: [
-  //     { label: 'Qtr 1', y: 53 },
-  //     { label: 'Qtr 2', y: 86 },
-  //     { label: 'Qtr 3', y: 47 },
-  //     { label: 'Qtr 4', y: 94 },
-  //   ],
-  // },
-  // ],
 
-  // [
-  // ],
+  employees!: Employee[];
 
   constructor(private service: EmployeeHttpService) {}
 
   public ngOnInit() {
-    this.initData();
-  }
-
-  private initData() {
-    this.getData();
-    console.log(`this.populateGraph : `, this.populateGraph());
-  }
-
-  getData() {
     this.service.getByDepartement().subscribe({
       next: (val) => {
         this.employees = val;
-        this.populateGraph();
-        this.fullFillListOfAbsences();
+        this.pushtoAllDatas();
+        this.populateChartOptionsData();
+        console.log(`chartOptions :`, this.chartOptions.data);
       },
       error: (err: any) => console.error(err),
     });
   }
 
+  private populateChartOptionsData() {
+    this.allDatas.forEach((data) => {
+      this.chartOptions.data.push({
+        type: 'stackedBar',
+        name: data.nom,
+        showInLegend: true,
+        color: '',
+        dataPoints: data.data,
+      });
+    });
+  }
+
+  private pushtoAllDatas() {
+    this.employees.forEach((employee) => {
+      this.allDatas.push({
+        nom: employee.nom,
+        data: this.createDataPoints(employee),
+      });
+    });
+  }
+
+  private createDataPoints(employee: Employee): DataPoint[] {
+    let datas: DataPoint[] = [];
+    for (let day of this.getDaysInMonth(this.year, this.month)) {
+      if (this.hasAbsenceOnCurrentDay(day, employee)) {
+        datas.push({
+          label: day.toDateString(),
+          y: 1,
+        });
+      } else {
+        datas.push({
+          label: day.toDateString(),
+          y: 0,
+        });
+      }
+    }
+    return datas;
+  }
+
+  hasAbsenceOnCurrentDay(day: Date, employee: Employee) {
+    let listAbsences: Date[] = [];
+    for (let absences of employee.absences) {
+      listAbsences = this.getDaysFromAbsenceByEmployee(
+        absences.dateDebut,
+        absences.dateFin
+      );
+    }
+    return listAbsences.includes(day);
+  }
+
   getDaysFromAbsenceByEmployee(dateDebut: string, dateFin: string) {
+    const dateDeb = new Date(dateDebut);
+    const dateFinal = new Date(dateFin);
+
+    const listDates = [];
     for (
-      var listDates = [], d = new Date(dateDebut);
-      d <= new Date(dateFin);
+      let d = dateDeb;
+      d.getDate() <= dateFinal.getDate();
       d.setDate(d.getDate() + 1)
     ) {
-      listDates.push(new Date(d));
+      listDates.push(d);
     }
     return listDates;
   }

@@ -21,14 +21,6 @@ import { ModalModifJFComponent } from './shared/modal-modif-jf/modal-modif-jf.co
 import { ModalModifRTTComponent } from './shared/modal-modif-rtt/modal-modif-rtt.component';
 import { ModalSuppressionRttComponent } from './shared/modal-suppression-rtt/modal-suppression-rtt.component';
 import { HistogramComponent } from './shared/histogram/histogram.component';
-// import {
-//   IgxDataChartCoreModule,
-//   IgxDataChartCategoryModule,
-//   IgxDataChartInteractivityModule,
-//   IgxLegendModule,
-//   IgxDataChartStackedModule,
-//   IgxStackedFragmentSeriesModule,
-// } from 'igniteui-angular-charts';
 import { CommonModule } from '@angular/common';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 
@@ -66,13 +58,7 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
     FullCalendarModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    // IgxDataChartCoreModule,
-    // IgxDataChartCategoryModule,
-    // IgxDataChartInteractivityModule,
-    // IgxLegendModule,
-    // IgxDataChartStackedModule,
-    // IgxStackedFragmentSeriesModule,
-      CanvasJSAngularChartsModule
+    CanvasJSAngularChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
