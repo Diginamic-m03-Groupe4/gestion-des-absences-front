@@ -11,7 +11,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let item of presentationItems; let index = index">
-      <td *ngIf="permission" class="digitab--cell">
+      <td *ngIf="permission" class="digitab--cell action">
         <div  class="digitab--action-container">
           <button class="btn" *ngIf='buttons?.includes(tabNotification.MODIFICATION) && permission' (click)='sendNotification(tabNotification.MODIFICATION, index)'>Modifier</button>
           <button class="btn danger" *ngIf='buttons?.includes(tabNotification.SUPPRESSION) && permission' (click)='sendNotification(tabNotification.SUPPRESSION, index)'>Supprimer</button>

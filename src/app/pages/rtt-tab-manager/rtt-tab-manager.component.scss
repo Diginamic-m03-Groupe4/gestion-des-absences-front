@@ -1,24 +1,46 @@
-.tab--year{
+.tab--year,
+.tab--ajout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  div {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
+#tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+  .tab {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
-    div {
-        margin-left: 1rem;
-        margin-right: 1rem;
+    flex-direction: column;
+    flex-grow: 1;
+    h2{
+      text-align: center;
     }
+  }
 }
 
 .filters {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  h2 {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  div {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    // align-items: center;
-    h2 {
-        text-align: center;
+    > * {
+      margin: 0.2rem;
+      display: flex;
     }
-    div {
-        display: flex;
-        justify-content: center;
-    }
+  }
+  > * {
+    margin: 0.2rem;
+  }
 }

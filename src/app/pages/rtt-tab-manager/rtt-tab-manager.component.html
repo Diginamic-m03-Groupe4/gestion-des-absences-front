@@ -1,13 +1,31 @@
 <app-navbar></app-navbar>
 <div class="tab--year">
   <button class="btn btn--tab" (click)="decrementYear()">-</button>
-    {{annee}}
+  <div>{{ annee }}</div>
   <button class="btn btn--tab" (click)="incrementYear()">+</button>
 </div>
 <div *ngIf="isAdmin" class="tab--ajout">
-    <button class="btn btn--tab" (click)="handleAjout()">+ Ajouter RTT</button>
+  <button class="btn btn--tab" (click)="handleAjout()">+ Ajouter RTT</button>
 </div>
-<h2>Jour Fériés</h2>
-<app-tableau [permission]="isAdmin" [service]="jfService" [buttons]="buttonsJF" [entities]="jfService.shownJf" [enTetes]="enTetesJF" ></app-tableau>
-<h2>Rtts Employeurs</h2>
-<app-tableau [permission]="isAdmin" [service]="rttService" [buttons]="buttonsRtt" [entities]="rttService.shownRtt" [enTetes]="enTetesRtt" ></app-tableau>
+<div id="tabs">
+  <div class="tab">
+    <h2>Jour Fériés</h2>
+    <app-tableau
+      [permission]="isAdmin"
+      [service]="jfService"
+      [buttons]="buttonsJF"
+      [entities]="jfService.shownJf"
+      [enTetes]="enTetesJF"
+    ></app-tableau>
+  </div>
+  <div class="tab">
+    <h2>Rtts Employeurs</h2>
+    <app-tableau
+      [permission]="isAdmin"
+      [service]="rttService"
+      [buttons]="buttonsRtt"
+      [entities]="rttService.shownRtt"
+      [enTetes]="enTetesRtt"
+    ></app-tableau>
+  </div>
+</div>

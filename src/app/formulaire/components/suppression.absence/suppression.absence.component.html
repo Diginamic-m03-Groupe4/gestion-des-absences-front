@@ -1,5 +1,9 @@
-<div>Voulez vous supprimer la demande de congés selectionnée ?</div>
-<button type="submit" (click)="onSubmit()">SUPPRIMER</button>
-<!-- Message de succès après l'envoi de la requete  -->
-<button type="submit" (click)="cancel()">ANNULER</button>
-<div>{{errorMessage}}</div>
+<div class="supr">
+  <div>Voulez vous supprimer la demande de congés selectionnée ?</div>
+  <div>
+    <button id="valid" type="submit" (click)="onSubmit()">SUPPRIMER</button>
+    <!-- Message de succès après l'envoi de la requete  -->
+    <button id="annul" type="submit" (click)="cancel()">ANNULER</button>
+    <div>{{ errorMessage }}</div>
+  </div>
+</div>
