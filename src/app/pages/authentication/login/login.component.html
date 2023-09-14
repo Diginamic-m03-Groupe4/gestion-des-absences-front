@@ -1,19 +1,18 @@
 <main>
   <h1>Login</h1>
   <form class="form" [formGroup]="signinForm">
-    <div class="formGroup">
-      <label for="email">E-mail</label>
-      <input class="formControl"  name="email" formControlName="email" type="text" placeholder="E-mail">
+    <div class="formGroup form__group field">
+      <input class="formControl form__field"  name="email" formControlName="email" type="text" placeholder="E-mail">
+      <label for="email" class="form__label">E-mail</label>
       <div class="error" *ngIf="!email?.valid && (this.signinForm.invalid && submitted) ">Invalid email</div>
     </div>
-    <div class="formGroup">
-      <label for="password">Password</label>
-      <input class="formControl"  name="password" formControlName="password" type="password" placeholder="Password">
-      <div class="error" *ngIf="!password?.valid && (this.signinForm.invalid && submitted)">Passwword is required</div>
+    <div class="formGroup form__group field">
+      <input class="formControl form__field"  name="password" formControlName="password" type="password" placeholder="Password">
+      <label for="password" class="form__label">Password</label>
+      <div class="error" *ngIf="!password?.valid && (this.signinForm.invalid && submitted)">Password is required</div>
     </div>
     <button class="btn btn--primary" (click)="onSubmit()" type="submit">Login</button>
     <div class="error">{{formError}}</div>
   </form>
   <a routerLink="/signup" routerLinkActive="active" >You don't have an account? Create one</a>
 </main>
-
