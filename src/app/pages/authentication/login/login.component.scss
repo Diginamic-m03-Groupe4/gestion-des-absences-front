@@ -19,12 +19,6 @@ main {
       margin-bottom: 1rem;
       display: flex;
     }
-    .formGroup {
-      .error {
-        color: red;
-        font-size: small;
-      }
-    }
     .formGroup > * {
       margin-left: 0.5rem;
       margin-right: 0.5rem;
@@ -32,6 +26,10 @@ main {
   }
 }
 
+.error {
+  color: red;
+  font-size: small;
+}
 $primary: #11998e;
 $secondary: #38ef7d;
 $white: #fff;
