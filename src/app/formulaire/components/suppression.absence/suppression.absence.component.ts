@@ -1,7 +1,6 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Absence } from 'src/app/models/absence';
-import { ErrorMessage } from 'src/app/models/error-message';
 import { AbsenceUtilTabService } from 'src/app/pages/absence-tab-utilisateur/providers/absence-util-tab.service';
 
 @Component({
@@ -34,7 +33,6 @@ export class SuppressionAbsenceComponent implements OnInit {
     .deleteByid(`${this.data.id}`)
     .subscribe({
       next : () => {
-        console.log(`Suppression de l'absence ${this.data.id}`);
         this.service.getAbsences(this.service.annee)
         this.dialog.closeAll()
       },

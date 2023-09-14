@@ -8,6 +8,8 @@ import { ModalValidationAbsenceComponent } from 'src/app/shared/modal-validation
 import { AbsenceManagerService } from './providers/absence-manager.service';
 import { Subscription } from 'rxjs';
 import { DAYS } from 'src/app/models/days';
+import { JourFerie } from 'src/app/models/jour-ferie';
+import { RttEmployeur } from 'src/app/models/rtt-employeur';
 
 
 @Component({
@@ -40,21 +42,7 @@ export class AbsencesManagerComponent implements OnInit, OnDestroy {
         this.employees.push(new EmployeeC(employee))
       }
       forkJoin([this.service.jfHttpService.get(this.year), this.service.rttHttpService.get(this.year)]).subscribe(value => {
-        for(let absence of value[0]){
-          let caseAbsence : CaseAbsence = {
-            absencePointer : absence,
-            displayedLetter : 'JF'
-          }
-          this.absenceEmployeurMap.set(new Date(absence.date).toLocaleDateString(), caseAbsence);
-        }
-        for(let absence of value[1]){
-          let caseAbsence : CaseAbsence = {
-            absencePointer : absence,
-            displayedLetter : 'RTT'
-          }
-          this.absenceEmployeurMap.set(new Date(absence.date).toLocaleDateString(), caseAbsence);
-        }
-        this.initializeMonthTab();
+        this.absenceSub(value);
       })
     })
     this.employeesSubscription = this.service.entitiesSubject.subscribe(value => {
@@ -68,6 +56,24 @@ export class AbsencesManagerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.employeesSubscription?.unsubscribe();
+  }
+
+  private absenceSub(value : [JourFerie[], RttEmployeur[]]){
+    for(let absence of value[0]){
+      let caseAbsence : CaseAbsence = {
+        absencePointer : absence,
+        displayedLetter : 'JF'
+      }
+      this.absenceEmployeurMap.set(new Date(absence.date).toLocaleDateString(), caseAbsence);
+    }
+    for(let absence of value[1]){
+      let caseAbsence : CaseAbsence = {
+        absencePointer : absence,
+        displayedLetter : 'RTT'
+      }
+      this.absenceEmployeurMap.set(new Date(absence.date).toLocaleDateString(), caseAbsence);
+    }
+    this.initializeMonthTab();
   }
 
   private initializeMonthTab(){
@@ -111,13 +117,13 @@ export class AbsencesManagerComponent implements OnInit, OnDestroy {
 
   decrementYear() {
     this.year--;
-    this.updateJourFerie();
+    this.updateAbsence();
     this.initializeMonthTab()
   }
 
   incrementYear() {
     this.year++;
-    this.updateJourFerie();
+    this.updateAbsence();
   }
 
   getDaysInMonth(month : number, year:number) {
@@ -127,29 +133,22 @@ export class AbsencesManagerComponent implements OnInit, OnDestroy {
   decrementMonth() {
     if (this.monthPointer == 0) {
       this.year--;
-      this.updateJourFerie();
+      this.updateAbsence();
     }
     this.monthPointer = (this.monthPointer == 0) ? 11 : (this.monthPointer - 1) % 12;
     this.initializeMonthTab()
   }
 
-  private updateJourFerie(){
-      this.service.jfHttpService.get(this.year).subscribe(value => {
-        for(let absence of value){
-          let caseAbsence : CaseAbsence = {
-            absencePointer : absence,
-            displayedLetter : 'JF'
-          }
-          this.absenceEmployeurMap.set(new Date(absence.date).toLocaleDateString(), caseAbsence);
-          this.initializeMonthTab()
-        }
-      })
+  private updateAbsence(){
+    forkJoin([this.service.jfHttpService.get(this.year), this.service.rttHttpService.get(this.year)]).subscribe(value => {
+      this.absenceSub(value);
+    })
   }
 
   incrementMonth() {
     if (this.monthPointer == 11) {
       this.year++;
-      this.updateJourFerie();
+      this.updateAbsence();
     }
     this.monthPointer = (this.monthPointer + 1) % 12;
     this.initializeMonthTab()

@@ -40,12 +40,14 @@ export class AbsenceUtilTabService extends TabService<Absence>{
 
   getAbsences(annee:number){
     this.httpService.get(annee).subscribe(value => {
+      value.sort((a, b) => {
+        return a.dateDebut > b.dateDebut ? 1 : -1;
+      })
       this.getEntitiesSubject().next(value);
     });
   }
 
   override handleTabSignal(signal: TypeButton, entity?: any): void {
-    console.log(entity);
     switch(signal){
       case TypeButton.AJOUT:
         this.dialog.open(CreationAbsenceComponent)
