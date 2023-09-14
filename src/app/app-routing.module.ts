@@ -15,9 +15,9 @@ const routes: Routes = [
   {path : "absences-manager", component : AbsencesManagerComponent, canActivate : [isManagerGuard]},
   {path : "login", component : LoginComponent},
   {path : "signup", component : SignupComponent},
-  {path : "", redirectTo : "login", pathMatch : "full"},
   {path : "calendar", component : CalendarComponent},
-  {path : "**", redirectTo : "login", pathMatch : "full"}
+  {path : "**", redirectTo : "login", pathMatch : "full"},
+  {path : "", redirectTo : "login", pathMatch : "full"},
 
 ];
 

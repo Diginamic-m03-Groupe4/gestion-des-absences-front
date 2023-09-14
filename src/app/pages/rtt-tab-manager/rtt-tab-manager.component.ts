@@ -51,12 +51,18 @@ export class RttTabManagerComponent {
     })
     this.rttSubscription = this.rttService.getEntitiesSubject().subscribe((rtt) => {
       this.rttService.shownRtt = rtt
+      this.rttService.shownRtt.forEach((rtt) => {
+        console.log(rtt.date)
+      })
     })
   }
 
   private getEntities() {
     forkJoin([this.rttService.httpService.get(this.rttService.annee), this.jfService.httpService.get(this.jfService.annee)]).subscribe(results => {
       this.rttService.shownRtt = results[0]
+      this.rttService.shownRtt =  this.rttService.shownRtt.sort((a, b) => {
+        return a.date > b.date ? 1 : -1;
+      })
       this.jfService.shownJf = results[1]
     })
   }

@@ -29,6 +29,9 @@ export class AbsenceTabUtilisateurComponent implements OnInit, OnDestroy{
     this.service.getAbsences(this.service.annee);
     this.absenceSubscription = this.service.getEntitiesSubject().subscribe(value => {
       this.entities = value;
+      this.entities.sort((a, b) => {
+        return a.dateDebut > b.dateDebut ? 1 : -1;
+      })
     })
   }
 
