@@ -35,7 +35,7 @@
         <div
           *ngFor="let absence of absences"
           (click)="openChange(absence)"
-          class="tab-absence-letter"
+          class="tab-absence-letter {{absence?.displayedLetter}}"
         >
           {{ absence?.displayedLetter }}
         </div>
