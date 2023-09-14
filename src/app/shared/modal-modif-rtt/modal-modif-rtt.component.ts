@@ -2,7 +2,6 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { RttEmployeur } from 'src/app/models/rtt-employeur';
-import { TypeAbsenceEmployeur } from 'src/app/models/type-absence-employeur';
 import { RttServiceService } from 'src/app/pages/rtt-tab-manager/providers/rtt-service.service';
 
 @Component({
